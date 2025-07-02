@@ -44,19 +44,18 @@ DD4hep.Parameters = {
                      "EncodingStringParameterName": ["GlobalTrackerReadoutID"]
                      }
 
-Config = MarlinProcessorWrapper("Config")
-Config.OutputLevel = INFO
-Config.ProcessorType = "CLICRecoConfig"
-Config.Parameters = {
-                     "VertexUnconstrained": ["OFF"],
-                     "VertexUnconstrainedChoices": ["ON", "OFF"]
-                     }
+# Config = MarlinProcessorWrapper("Config")
+# Config.OutputLevel = INFO
+# Config.ProcessorType = "CLICRecoConfig"
+# Config.Parameters = {
+#                      "VertexUnconstrained": ["OFF"],
+#                      "VertexUnconstrainedChoices": ["ON", "OFF"]
+#                      }
 
 AIDA = MarlinProcessorWrapper("AIDA")
 AIDA.OutputLevel = INFO
 AIDA.ProcessorType = "AIDAProcessor"
 AIDA.Parameters = {
-                   "Compress": ["1"],
                    "FileName": ["output_reco"],
                    "FileType": ["root"]
                    }
@@ -81,20 +80,8 @@ LCIOWriter_all.Parameters = {
                              "LCIOWriteMode": ["WRITE_NEW"]
                              }
 
-#https://github.com/iLCSoft/Marlin/blob/6f8703a389987082363206e41e5ff1054ed1f444/source/src/LCIOOutputProcessor.cc
-LCIOWriter_light = MarlinProcessorWrapper("LCIOWriter_light")
-LCIOWriter_light.OutputLevel = INFO
-LCIOWriter_light.ProcessorType = "LCIOOutputProcessor"
-LCIOWriter_light.Parameters = {
-                               "DropCollectionNames": [],
-                               "DropCollectionTypes": ["SimCalorimeterHit", "CalorimeterHit", "SimTrackerHit", "TrackerHitPlane", "Track", "LCRelation"],
-                               "FullSubsetCollections": [],
-                               "KeepCollectionNames": ["SiTracks_Refitted", "SiTracks_Refitted_Relations", "PandoraPFOs", "MCPhysicsParticle", "MCParticle_SiTracks_Refitted", "RecoMCTruthLink"],
-                               "LCIOOutputFile": ["output_reco_light.slcio"],
-                               "LCIOWriteMode": ["WRITE_NEW"]
-                               }
-
 #https://github.com/MuonColliderSoft/ACTSTracking/blob/ce74f55a0ec320284ce8cc2d2d233a7f9c8b912d/src/ACTSSeededCKFTrackingProc.cxx#L45
+# Adapted from Fede's config
 CKFTracking = MarlinProcessorWrapper("CKFTracking")
 CKFTracking.OutputLevel = INFO
 CKFTracking.ProcessorType = "ACTSSeededCKFTrackingProc"
@@ -104,32 +91,35 @@ CKFTracking.Parameters = {
     "MatFile": [the_args.MatFile],
     "PropagateBackward": ["False"],
     "RunCKF": ["True"],
-    "SeedFinding_CollisionRegion": ["3.5"],
-    "SeedFinding_DeltaRMax": ["60"],
-    "SeedFinding_DeltaRMin": ["2"],
-    "SeedFinding_DeltaRMaxBottom": ["50"],
-    "SeedFinding_DeltaRMaxTop": ["50"],
-    "SeedFinding_DeltaRMinBottom": ["5"],
-    "SeedFinding_DeltaRMinTop": ["2"],
+    "DetectorSchema": ["MAIA_v0"],
+    "SeedFinding_CollisionRegion": ["6"],
+    # "SeedFinding_DeltaRMax": ["60"],
+    # "SeedFinding_DeltaRMin": ["2"],
+    # "SeedFinding_DeltaRMaxBottom": ["50"],
+    # "SeedFinding_DeltaRMaxTop": ["50"],
+    # "SeedFinding_DeltaRMinBottom": ["5"],
+    # "SeedFinding_DeltaRMinTop": ["2"],
     "SeedFinding_ImpactMax": ["3"],
     "SeedFinding_MinPt": ["500"],
     "SeedFinding_RMax": ["150"],
-    "SeedFinding_ZMax": ["500"],
+    "SeedFinding_ZMax": ["600"],
     "SeedFinding_RadLengthPerSeed": ["0.1"],
-    "SeedFinding_zBottomBinLen": ["1"],
-    "SeedFinding_zTopBinLen": ["1"],
-    "SeedFinding_phiBottomBinLen": ["1"],
-    "SeedFinding_phiTopBinLen": ["1"],
-    "SeedFinding_SigmaScattering": ["3"],
-    "SeedingLayers": [
-        "13", "2", "13", "6", "13", "10", "13", "14", 
-        "14", "2", "14", "6", "14", "10", "14", "14", 
-        "15", "2", "15", "6", "15", "10", "15", "14",
-        ],
+    # "SeedFinding_zBottomBinLen": ["1"],
+    # "SeedFinding_zTopBinLen": ["1"],
+    # "SeedFinding_phiBottomBinLen": ["1"],
+    # "SeedFinding_phiTopBinLen": ["1"],
+    "SeedFinding_SigmaScattering": ["50"],
+    "SeedingLayers": ["13", "2", "13", "6", "13", "10", "13", "14",
+                      "14", "2", "14", "6", "14", "8", "14", "10", 
+                      "15", "2", "15", "6", "15", "10", "15", "14",
+                      "8", "2",
+                      "17", "2",
+                      "18", "2"],
     "TGeoFile": [the_args.TGeoFile],
+    "TGeoDescFile": ["/opt/spack/opt/spack/linux-ubuntu24.04-x86_64/gcc-13.3.0/actstracking-1.3.1-bqlvvdmew24gow2jqheahfpzxnp6xwbt/share/ACTSTracking/data/MAIA_v0.json"],
     "TrackCollectionName": ["AllTracks"],
     "TrackerHitCollectionNames": ["VXDBarrelHits", "ITBarrelHits", "OTBarrelHits", "VXDEndcapHits", "ITEndcapHits", "OTEndcapHits"],
-    "CaloFace_Radius": ["1500"],
+    "CaloFace_Radius": ["1857"],
     "CaloFace_Z": ["2307"]
 }
 
@@ -353,7 +343,7 @@ FastJetProcessor.Parameters = {
 
 algList.append(AIDA)
 algList.append(EventNumber)
-algList.append(Config)
+#algList.append(Config)
 algList.append(DD4hep)
 algList.append(CKFTracking)
 algList.append(TrackDeduplication)
@@ -364,7 +354,6 @@ algList.append(DDMarlinPandora)
 algList.append(PFOSelection)
 algList.append(FastJetProcessor)
 algList.append(LCIOWriter_all)
-algList.append(LCIOWriter_light)
 
 from Configurables import ApplicationMgr
 ApplicationMgr( TopAlg = algList,
