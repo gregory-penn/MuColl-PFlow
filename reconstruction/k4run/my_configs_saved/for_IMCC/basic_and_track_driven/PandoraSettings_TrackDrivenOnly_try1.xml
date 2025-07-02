@@ -1,0 +1,168 @@
+<!-- Pandora settings xml file -->
+
+<!-- This is to test the entirely default, Cone Clustering algorithm on its own. -->
+<!-- Very loose track-cluster matching requirements are imposed -->
+
+
+<pandora>
+    <!-- GLOBAL SETTINGS -->
+    <IsMonitoringEnabled>true</IsMonitoringEnabled>
+    <ShouldDisplayAlgorithmInfo>false</ShouldDisplayAlgorithmInfo>
+    <ShouldCollapseMCParticlesToPfoTarget>true</ShouldCollapseMCParticlesToPfoTarget>
+
+    <!-- PLUGIN REGISTRATION -->
+    <HadronicEnergyCorrectionPlugins>SoftwareCompensation</HadronicEnergyCorrectionPlugins>
+    <EmShowerPlugin>LCEmShowerId</EmShowerPlugin>
+    <PhotonPlugin>LCPhotonId</PhotonPlugin>
+    <ElectronPlugin>LCElectronId</ElectronPlugin>
+    <MuonPlugin>LCMuonId</MuonPlugin>
+
+    <!-- PLUGIN SETTINGS -->
+    <LCMuonId>
+        <MinMuonTrackSegmentHitsCut>5</MinMuonTrackSegmentHitsCut>
+        <MuonRmsCut>15.625</MuonRmsCut>
+    </LCMuonId>
+
+    <!-- ALGORITHM SETTINGS -->
+
+    <!-- Set calo hit properties, then select tracks and hits to use for clustering -->
+    <algorithm type = "CaloHitPreparation"/>
+    <algorithm type = "EventPreparation">
+        <OutputTrackListName>Tracks</OutputTrackListName>
+        <OutputCaloHitListName>CaloHits</OutputCaloHitListName>
+        <OutputMuonCaloHitListName>MuonYokeHits</OutputMuonCaloHitListName>
+        <ReplacementTrackListName>Tracks</ReplacementTrackListName>
+        <ReplacementCaloHitListName>CaloHits</ReplacementCaloHitListName>
+    </algorithm>
+
+    <!-- Doing the most basic clustering algorithm -->
+
+    <!-- Clustering parent algorithm runs a daughter clustering algorithm -->
+    <algorithm type = "ClusteringParent">
+        <algorithm type = "ConeClustering" description = "ClusterFormation">
+            <ClusterSeedStrategy>2</ClusterSeedStrategy>    <!-- default value -->
+            <ShouldUseTrackSeed>true</ShouldUseTrackSeed> <!-- default value -->
+        </algorithm>
+        <ClusterListName>PrimaryClusters</ClusterListName>
+        <ReplaceCurrentClusterList>true</ReplaceCurrentClusterList>
+    </algorithm>
+
+    <algorithm type = "TrackDrivenMerging">
+        <algorithm type = "TrackClusterAssociation" description = "TrackClusterAssociation"></algorithm>
+    </algorithm>
+
+    <algorithm type = "ResolveTrackAssociations">
+        <clusteringAlgorithms>
+            <algorithm type = "ConeClustering" instance = "Reclustering1"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering2"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering3"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering4"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering5"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering6"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering7"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering8"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering9"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering10"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering11"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering12"/>
+        </clusteringAlgorithms>
+        <algorithm type = "TopologicalAssociationParent" description = "ClusterAssociation" instance = "reclusterAssociation"></algorithm>
+        <algorithm type = "TrackClusterAssociation" description = "TrackClusterAssociation"></algorithm>
+        <UsingOrderedAlgorithms>true</UsingOrderedAlgorithms>
+        <ShouldUseForcedClustering>true</ShouldUseForcedClustering>
+        <algorithm type = "ForcedClustering" description = "ForcedClustering"/>
+    </algorithm>
+
+    <!-- Below crashes for some reason... -->
+    <!-- <algorithm type = "SplitTrackAssociations" instance = "SplitTrackAssociations1"/>
+    <algorithm type = "SplitMergedClusters" instance = "SplitMergedClusters1"/> -->
+
+    <algorithm type = "TrackDrivenAssociation">
+        <clusteringAlgorithms>
+            <algorithm type = "ConeClustering" instance = "Reclustering1"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering2"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering3"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering4"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering5"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering6"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering7"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering8"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering9"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering10"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering11"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering12"/>
+        </clusteringAlgorithms>
+        <algorithm type = "TopologicalAssociationParent" description = "ClusterAssociation" instance = "reclusterAssociation"></algorithm>
+        <algorithm type = "TrackClusterAssociation" description = "TrackClusterAssociation"></algorithm>
+        <UsingOrderedAlgorithms>true</UsingOrderedAlgorithms>
+    </algorithm>
+
+    <!-- Below crashes for some reason... -->
+    <!-- <algorithm type = "SplitTrackAssociations" instance = "SplitTrackAssociations1"/>
+    <algorithm type = "SplitMergedClusters" instance = "SplitMergedClusters1"/> -->
+
+    <algorithm type = "ExitingTrack">
+        <clusteringAlgorithms>
+            <algorithm type = "ConeClustering" instance = "Reclustering1"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering2"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering3"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering4"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering5"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering6"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering7"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering8"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering9"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering10"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering11"/>
+            <algorithm type = "ConeClustering" instance = "Reclustering12"/>
+        </clusteringAlgorithms>
+        <algorithm type = "TopologicalAssociationParent" description = "ClusterAssociation" instance = "reclusterAssociation"></algorithm>
+        <algorithm type = "TrackClusterAssociation" description = "TrackClusterAssociation"></algorithm>
+        <UsingOrderedAlgorithms>true</UsingOrderedAlgorithms>
+        <ShouldUseForcedClustering>true</ShouldUseForcedClustering>
+        <algorithm type = "ForcedClustering" description = "ForcedClustering"/>
+    </algorithm>
+
+    <!-- Prepare particle flow objects -->
+    <algorithm type = "TrackPreparation">
+        <CandidateListNames>Input</CandidateListNames>
+        <MergedCandidateListName>PfoCandidates</MergedCandidateListName>
+        <PfoTrackListName>PfoCreation</PfoTrackListName>
+        <trackClusterAssociationAlgorithms>
+            <algorithm type = "TrackClusterAssociation"/>
+            <algorithm type = "LoopingTrackAssociation"/>
+            <algorithm type = "TrackRecovery"/>
+            <algorithm type = "TrackRecoveryHelix"/>
+            <algorithm type = "TrackRecoveryInteractions"/>
+        </trackClusterAssociationAlgorithms>
+    </algorithm>
+
+    <algorithm type = "ClusterPreparation">
+        <CandidateListNames>PrimaryClusters</CandidateListNames>
+        <MergedCandidateListName>PfoCreation</MergedCandidateListName>
+    </algorithm>
+
+    <!-- Create particle flow objects -->
+    <algorithm type = "ForceSplitTrackAssociations"/>
+    <algorithm type = "PfoCreation">
+        <OutputPfoListName>PrimaryAndPhotonPfos</OutputPfoListName>
+    </algorithm>
+
+    <algorithm type = "PfoPreparation">
+        <CandidateListNames>PrimaryAndPhotonPfos</CandidateListNames>
+        <MergedCandidateListName>OutputPfos</MergedCandidateListName>
+    </algorithm>
+
+    <!-- Particle flow object modification algorithms -->
+    <algorithm type = "FinalParticleId"/>
+    <algorithm type = "V0PfoCreation"/>
+    <!-- <algorithm type = "DumpPfosMonitoring"/> -->
+    <!-- Commenting below out - it is for event displays. This will crash if PandoraMonitoring is not in the software environment.-->
+    <!-- <algorithm type = "VisualMonitoring"/>
+        <DisplayDetector>true</DisplayDetector>
+        <ShowCurrentTracks>true</ShowCurrentTracks>
+        <ShowCurrentCaloHits>true</ShowCurrentCaloHits>
+        <ShowCurrentClusters>true</ShowCurrentClusters>
+        <ShowCurrentPfos>true</ShowCurrentPfos>
+        <TrackListNames>SiTracks</TrackListNames> -->
+</pandora>
