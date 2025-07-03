@@ -481,82 +481,80 @@ MyHcalEndcapReco.Parameters = {
     "ppd_npix": ["2000"]
 }
 
-# Commenting out - requires external files / packages
+MyEcalBarrelConer = MarlinProcessorWrapper("MyEcalBarrelConer")
+MyEcalBarrelConer.OutputLevel = INFO
+MyEcalBarrelConer.ProcessorType = "CaloConer"
+MyEcalBarrelConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["EcalBarrelCollectionRec"],
+    "CaloRelationCollectionName": ["EcalBarrelRelationsSimRec"],
+    "GoodHitCollection": ["EcalBarrelCollectionConed"],
+    "GoodRelationCollection": ["EcalBarrelRelationsSimConed"],
+    "ConeWidth": ["0.2"]
+}
 
-# MyEcalBarrelConer = MarlinProcessorWrapper("MyEcalBarrelConer")
-# MyEcalBarrelConer.OutputLevel = INFO
-# MyEcalBarrelConer.ProcessorType = "CaloConer"
-# MyEcalBarrelConer.Parameters = {
-#     "MCParticleCollectionName": ["MCParticle"],
-#     "CaloHitCollectionName": ["EcalBarrelCollectionRec"],
-#     "CaloRelationCollectionName": ["EcalBarrelRelationsSimRec"],
-#     "GoodHitCollection": ["EcalBarrelCollectionConed"],
-#     "GoodRelationCollection": ["EcalBarrelRelationsSimConed"],
-#     "ConeWidth": ["0.2"]
-# }
+MyEcalEndcapConer = MarlinProcessorWrapper("MyEcalEndcapConer")
+MyEcalEndcapConer.OutputLevel = INFO
+MyEcalEndcapConer.ProcessorType = "CaloConer"
+MyEcalEndcapConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["EcalEndcapCollectionRec"],
+    "CaloRelationCollectionName": ["EcalEndcapRelationsSimRec"],
+    "GoodHitCollection": ["EcalEndcapCollectionConed"],
+    "GoodRelationCollection": ["EcalEndcapRelationsSimConed"],
+    "ConeWidth": ["0.2"]
+}
 
-# MyEcalEndcapConer = MarlinProcessorWrapper("MyEcalEndcapConer")
-# MyEcalEndcapConer.OutputLevel = INFO
-# MyEcalEndcapConer.ProcessorType = "CaloConer"
-# MyEcalEndcapConer.Parameters = {
-#     "MCParticleCollectionName": ["MCParticle"],
-#     "CaloHitCollectionName": ["EcalEndcapCollectionRec"],
-#     "CaloRelationCollectionName": ["EcalEndcapRelationsSimRec"],
-#     "GoodHitCollection": ["EcalEndcapCollectionConed"],
-#     "GoodRelationCollection": ["EcalEndcapRelationsSimConed"],
-#     "ConeWidth": ["0.2"]
-# }
+MyHcalBarrelConer = MarlinProcessorWrapper("MyHcalBarrelConer")
+MyHcalBarrelConer.OutputLevel = INFO
+MyHcalBarrelConer.ProcessorType = "CaloConer"
+MyHcalBarrelConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["HcalBarrelCollectionRec"],
+    "CaloRelationCollectionName": ["HcalBarrelRelationsSimRec"],
+    "GoodHitCollection": ["HcalBarrelCollectionConed"],
+    "GoodRelationCollection": ["HcalBarrelRelationsSimConed"],
+    "ConeWidth": ["0.2"]
+}
 
-# MyHcalBarrelConer = MarlinProcessorWrapper("MyHcalBarrelConer")
-# MyHcalBarrelConer.OutputLevel = INFO
-# MyHcalBarrelConer.ProcessorType = "CaloConer"
-# MyHcalBarrelConer.Parameters = {
-#     "MCParticleCollectionName": ["MCParticle"],
-#     "CaloHitCollectionName": ["HcalBarrelCollectionRec"],
-#     "CaloRelationCollectionName": ["HcalBarrelRelationsSimRec"],
-#     "GoodHitCollection": ["HcalBarrelCollectionConed"],
-#     "GoodRelationCollection": ["HcalBarrelRelationsSimConed"],
-#     "ConeWidth": ["0.2"]
-# }
-
-# MyHcalEndcapConer = MarlinProcessorWrapper("MyHcalEndcapConer")
-# MyHcalEndcapConer.OutputLevel = INFO
-# MyHcalEndcapConer.ProcessorType = "CaloConer"
-# MyHcalEndcapConer.Parameters = {
-#     "MCParticleCollectionName": ["MCParticle"],
-#     "CaloHitCollectionName": ["HcalEndcapCollectionRec"],
-#     "CaloRelationCollectionName": ["HcalEndcapRelationsSimRec"],
-#     "GoodHitCollection": ["HcalEndcapCollectionConed"],
-#     "GoodRelationCollection": ["HcalEndcapRelationsSimConed"],
-#     "ConeWidth": ["0.2"]
-# }
+MyHcalEndcapConer = MarlinProcessorWrapper("MyHcalEndcapConer")
+MyHcalEndcapConer.OutputLevel = INFO
+MyHcalEndcapConer.ProcessorType = "CaloConer"
+MyHcalEndcapConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["HcalEndcapCollectionRec"],
+    "CaloRelationCollectionName": ["HcalEndcapRelationsSimRec"],
+    "GoodHitCollection": ["HcalEndcapCollectionConed"],
+    "GoodRelationCollection": ["HcalEndcapRelationsSimConed"],
+    "ConeWidth": ["0.2"]
+}
 
 
-# MyEcalBarrelSelector = MarlinProcessorWrapper("MyEcalBarrelSelector")
-# MyEcalBarrelSelector.OutputLevel = INFO
-# MyEcalBarrelSelector.ProcessorType = "CaloHitSelector"
-# MyEcalBarrelSelector.Parameters = {
-#     "CaloHitCollectionName": ["EcalBarrelCollectionConed"],
-#     "CaloRelationCollectionName": ["EcalBarrelRelationsSimConed"],
-#     "GoodHitCollection": ["EcalBarrelCollectionSel"],
-#     "GoodRelationCollection": ["EcalBarrelRelationsSimSel"],
-#     "ThresholdsFilePath": ["/code/CaloSelector/ECAL_Thresholds_10TeV.root"],
-#     "Nsigma": ["0"],
-#     "DoBIBsubtraction": ["true"]
-# }
+MyEcalBarrelSelector = MarlinProcessorWrapper("MyEcalBarrelSelector")
+MyEcalBarrelSelector.OutputLevel = INFO
+MyEcalBarrelSelector.ProcessorType = "CaloHitSelector"
+MyEcalBarrelSelector.Parameters = {
+    "CaloHitCollectionName": ["EcalBarrelCollectionConed"],
+    "CaloRelationCollectionName": ["EcalBarrelRelationsSimConed"],
+    "GoodHitCollection": ["EcalBarrelCollectionSel"],
+    "GoodRelationCollection": ["EcalBarrelRelationsSimSel"],
+    "ThresholdsFilePath": ["/code/CaloSelector/ECAL_Thresholds_10TeV.root"], # not sure what will happen when this is read, I don't have this file
+    "Nsigma": ["0"],
+    "DoBIBsubtraction": ["true"]
+}
 
-# MyEcalEndcapSelector = MarlinProcessorWrapper("MyEcalEndcapSelector")
-# MyEcalEndcapSelector.OutputLevel = INFO
-# MyEcalEndcapSelector.ProcessorType = "CaloHitSelector"
-# MyEcalEndcapSelector.Parameters = {
-#     "CaloHitCollectionName": ["EcalEndcapCollectionConed"],
-#     "CaloRelationCollectionName": ["EcalEndcapRelationsSimConed"],
-#     "GoodHitCollection": ["EcalEndcapCollectionSel"],
-#     "GoodRelationCollection": ["EcalEndcapRelationsSimSel"],
-#     "ThresholdsFilePath": ["/code/CaloSelector/ECAL_Thresholds_10TeV.root"],
-#     "Nsigma": ["0"],
-#     "DoBIBsubtraction": ["true"]
-# }
+MyEcalEndcapSelector = MarlinProcessorWrapper("MyEcalEndcapSelector")
+MyEcalEndcapSelector.OutputLevel = INFO
+MyEcalEndcapSelector.ProcessorType = "CaloHitSelector"
+MyEcalEndcapSelector.Parameters = {
+    "CaloHitCollectionName": ["EcalEndcapCollectionConed"],
+    "CaloRelationCollectionName": ["EcalEndcapRelationsSimConed"],
+    "GoodHitCollection": ["EcalEndcapCollectionSel"],
+    "GoodRelationCollection": ["EcalEndcapRelationsSimSel"],
+    "ThresholdsFilePath": ["/code/CaloSelector/ECAL_Thresholds_10TeV.root"], # not sure what will happen when this is read, I don't have this file
+    "Nsigma": ["0"],
+    "DoBIBsubtraction": ["true"]
+}
 
 DDMarlinPandora = MarlinProcessorWrapper("DDMarlinPandora")
 DDMarlinPandora.OutputLevel = INFO
