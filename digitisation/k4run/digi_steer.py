@@ -29,7 +29,7 @@ parser.add_argument(
     "--OverlayFullNumberBackground",
     help="Number of background files used for BIB overlay",
     type=str,
-    default="192", #Magic number assumes 45 phi clones of each MC particle
+    default="1666", #Magic number (1666) assumes BIB was created with -n 42.66 phi clones of each MC particle
 )
 
 parser.add_argument(
@@ -468,7 +468,7 @@ FilterDL_VXDE.Parameters = {
                             }
 
 OverlayFull = MarlinProcessorWrapper("OverlayFull")
-OverlayFull.OutputLevel = INFO
+OverlayFull.OutputLevel = WARNING
 OverlayFull.ProcessorType = "OverlayTimingRandomMix"
 OverlayFull.Parameters = {
     "PathToMuPlus": [the_args.OverlayFullPathToMuPlus],
