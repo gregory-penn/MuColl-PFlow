@@ -3,3 +3,6 @@
 *.slcio
 *.log
 *.pkl
+*.root
+run_BIB/*
+samples/*
