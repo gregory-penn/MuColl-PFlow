@@ -122,109 +122,201 @@ VXDBarrelDigitiser = MarlinProcessorWrapper("VXDBarrelDigitiser")
 VXDBarrelDigitiser.OutputLevel = INFO
 VXDBarrelDigitiser.ProcessorType = "DDPlanarDigiProcessor"
 VXDBarrelDigitiser.Parameters = {
-                                 "CorrectTimesForPropagation": ["true"],
-                                 "IsStrip": ["false"],
-                                 "ResolutionT": ["0.03"],
-                                 "ResolutionU": ["0.005"],
-                                 "ResolutionV": ["0.005"],
-                                 "SimTrackHitCollectionName": ["VertexBarrelCollection"],
-                                 "SimTrkHitRelCollection": ["VXDBarrelHitsRelations"],
-                                 "SubDetectorName": ["Vertex"],
-                                 "TimeWindowMax": ["0.15"],
-                                 "TimeWindowMin": ["-0.09"],
-                                 "TrackerHitCollectionName": ["VXDBarrelHits"],
-                                 "UseTimeWindow": ["true"]
-                                 }
+    "CorrectTimesForPropagation": ["true"],
+    "IsStrip": ["false"],
+    "ResolutionT": ["0.03"],
+    "ResolutionU": ["0.005"],
+    "ResolutionV": ["0.005"],
+    "SimTrackHitCollectionName": ["VertexBarrelCollection"],
+    "SimTrkHitRelCollection": ["VBTrackerHitsRelations"],
+    "SubDetectorName": ["Vertex"],
+    "TimeWindowMax": ["0.15"],
+    "TimeWindowMin": ["-0.09"],
+    "TrackerHitCollectionName": ["VBTrackerHits"],
+    "UseTimeWindow": ["true"]
+}
 
 VXDEndcapDigitiser = MarlinProcessorWrapper("VXDEndcapDigitiser")
 VXDEndcapDigitiser.OutputLevel = INFO
 VXDEndcapDigitiser.ProcessorType = "DDPlanarDigiProcessor"
 VXDEndcapDigitiser.Parameters = {
-                                 "CorrectTimesForPropagation": ["true"],
-                                 "IsStrip": ["false"],
-                                 "ResolutionT": ["0.03"],
-                                 "ResolutionU": ["0.005"],
-                                 "ResolutionV": ["0.005"],
-                                 "SimTrackHitCollectionName": ["VertexEndcapCollection"],
-                                 "SimTrkHitRelCollection": ["VXDEndcapHitsRelations"],
-                                 "SubDetectorName": ["Vertex"],
-                                 "TimeWindowMax": ["0.15"],
-                                 "TimeWindowMin": ["-0.09"],
-                                 "TrackerHitCollectionName": ["VXDEndcapHits"],
-                                 "UseTimeWindow": ["true"]
-                                 }
+    "CorrectTimesForPropagation": ["true"],
+    "IsStrip": ["false"],
+    "ResolutionT": ["0.03"],
+    "ResolutionU": ["0.005"],
+    "ResolutionV": ["0.005"],
+    "SimTrackHitCollectionName": ["VertexEndcapCollection"],
+    "SimTrkHitRelCollection": ["VETrackerHitsRelations"],
+    "SubDetectorName": ["Vertex"],
+    "TimeWindowMax": ["0.15"],
+    "TimeWindowMin": ["-0.09"],
+    "TrackerHitCollectionName": ["VETrackerHits"],
+    "UseTimeWindow": ["true"]
+}
 
-ITBarrelDigitiser = MarlinProcessorWrapper("ITBarrelDigitiser")
-ITBarrelDigitiser.OutputLevel = INFO
-ITBarrelDigitiser.ProcessorType = "DDPlanarDigiProcessor"
-ITBarrelDigitiser.Parameters = {
-                                "CorrectTimesForPropagation": ["true"],
-                                "IsStrip": ["false"],
-                                "ResolutionT": ["0.06"],
-                                "ResolutionU": ["0.007"],
-                                "ResolutionV": ["0.09"],
-                                "SimTrackHitCollectionName": ["InnerTrackerBarrelCollection"],
-                                "SimTrkHitRelCollection": ["ITBarrelHitsRelations"],
-                                "SubDetectorName": ["InnerTrackers"],
-                                "TimeWindowMax": ["0.3"],
-                                "TimeWindowMin": ["-0.18"],
-                                "TrackerHitCollectionName": ["ITBarrelHits"],
-                                "UseTimeWindow": ["true"]
-                                }
+InnerPlanarDigiProcessor = MarlinProcessorWrapper("InnerPlanarDigiProcessor")
+InnerPlanarDigiProcessor.OutputLevel = INFO
+InnerPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
+InnerPlanarDigiProcessor.Parameters = {
+    "CorrectTimesForPropagation": ["true"],
+    "IsStrip": ["false"],
+    "ResolutionT": ["0.06"],
+    "ResolutionU": ["0.007"],
+    "ResolutionV": ["0.090"],
+    "SimTrackHitCollectionName": ["InnerTrackerBarrelCollection"],
+    "SimTrkHitRelCollection": ["IBTrackerHitsRelations"],
+    "SubDetectorName": ["InnerTrackers"],
+    "TimeWindowMax": ["0.3"],
+    "TimeWindowMin": ["-0.18"],
+    "TrackerHitCollectionName": ["IBTrackerHits"],
+    "UseTimeWindow": ["true"]
+}
 
-ITEndcapDigitiser = MarlinProcessorWrapper("ITEndcapDigitiser")
-ITEndcapDigitiser.OutputLevel = INFO
-ITEndcapDigitiser.ProcessorType = "DDPlanarDigiProcessor"
-ITEndcapDigitiser.Parameters = {
-                                "CorrectTimesForPropagation": ["true"],
-                                "IsStrip": ["false"],
-                                "ResolutionT": ["0.06"],
-                                "ResolutionU": ["0.007"],
-                                "ResolutionV": ["0.09"],
-                                "SimTrackHitCollectionName": ["InnerTrackerEndcapCollection"],
-                                "SimTrkHitRelCollection": ["ITEndcapHitsRelations"],
-                                "SubDetectorName": ["InnerTrackers"],
-                                "TimeWindowMax": ["0.3"],
-                                "TimeWindowMin": ["-0.18"],
-                                "TrackerHitCollectionName": ["ITEndcapHits"],
-                                "UseTimeWindow": ["true"]
-                                }
+InnerEndcapPlanarDigiProcessor = MarlinProcessorWrapper("InnerEndcapPlanarDigiProcessor")
+InnerEndcapPlanarDigiProcessor.OutputLevel = INFO
+InnerEndcapPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
+InnerEndcapPlanarDigiProcessor.Parameters = {
+    "CorrectTimesForPropagation": ["true"],
+    "IsStrip": ["false"],
+    "ResolutionT": ["0.06"],
+    "ResolutionU": ["0.007"],
+    "ResolutionV": ["0.090"],
+    "SimTrackHitCollectionName": ["InnerTrackerEndcapCollection"],
+    "SimTrkHitRelCollection": ["IETrackerHitsRelations"],
+    "SubDetectorName": ["InnerTrackers"],
+    "TimeWindowMax": ["0.3"],
+    "TimeWindowMin": ["-0.18"],
+    "TrackerHitCollectionName": ["IETrackerHits"],
+    "UseTimeWindow": ["true"]
+}
 
-OTBarrelDigitiser = MarlinProcessorWrapper("OTBarrelDigitiser")
-OTBarrelDigitiser.OutputLevel = INFO
-OTBarrelDigitiser.ProcessorType = "DDPlanarDigiProcessor"
-OTBarrelDigitiser.Parameters = {
-                                "CorrectTimesForPropagation": ["true"],
-                                "IsStrip": ["false"],
-                                "ResolutionT": ["0.06"],
-                                "ResolutionU": ["0.007"],
-                                "ResolutionV": ["0.09"],
-                                "SimTrackHitCollectionName": ["OuterTrackerBarrelCollection"],
-                                "SimTrkHitRelCollection": ["OTBarrelHitsRelations"],
-                                "SubDetectorName": ["OuterTrackers"],
-                                "TimeWindowMax": ["0.3"],
-                                "TimeWindowMin": ["-0.18"],
-                                "TrackerHitCollectionName": ["OTBarrelHits"],
-                                "UseTimeWindow": ["true"]
-                                }
+OuterPlanarDigiProcessor = MarlinProcessorWrapper("OuterPlanarDigiProcessor")
+OuterPlanarDigiProcessor.OutputLevel = INFO
+OuterPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
+OuterPlanarDigiProcessor.Parameters = {
+    "CorrectTimesForPropagation": ["true"],
+    "IsStrip": ["false"],
+    "ResolutionT": ["0.06"],
+    "ResolutionU": ["0.007"],
+    "ResolutionV": ["0.090"],
+    "SimTrackHitCollectionName": ["OuterTrackerBarrelCollection"],
+    "SimTrkHitRelCollection": ["OBTrackerHitsRelations"],
+    "SubDetectorName": ["OuterTrackers"],
+    "TimeWindowMax": ["0.3"],
+    "TimeWindowMin": ["-0.18"],
+    "TrackerHitCollectionName": ["OBTrackerHits"],
+    "UseTimeWindow": ["true"]
+}
 
-OTEndcapDigitiser = MarlinProcessorWrapper("OTEndcapDigitiser")
-OTEndcapDigitiser.OutputLevel = INFO
-OTEndcapDigitiser.ProcessorType = "DDPlanarDigiProcessor"
-OTEndcapDigitiser.Parameters = {
-                                "CorrectTimesForPropagation": ["true"],
-                                "IsStrip": ["false"],
-                                "ResolutionT": ["0.06"],
-                                "ResolutionU": ["0.007"],
-                                "ResolutionV": ["0.09"],
-                                "SimTrackHitCollectionName": ["OuterTrackerEndcapCollection"],
-                                "SimTrkHitRelCollection": ["OTEndcapHitsRelations"],
-                                "SubDetectorName": ["OuterTrackers"],
-                                "TimeWindowMax": ["0.3"],
-                                "TimeWindowMin": ["-0.18"],
-                                "TrackerHitCollectionName": ["OTEndcapHits"],
-                                "UseTimeWindow": ["true"]
-                                }
+OuterEndcapPlanarDigiProcessor = MarlinProcessorWrapper(
+    "OuterEndcapPlanarDigiProcessor")
+OuterEndcapPlanarDigiProcessor.OutputLevel = INFO
+OuterEndcapPlanarDigiProcessor.ProcessorType = "DDPlanarDigiProcessor"
+OuterEndcapPlanarDigiProcessor.Parameters = {
+    "CorrectTimesForPropagation": ["true"],
+    "IsStrip": ["false"],
+    "ResolutionT": ["0.06"],
+    "ResolutionU": ["0.007"],
+    "ResolutionV": ["0.090"],
+    "SimTrackHitCollectionName": ["OuterTrackerEndcapCollection"],
+    "SimTrkHitRelCollection": ["OETrackerHitsRelations"],
+    "SubDetectorName": ["OuterTrackers"],
+    "TimeWindowMax": ["0.3"],
+    "TimeWindowMin": ["-0.18"],
+    "TrackerHitCollectionName": ["OETrackerHits"],
+    "UseTimeWindow": ["true"]
+}
+
+VXDBarrelConer = MarlinProcessorWrapper("VXDBarrelConer")
+VXDBarrelConer.OutputLevel = INFO
+VXDBarrelConer.ProcessorType = "FilterConeHits"
+VXDBarrelConer.Parameters = {
+    "MCParticleCollection": ["MCParticle"],
+    "TrackerHitInputCollections": ["VBTrackerHits"],
+    "TrackerSimHitInputCollections": ["VertexBarrelCollection"],
+    "TrackerHitInputRelations": ["VBTrackerHitsRelations"],
+    "TrackerHitOutputCollections": ["VBTrackerHitsConed"],
+    "TrackerSimHitOutputCollections": ["VertexBarrelCollectionConed"],
+    "TrackerHitOutputRelations": ["VBTrackerHitsRelationsConed"],
+    "Dist3DCut": ["30."],
+    "FillHistograms": ["true"]
+}
+
+VXDEndcapConer = MarlinProcessorWrapper("VXDEndcapConer")
+VXDEndcapConer.OutputLevel = INFO
+VXDEndcapConer.ProcessorType = "FilterConeHits"
+VXDEndcapConer.Parameters = {
+    "MCParticleCollection": ["MCParticle"],
+    "TrackerHitInputCollections": ["VETrackerHits"],
+    "TrackerSimHitInputCollections": ["VertexEndcapCollection"],
+    "TrackerHitInputRelations": ["VETrackerHitsRelations"],
+    "TrackerHitOutputCollections": ["VETrackerHitsConed"],
+    "TrackerSimHitOutputCollections": ["VertexEndcapCollectionConed"],
+    "TrackerHitOutputRelations": ["VETrackerHitsRelationsConed"],
+    "Dist3DCut": ["30."],
+    "FillHistograms": ["true"]
+}
+
+InnerPlanarConer = MarlinProcessorWrapper("InnerPlanarConer")
+InnerPlanarConer.OutputLevel = INFO
+InnerPlanarConer.ProcessorType = "FilterConeHits"
+InnerPlanarConer.Parameters = {
+    "MCParticleCollection": ["MCParticle"],
+    "TrackerHitInputCollections": ["IBTrackerHits"],
+    "TrackerSimHitInputCollections": ["InnerTrackerBarrelCollection"],
+    "TrackerHitInputRelations": ["IBTrackerHitsRelations"],
+    "TrackerHitOutputCollections": ["IBTrackerHitsConed"],
+    "TrackerSimHitOutputCollections": ["InnerTrackerBarrelCollectionConed"],
+    "TrackerHitOutputRelations": ["IBTrackerHitsRelationsConed"],
+    "Dist3DCut": ["30."],
+    "FillHistograms": ["true"]
+}
+
+InnerEndcapConer = MarlinProcessorWrapper("InnerEndcapConer")
+InnerEndcapConer.OutputLevel = INFO
+InnerEndcapConer.ProcessorType = "FilterConeHits"
+InnerEndcapConer.Parameters = {
+    "MCParticleCollection": ["MCParticle"],
+    "TrackerHitInputCollections": ["IETrackerHits"],
+    "TrackerSimHitInputCollections": ["InnerTrackerEndcapCollection"],
+    "TrackerHitInputRelations": ["IETrackerHitsRelations"],
+    "TrackerHitOutputCollections": ["IETrackerHitsConed"],
+    "TrackerSimHitOutputCollections": ["InnerTrackerEndcapCollectionConed"],
+    "TrackerHitOutputRelations": ["IETrackerHitsRelationsConed"],
+    "Dist3DCut": ["30."],
+    "FillHistograms": ["true"]
+}
+
+OuterPlanarConer = MarlinProcessorWrapper("OuterPlanarConer")
+OuterPlanarConer.OutputLevel = INFO
+OuterPlanarConer.ProcessorType = "FilterConeHits"
+OuterPlanarConer.Parameters = {
+    "MCParticleCollection": ["MCParticle"],
+    "TrackerHitInputCollections": ["OBTrackerHits"],
+    "TrackerSimHitInputCollections": ["OuterTrackerBarrelCollection"],
+    "TrackerHitInputRelations": ["OBTrackerHitsRelations"],
+    "TrackerHitOutputCollections": ["OBTrackerHitsConed"],
+    "TrackerSimHitOutputCollections": ["OuterTrackerBarrelCollectionConed"],
+    "TrackerHitOutputRelations": ["OBTrackerHitsRelationsConed"],
+    "Dist3DCut": ["30."],
+    "FillHistograms": ["true"]
+}
+
+OuterEndcapConer = MarlinProcessorWrapper("OuterEndcapConer")
+OuterEndcapConer.OutputLevel = INFO
+OuterEndcapConer.ProcessorType = "FilterConeHits"
+OuterEndcapConer.Parameters = {
+    "MCParticleCollection": ["MCParticle"],
+    "TrackerHitInputCollections": ["OETrackerHits"],
+    "TrackerSimHitInputCollections": ["OuterTrackerEndcapCollection"],
+    "TrackerHitInputRelations": ["OETrackerHitsRelations"],
+    "TrackerHitOutputCollections": ["OETrackerHitsConed"],
+    "TrackerSimHitOutputCollections": ["OuterTrackerEndcapCollectionConed"],
+    "TrackerHitOutputRelations": ["OETrackerHitsRelationsConed"],
+    "Dist3DCut": ["30."],
+    "FillHistograms": ["true"]
+}
+
 
 ECalBarrelDigi = MarlinProcessorWrapper("ECalBarrelDigi")
 ECalBarrelDigi.OutputLevel = INFO
@@ -433,6 +525,54 @@ HCalRingReco.Parameters = {
     "ppd_npix": ["2000"]
 }
 
+# MyEcalBarrelConer = MarlinProcessorWrapper("MyEcalBarrelConer")
+# MyEcalBarrelConer.OutputLevel = INFO
+# MyEcalBarrelConer.ProcessorType = "CaloConer"
+# MyEcalBarrelConer.Parameters = {
+#     "MCParticleCollectionName": ["MCParticle"],
+#     "CaloHitCollectionName": ["EcalBarrelCollectionRec"],
+#     "CaloRelationCollectionName": ["EcalBarrelRelationsSimRec"],
+#     "GoodHitCollection": ["EcalBarrelCollectionConed"],
+#     "GoodRelationCollection": ["EcalBarrelRelationsSimConed"],
+#     "ConeWidth": ["0.2"]
+# }
+
+# MyEcalEndcapConer = MarlinProcessorWrapper("MyEcalEndcapConer")
+# MyEcalEndcapConer.OutputLevel = INFO
+# MyEcalEndcapConer.ProcessorType = "CaloConer"
+# MyEcalEndcapConer.Parameters = {
+#     "MCParticleCollectionName": ["MCParticle"],
+#     "CaloHitCollectionName": ["EcalEndcapCollectionRec"],
+#     "CaloRelationCollectionName": ["EcalEndcapRelationsSimRec"],
+#     "GoodHitCollection": ["EcalEndcapCollectionConed"],
+#     "GoodRelationCollection": ["EcalEndcapRelationsSimConed"],
+#     "ConeWidth": ["0.2"]
+# }
+
+# MyHcalBarrelConer = MarlinProcessorWrapper("MyHcalBarrelConer")
+# MyHcalBarrelConer.OutputLevel = INFO
+# MyHcalBarrelConer.ProcessorType = "CaloConer"
+# MyHcalBarrelConer.Parameters = {
+#     "MCParticleCollectionName": ["MCParticle"],
+#     "CaloHitCollectionName": ["HcalBarrelCollectionRec"],
+#     "CaloRelationCollectionName": ["HcalBarrelRelationsSimRec"],
+#     "GoodHitCollection": ["HcalBarrelCollectionConed"],
+#     "GoodRelationCollection": ["HcalBarrelRelationsSimConed"],
+#     "ConeWidth": ["0.2"]
+# }
+
+# MyHcalEndcapConer = MarlinProcessorWrapper("MyHcalEndcapConer")
+# MyHcalEndcapConer.OutputLevel = INFO
+# MyHcalEndcapConer.ProcessorType = "CaloConer"
+# MyHcalEndcapConer.Parameters = {
+#     "MCParticleCollectionName": ["MCParticle"],
+#     "CaloHitCollectionName": ["HcalEndcapCollectionRec"],
+#     "CaloRelationCollectionName": ["HcalEndcapRelationsSimRec"],
+#     "GoodHitCollection": ["HcalEndcapCollectionConed"],
+#     "GoodRelationCollection": ["HcalEndcapRelationsSimConed"],
+#     "ConeWidth": ["0.2"]
+# }
+
 MuonDigitiser = MarlinProcessorWrapper("MuonDigitiser")
 MuonDigitiser.OutputLevel = INFO
 MuonDigitiser.ProcessorType = "DDSimpleMuonDigi"
@@ -540,10 +680,16 @@ if the_args.doOverlayIP:
     algList.append(OverlayIP)     # Incoherent pairs full BX BIB overlay
 algList.append(VXDBarrelDigitiser)
 algList.append(VXDEndcapDigitiser)
-algList.append(ITBarrelDigitiser)
-algList.append(ITEndcapDigitiser)
-algList.append(OTBarrelDigitiser)
-algList.append(OTEndcapDigitiser)
+algList.append(InnerPlanarDigiProcessor)
+algList.append(InnerEndcapPlanarDigiProcessor)
+algList.append(OuterPlanarDigiProcessor)
+algList.append(OuterEndcapPlanarDigiProcessor)
+algList.append(VXDBarrelConer)
+algList.append(VXDEndcapConer)
+algList.append(InnerPlanarConer)
+algList.append(InnerEndcapConer)
+algList.append(OuterPlanarConer)
+algList.append(OuterEndcapConer)
 if the_args.doFilterDL:
     algList.append(FilterDL_VXDB)
     algList.append(FilterDL_VXDE)
@@ -559,6 +705,10 @@ algList.append(HCalEndcapDigi)
 algList.append(HCalEndcapReco)
 algList.append(HCalRingDigi)
 algList.append(HCalRingReco)
+# algList.append(MyEcalBarrelConer)
+# algList.append(MyEcalEndcapConer)
+# algList.append(MyHcalBarrelConer)
+# algList.append(MyHcalEndcapConer)
 algList.append(MuonDigitiser)
 algList.append(LCIOWriter_all)
 algList.append(LCIOWriter_light)
