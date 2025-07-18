@@ -98,25 +98,29 @@ LCIOWriter_all = MarlinProcessorWrapper("LCIOWriter_all")
 LCIOWriter_all.OutputLevel = INFO
 LCIOWriter_all.ProcessorType = "LCIOOutputProcessor"
 LCIOWriter_all.Parameters = {
-                             "DropCollectionNames": [],
+                             # Dropping all non-coned tracker hits to save file size
+                             "DropCollectionNames": ["VBTrackerHits", "VBTrackerHitsRelations", "VETrackerHits", "VETrackerHitsRelations", "VertexBarrelCollection", "VertexEndcapCollection",
+                                                      "IBTrackerHits", "IBTrackerHitsRelations", "InnerTrackerBarrelCollection", "IETrackerHits", "IETrackerHitsRelations", "InnerTrackerEndcapCollection",
+                                                      "OBTrackerHits", "OBTrackerHitsRelations", "OuterTrackerBarrelCollection", "OETrackerHits", "OETrackerHitsRelations", "OuterTrackerEndcapCollection",
+                                                      ],
                              "DropCollectionTypes": [],
                              "FullSubsetCollections": [],
                              "KeepCollectionNames": [],
-                             "LCIOOutputFile": ["output_digi.slcio"],
+                             "LCIOOutputFile": ["output_digi_onlyConedTrackerHits.slcio"],
                              "LCIOWriteMode": ["WRITE_NEW"]
                              }
 
-LCIOWriter_light = MarlinProcessorWrapper("LCIOWriter_light")
-LCIOWriter_light.OutputLevel = INFO
-LCIOWriter_light.ProcessorType = "LCIOOutputProcessor"
-LCIOWriter_light.Parameters = {
-                               "DropCollectionNames": ["MCParticle", "MCPhysicsParticle"],
-                               "DropCollectionTypes": ["SimTrackerHit", "SimCalorimeterHit", "LCRelation"],
-                               "FullSubsetCollections": [],
-                               "KeepCollectionNames": [],
-                               "LCIOOutputFile": ["output_digi_light.slcio"],
-                               "LCIOWriteMode": ["WRITE_NEW"]
-                               }
+# LCIOWriter_light = MarlinProcessorWrapper("LCIOWriter_light")
+# LCIOWriter_light.OutputLevel = INFO
+# LCIOWriter_light.ProcessorType = "LCIOOutputProcessor"
+# LCIOWriter_light.Parameters = {
+#                                "DropCollectionNames": ["MCParticle", "MCPhysicsParticle"],
+#                                "DropCollectionTypes": ["SimTrackerHit", "SimCalorimeterHit", "LCRelation"],
+#                                "FullSubsetCollections": [],
+#                                "KeepCollectionNames": [],
+#                                "LCIOOutputFile": ["output_digi_light.slcio"],
+#                                "LCIOWriteMode": ["WRITE_NEW"]
+#                                }
 
 VXDBarrelDigitiser = MarlinProcessorWrapper("VXDBarrelDigitiser")
 VXDBarrelDigitiser.OutputLevel = INFO
@@ -238,7 +242,7 @@ VXDBarrelConer.Parameters = {
     "TrackerHitOutputCollections": ["VBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["VertexBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["VBTrackerHitsRelationsConed"],
-    "Dist3DCut": ["30."],
+    "DeltaRCut": ["1.0"], 
     "FillHistograms": ["true"]
 }
 
@@ -253,7 +257,7 @@ VXDEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["VETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["VertexEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["VETrackerHitsRelationsConed"],
-    "Dist3DCut": ["30."],
+    "DeltaRCut": ["1.0"], 
     "FillHistograms": ["true"]
 }
 
@@ -268,7 +272,7 @@ InnerPlanarConer.Parameters = {
     "TrackerHitOutputCollections": ["IBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["InnerTrackerBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["IBTrackerHitsRelationsConed"],
-    "Dist3DCut": ["30."],
+    "DeltaRCut": ["1.0"], 
     "FillHistograms": ["true"]
 }
 
@@ -283,7 +287,7 @@ InnerEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["IETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["InnerTrackerEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["IETrackerHitsRelationsConed"],
-    "Dist3DCut": ["30."],
+    "DeltaRCut": ["1.0"], 
     "FillHistograms": ["true"]
 }
 
@@ -298,7 +302,7 @@ OuterPlanarConer.Parameters = {
     "TrackerHitOutputCollections": ["OBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["OuterTrackerBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["OBTrackerHitsRelationsConed"],
-    "Dist3DCut": ["30."],
+    "DeltaRCut": ["1.0"], 
     "FillHistograms": ["true"]
 }
 
@@ -313,7 +317,7 @@ OuterEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["OETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["OuterTrackerEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["OETrackerHitsRelationsConed"],
-    "Dist3DCut": ["30."],
+    "DeltaRCut": ["1.0"], 
     "FillHistograms": ["true"]
 }
 
@@ -711,7 +715,7 @@ algList.append(HCalRingReco)
 # algList.append(MyHcalEndcapConer)
 algList.append(MuonDigitiser)
 algList.append(LCIOWriter_all)
-algList.append(LCIOWriter_light)
+#algList.append(LCIOWriter_light)
 
 from Configurables import ApplicationMgr
 ApplicationMgr( TopAlg = algList,

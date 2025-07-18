@@ -118,7 +118,7 @@ CKFTracking.Parameters = {
     "TGeoFile": [the_args.TGeoFile],
     "TGeoDescFile": ["/opt/spack/opt/spack/linux-ubuntu24.04-x86_64/gcc-13.3.0/actstracking-1.3.1-bqlvvdmew24gow2jqheahfpzxnp6xwbt/share/ACTSTracking/data/MAIA_v0.json"],
     "TrackCollectionName": ["AllTracks"],
-    "TrackerHitCollectionNames": ["VXDBarrelHits", "ITBarrelHits", "OTBarrelHits", "VXDEndcapHits", "ITEndcapHits", "OTEndcapHits"],
+    "TrackerHitCollectionNames": ["VBTrackerHitsConed", "IBTrackerHitsConed", "OBTrackerHitsConed", "VETrackerHitsConed", "IETrackerHitsConed", "OETrackerHitsConed"],
     "CaloFace_Radius": ["1857"],
     "CaloFace_Z": ["2307"]
 }
@@ -162,7 +162,7 @@ MyTrackTruth.Parameters = {
     "MCParticleCollection": ["MCParticle"],
     "Particle2TrackRelationName": ["MCParticle_SiTracks_Refitted"],
     "TrackCollection": ["SiTracks_Refitted"],
-    "TrackerHit2SimTrackerHitRelationName": ["VXDBarrelHitsRelations", "ITBarrelHitsRelations", "OTBarrelHitsRelations", "VXDEndcapHitsRelations", "ITEndcapHitsRelations", "OTEndcapHitsRelations"]
+    "TrackerHit2SimTrackerHitRelationName": ["VBTrackerHitsRelationsConed", "IBTrackerHitsRelationsConed", "OBTrackerHitsRelationsConed", "VETrackerHitsRelationsConed", "IETrackerHitsRelationsConed", "OETrackerHitsRelationsConed"]
 }
 
 # https://github.com/MuonColliderSoft/ACTSTracking/blob/ce74f55a0ec320284ce8cc2d2d233a7f9c8b912d/src/TrackTruthProc.cxx#L20
@@ -173,7 +173,7 @@ MyTrackTruthSiTracks.Parameters = {
     "MCParticleCollection": ["MCParticle"],
     "Particle2TrackRelationName": ["MCParticle_SiTracks"],
     "TrackCollection": ["SiTracks"],
-    "TrackerHit2SimTrackerHitRelationName": ["VXDBarrelHitsRelations", "ITBarrelHitsRelations", "OTBarrelHitsRelations", "VXDEndcapHitsRelations", "ITEndcapHitsRelations", "OTEndcapHitsRelations"]
+    "TrackerHit2SimTrackerHitRelationName": ["VBTrackerHitsRelationsConed", "IBTrackerHitsRelationsConed", "OBTrackerHitsRelationsConed", "VETrackerHitsRelationsConed", "IETrackerHitsRelationsConed", "OETrackerHitsRelationsConed"]
 }
 
 DDMarlinPandora = MarlinProcessorWrapper("DDMarlinPandora")
@@ -330,6 +330,7 @@ PFOSelection.Parameters = {
                            "UseNeutronTiming": ["0"]
                            }
 
+# this algorithm isn't added right now (reduces file size and run time). 
 FastJetProcessor = MarlinProcessorWrapper("FastJetProcessor")
 FastJetProcessor.OutputLevel = INFO
 FastJetProcessor.ProcessorType = "FastJetProcessor"
@@ -352,7 +353,7 @@ algList.append(MyTrackTruth)
 algList.append(MyTrackTruthSiTracks)
 algList.append(DDMarlinPandora)
 algList.append(PFOSelection)
-algList.append(FastJetProcessor)
+#algList.append(FastJetProcessor)
 algList.append(LCIOWriter_all)
 
 from Configurables import ApplicationMgr
