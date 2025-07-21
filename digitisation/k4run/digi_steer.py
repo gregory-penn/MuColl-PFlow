@@ -102,21 +102,21 @@ LCIOWriter_all.Parameters = {
                              "DropCollectionNames": ["VBTrackerHits", "VBTrackerHitsRelations", "VETrackerHits", "VETrackerHitsRelations", "VertexBarrelCollection", "VertexEndcapCollection",
                                                       "IBTrackerHits", "IBTrackerHitsRelations", "InnerTrackerBarrelCollection", "IETrackerHits", "IETrackerHitsRelations", "InnerTrackerEndcapCollection",
                                                       "OBTrackerHits", "OBTrackerHitsRelations", "OuterTrackerBarrelCollection", "OETrackerHits", "OETrackerHitsRelations", "OuterTrackerEndcapCollection",
-                                                      "EcalBarrelCollectionDigi","EcalBarrelRelationsSimDigi", "EcalBarrelCollectionRec", "EcalBarrelRelationsSimRec", 
-                                                      "EcalEndcapCollectionDigi","EcalEndcapRelationsSimDigi", "EcalEndcapCollectionRec", "EcalEndcapRelationsSimRec", 
-                                                      "HcalBarrelCollectionDigi","HcalBarrelRelationsSimDigi", "HcalBarrelCollectionRec", "HcalBarrelRelationsSimRec", 
-                                                      "HcalEndcapCollectionDigi","HcalEndcapRelationsSimDigi", "HcalEndcapCollectionRec", "HcalEndcapRelationsSimRec", 
-                                                      "HcalRingCollectionDigi","HcalRingRelationsSimDigi", "HcalRingCollectionRec", "HcalRingRelationsSimRec", 
+                                                    #   "EcalBarrelCollectionDigi","EcalBarrelRelationsSimDigi", "EcalBarrelCollectionRec", "EcalBarrelRelationsSimRec", 
+                                                    #   "EcalEndcapCollectionDigi","EcalEndcapRelationsSimDigi", "EcalEndcapCollectionRec", "EcalEndcapRelationsSimRec", 
+                                                    #   "HcalBarrelCollectionDigi","HcalBarrelRelationsSimDigi", "HcalBarrelCollectionRec", "HcalBarrelRelationsSimRec", 
+                                                    #   "HcalEndcapCollectionDigi","HcalEndcapRelationsSimDigi", "HcalEndcapCollectionRec", "HcalEndcapRelationsSimRec", 
+                                                    #   "HcalRingCollectionDigi","HcalRingRelationsSimDigi", "HcalRingCollectionRec", "HcalRingRelationsSimRec", 
                                                       ],
                              "DropCollectionTypes": [],
                              "FullSubsetCollections": [],
                              "KeepCollectionNames": ["VBTrackerHitsConed", "IBTrackerHitsConed", "OBTrackerHitsConed", "VETrackerHitsConed", "IETrackerHitsConed", "OETrackerHitsConed", 
-                                                     "EcalBarrelCollectionConed", "EcalBarrelRelationsSimConed",
-                                                     "EcalEndcapCollectionConed", "EcalEndcapRelationsSimConed", 
-                                                     "EcalPlugCollectionConed", "EcalPlugRelationsSimConed",
-                                                     "HcalBarrelCollectionConed", "HcalBarrelRelationsSimConed",
-                                                     "HcalEndcapCollectionConed", "HcalEndcapRelationsSimConed", 
-                                                     "HcalRingCollectionConed", "HcalRingRelationsSimConed",
+                                                    #  "EcalBarrelCollectionConed", "EcalBarrelRelationsSimConed",
+                                                    #  "EcalEndcapCollectionConed", "EcalEndcapRelationsSimConed", 
+                                                    #  "EcalPlugCollectionConed", "EcalPlugRelationsSimConed",
+                                                    #  "HcalBarrelCollectionConed", "HcalBarrelRelationsSimConed",
+                                                    #  "HcalEndcapCollectionConed", "HcalEndcapRelationsSimConed", 
+                                                    #  "HcalRingCollectionConed", "HcalRingRelationsSimConed",
                                                      ],
                              "LCIOOutputFile": ["output_digi_onlyConedTrackerHits.slcio"],
                              "LCIOWriteMode": ["WRITE_NEW"]
@@ -746,12 +746,12 @@ algList.append(HCalEndcapDigi)
 algList.append(HCalEndcapReco)
 algList.append(HCalRingDigi)
 algList.append(HCalRingReco)
-algList.append(MyEcalBarrelConer)
-algList.append(MyEcalEndcapConer)
-algList.append(MyEcalPlugConer)
-algList.append(MyHcalBarrelConer)
-algList.append(MyHcalEndcapConer)
-algList.append(MyHcalRingConer)
+# algList.append(MyEcalBarrelConer)
+# algList.append(MyEcalEndcapConer)
+# algList.append(MyEcalPlugConer)
+# algList.append(MyHcalBarrelConer)
+# algList.append(MyHcalEndcapConer)
+# algList.append(MyHcalRingConer)
 algList.append(MuonDigitiser)
 algList.append(LCIOWriter_all)
 #algList.append(LCIOWriter_light)

@@ -80,6 +80,79 @@ LCIOWriter_all.Parameters = {
                              "LCIOWriteMode": ["WRITE_NEW"]
                              }
 
+MyEcalBarrelConer = MarlinProcessorWrapper("MyEcalBarrelConer")
+MyEcalBarrelConer.OutputLevel = INFO
+MyEcalBarrelConer.ProcessorType = "CaloConer"
+MyEcalBarrelConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["EcalBarrelCollectionRec"],
+    "CaloRelationCollectionName": ["EcalBarrelRelationsSimRec"],
+    "GoodHitCollection": ["EcalBarrelCollectionConed"],
+    "GoodRelationCollection": ["EcalBarrelRelationsSimConed"],
+    "ConeWidth": ["0.4"]
+}
+
+MyEcalEndcapConer = MarlinProcessorWrapper("MyEcalEndcapConer")
+MyEcalEndcapConer.OutputLevel = INFO
+MyEcalEndcapConer.ProcessorType = "CaloConer"
+MyEcalEndcapConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["EcalEndcapCollectionRec"],
+    "CaloRelationCollectionName": ["EcalEndcapRelationsSimRec"],
+    "GoodHitCollection": ["EcalEndcapCollectionConed"],
+    "GoodRelationCollection": ["EcalEndcapRelationsSimConed"],
+    "ConeWidth": ["0.4"]
+}
+
+MyEcalPlugConer = MarlinProcessorWrapper("MyEcalPlugConer")
+MyEcalPlugConer.OutputLevel = INFO
+MyEcalPlugConer.ProcessorType = "CaloConer"
+MyEcalPlugConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["EcalPlugCollectionRec"],
+    "CaloRelationCollectionName": ["EcalPlugRelationsSimRec"],
+    "GoodHitCollection": ["EcalPlugCollectionConed"],
+    "GoodRelationCollection": ["EcalPlugRelationsSimConed"],
+    "ConeWidth": ["0.4"]
+}
+
+
+MyHcalBarrelConer = MarlinProcessorWrapper("MyHcalBarrelConer")
+MyHcalBarrelConer.OutputLevel = INFO
+MyHcalBarrelConer.ProcessorType = "CaloConer"
+MyHcalBarrelConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["HcalBarrelCollectionRec"],
+    "CaloRelationCollectionName": ["HcalBarrelRelationsSimRec"],
+    "GoodHitCollection": ["HcalBarrelCollectionConed"],
+    "GoodRelationCollection": ["HcalBarrelRelationsSimConed"],
+    "ConeWidth": ["0.4"]
+}
+
+MyHcalEndcapConer = MarlinProcessorWrapper("MyHcalEndcapConer")
+MyHcalEndcapConer.OutputLevel = INFO
+MyHcalEndcapConer.ProcessorType = "CaloConer"
+MyHcalEndcapConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["HcalEndcapCollectionRec"],
+    "CaloRelationCollectionName": ["HcalEndcapRelationsSimRec"],
+    "GoodHitCollection": ["HcalEndcapCollectionConed"],
+    "GoodRelationCollection": ["HcalEndcapRelationsSimConed"],
+    "ConeWidth": ["0.4"]
+}
+
+MyHcalRingConer = MarlinProcessorWrapper("MyHcalRingConer")
+MyHcalRingConer.OutputLevel = INFO
+MyHcalRingConer.ProcessorType = "CaloConer"
+MyHcalRingConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["HcalRingCollectionRec"],
+    "CaloRelationCollectionName": ["HcalRingRelationsSimRec"],
+    "GoodHitCollection": ["HcalRingCollectionConed"],
+    "GoodRelationCollection": ["HcalRingRelationsSimConed"],
+    "ConeWidth": ["0.4"]
+}
+
 #https://github.com/MuonColliderSoft/ACTSTracking/blob/ce74f55a0ec320284ce8cc2d2d233a7f9c8b912d/src/ACTSSeededCKFTrackingProc.cxx#L45
 # Adapted from Fede's config
 CKFTracking = MarlinProcessorWrapper("CKFTracking")
@@ -188,7 +261,7 @@ DDMarlinPandora.Parameters = {
                               "D0UnmatchedVertexTrackCut": ["5"], # used for CanFormClusterlessPFO
                               "DigitalMuonHits": ["0"],
                               "ECalBarrelNormalVector": ["0", "0", "1"],
-                              "ECalCaloHitCollections": ["EcalBarrelCollectionRec", "EcalEndcapCollectionRec", "EcalPlugCollectionRec"], 
+                              "ECalCaloHitCollections": ["EcalBarrelCollectionConed", "EcalEndcapCollectionConed", "EcalPlugCollectionConed"], 
                               "ECalMipThreshold": ["0.5"],
                               "ECalScMipThreshold": ["0"],
                               "ECalScToEMGeVCalibration": ["1"],
@@ -208,7 +281,7 @@ DDMarlinPandora.Parameters = {
                               "EMStochasticTerm": ["0.17"],
                               "FinalEnergyDensityBin": ["110."],
                               "HCalBarrelNormalVector": ["0", "0", "1"],
-                              "HCalCaloHitCollections": ["HcalBarrelCollectionRec", "HcalEndcapCollectionRec", "HcalRingCollectionRec"],
+                              "HCalCaloHitCollections": ["HcalBarrelCollectionConed", "HcalEndcapCollectionConed", "HcalRingCollectionConed"],
                               "HCalMipThreshold": ["0.3"],
                               "HCalToEMGeVCalibration": ["1.02373335516"],
                               "HCalToHadGeVCalibration": ["1.01799349172"],
@@ -346,6 +419,12 @@ algList.append(AIDA)
 algList.append(EventNumber)
 #algList.append(Config)
 algList.append(DD4hep)
+algList.append(MyEcalBarrelConer)
+algList.append(MyEcalEndcapConer)
+algList.append(MyEcalPlugConer)
+algList.append(MyHcalBarrelConer)
+algList.append(MyHcalEndcapConer)
+algList.append(MyHcalRingConer)
 algList.append(CKFTracking)
 algList.append(TrackDeduplication)
 algList.append(TrackRefit)
