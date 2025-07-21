@@ -366,37 +366,39 @@ ECalBarrelReco.Parameters = {
     "outputRelationCollections": ["EcalBarrelRelationsSimRec"]
 }
 
-ECalPlugDigi = MarlinProcessorWrapper("ECalPlugDigi")
-ECalPlugDigi.OutputLevel = INFO
-ECalPlugDigi.ProcessorType = "RealisticCaloDigiSilicon"
-ECalPlugDigi.Parameters = {
-    "CellIDLayerString": ["layer"],
-    "calibration_mip": ["0.0001575"],
-    "inputHitCollections": ["ECalPlugCollection"],
-    "outputHitCollections": ["ECalPlugCollectionDigi"],
-    "outputRelationCollections": ["ECalPlugRelationsSimDigi"],
-    "threshold": ["5e-05"],
-    "thresholdUnit": ["GeV"],
-    "timingCorrectForPropagation": ["1"],
-    "timingCut": ["1"],
-    "timingResolution": ["0"],
-    "timingWindowMax": ["10"],
-    "timingWindowMin": ["-0.5"],
-    "elec_range_mip": ["15000"]
-}
+# Not sure these really exist?
 
-ECalPlugReco = MarlinProcessorWrapper("ECalPlugReco")
-ECalPlugReco.OutputLevel = INFO
-ECalPlugReco.ProcessorType = "RealisticCaloRecoSilicon"
-ECalPlugReco.Parameters = {
-    "CellIDLayerString": ["layer"],
-    "calibration_factorsMipGev": ["0.00641222630095"],
-    "calibration_layergroups": ["41"],
-    "inputHitCollections": ["ECalPlugCollectionDigi"],
-    "inputRelationCollections": ["ECalPlugRelationsSimDigi"],
-    "outputHitCollections": ["ECalPlugCollectionRec"],
-    "outputRelationCollections": ["ECalPlugRelationsSimRec"]
-}
+# ECalPlugDigi = MarlinProcessorWrapper("ECalPlugDigi")
+# ECalPlugDigi.OutputLevel = INFO
+# ECalPlugDigi.ProcessorType = "RealisticCaloDigiSilicon"
+# ECalPlugDigi.Parameters = {
+#     "CellIDLayerString": ["layer"],
+#     "calibration_mip": ["0.0001575"],
+#     "inputHitCollections": ["ECalPlugCollection"],
+#     "outputHitCollections": ["ECalPlugCollectionDigi"],
+#     "outputRelationCollections": ["ECalPlugRelationsSimDigi"],
+#     "threshold": ["5e-05"],
+#     "thresholdUnit": ["GeV"],
+#     "timingCorrectForPropagation": ["1"],
+#     "timingCut": ["1"],
+#     "timingResolution": ["0"],
+#     "timingWindowMax": ["10"],
+#     "timingWindowMin": ["-0.5"],
+#     "elec_range_mip": ["15000"]
+# }
+
+# ECalPlugReco = MarlinProcessorWrapper("ECalPlugReco")
+# ECalPlugReco.OutputLevel = INFO
+# ECalPlugReco.ProcessorType = "RealisticCaloRecoSilicon"
+# ECalPlugReco.Parameters = {
+#     "CellIDLayerString": ["layer"],
+#     "calibration_factorsMipGev": ["0.00641222630095"],
+#     "calibration_layergroups": ["41"],
+#     "inputHitCollections": ["ECalPlugCollectionDigi"],
+#     "inputRelationCollections": ["ECalPlugRelationsSimDigi"],
+#     "outputHitCollections": ["ECalPlugCollectionRec"],
+#     "outputRelationCollections": ["ECalPlugRelationsSimRec"]
+# }
 
 ECalEndcapDigi = MarlinProcessorWrapper("ECalEndcapDigi")
 ECalEndcapDigi.OutputLevel = INFO
@@ -504,42 +506,44 @@ HCalEndcapReco.Parameters = {
     "ppd_npix": ["2000"]
 }
 
-HCalRingDigi = MarlinProcessorWrapper("HCalRingDigi")
-HCalRingDigi.OutputLevel = INFO
-HCalRingDigi.ProcessorType = "RealisticCaloDigiScinPpd"
-HCalRingDigi.Parameters = {
-    "CellIDLayerString": ["layer"],
-    "calibration_mip": ["0.0004725"],
-    "inputHitCollections": ["HCalRingCollection"],
-    "outputHitCollections": ["HCalRingCollectionDigi"],
-    "outputRelationCollections": ["HCalRingRelationsSimDigi"],
-    "ppd_mipPe": ["15"],
-    "ppd_npix": ["2000"],
-    "ppd_npix_uncert": ["0"],
-    "ppd_pix_spread": ["0"],
-    "threshold": ["2.5e-04"],
-    "thresholdUnit": ["GeV"],
-    #"timingCorrectForPropagation": ["1"],
-    "timingCut": ["1"],
-    #"timingResolution": ["0"],
-    #"timingWindowMax": ["10"],
-    #"timingWindowMin": ["-0.5"]
-}
+# Not sure these actually exist?
 
-HCalRingReco = MarlinProcessorWrapper("HCalRingReco")
-HCalRingReco.OutputLevel = INFO
-HCalRingReco.ProcessorType = "RealisticCaloRecoScinPpd"
-HCalRingReco.Parameters = {
-    "CellIDLayerString": ["layer"],
-    "calibration_factorsMipGev": ["0.0285819096797"],
-    "calibration_layergroups": ["100"],
-    "inputHitCollections": ["HCalRingCollectionDigi"],
-    "inputRelationCollections": ["HCalRingRelationsSimDigi"],
-    "outputHitCollections": ["HCalRingCollectionRec"],
-    "outputRelationCollections": ["HCalRingRelationsSimRec"],
-    "ppd_mipPe": ["15"],
-    "ppd_npix": ["2000"]
-}
+# HCalRingDigi = MarlinProcessorWrapper("HCalRingDigi")
+# HCalRingDigi.OutputLevel = INFO
+# HCalRingDigi.ProcessorType = "RealisticCaloDigiScinPpd"
+# HCalRingDigi.Parameters = {
+#     "CellIDLayerString": ["layer"],
+#     "calibration_mip": ["0.0004725"],
+#     "inputHitCollections": ["HCalRingCollection"],
+#     "outputHitCollections": ["HCalRingCollectionDigi"],
+#     "outputRelationCollections": ["HCalRingRelationsSimDigi"],
+#     "ppd_mipPe": ["15"],
+#     "ppd_npix": ["2000"],
+#     "ppd_npix_uncert": ["0"],
+#     "ppd_pix_spread": ["0"],
+#     "threshold": ["2.5e-04"],
+#     "thresholdUnit": ["GeV"],
+#     #"timingCorrectForPropagation": ["1"],
+#     "timingCut": ["1"],
+#     #"timingResolution": ["0"],
+#     #"timingWindowMax": ["10"],
+#     #"timingWindowMin": ["-0.5"]
+# }
+
+# HCalRingReco = MarlinProcessorWrapper("HCalRingReco")
+# HCalRingReco.OutputLevel = INFO
+# HCalRingReco.ProcessorType = "RealisticCaloRecoScinPpd"
+# HCalRingReco.Parameters = {
+#     "CellIDLayerString": ["layer"],
+#     "calibration_factorsMipGev": ["0.0285819096797"],
+#     "calibration_layergroups": ["100"],
+#     "inputHitCollections": ["HCalRingCollectionDigi"],
+#     "inputRelationCollections": ["HCalRingRelationsSimDigi"],
+#     "outputHitCollections": ["HCalRingCollectionRec"],
+#     "outputRelationCollections": ["HCalRingRelationsSimRec"],
+#     "ppd_mipPe": ["15"],
+#     "ppd_npix": ["2000"]
+# }
 
 MyEcalBarrelConer = MarlinProcessorWrapper("MyEcalBarrelConer")
 MyEcalBarrelConer.OutputLevel = INFO
@@ -565,17 +569,17 @@ MyEcalEndcapConer.Parameters = {
     "ConeWidth": ["0.4"]
 }
 
-MyEcalPlugConer = MarlinProcessorWrapper("MyEcalPlugConer")
-MyEcalPlugConer.OutputLevel = INFO
-MyEcalPlugConer.ProcessorType = "CaloConer"
-MyEcalPlugConer.Parameters = {
-    "MCParticleCollectionName": ["MCParticle"],
-    "CaloHitCollectionName": ["EcalPlugCollectionRec"],
-    "CaloRelationCollectionName": ["EcalPlugRelationsSimRec"],
-    "GoodHitCollection": ["EcalPlugCollectionConed"],
-    "GoodRelationCollection": ["EcalPlugRelationsSimConed"],
-    "ConeWidth": ["0.4"]
-}
+# MyEcalPlugConer = MarlinProcessorWrapper("MyEcalPlugConer")
+# MyEcalPlugConer.OutputLevel = INFO
+# MyEcalPlugConer.ProcessorType = "CaloConer"
+# MyEcalPlugConer.Parameters = {
+#     "MCParticleCollectionName": ["MCParticle"],
+#     "CaloHitCollectionName": ["EcalPlugCollectionRec"],
+#     "CaloRelationCollectionName": ["EcalPlugRelationsSimRec"],
+#     "GoodHitCollection": ["EcalPlugCollectionConed"],
+#     "GoodRelationCollection": ["EcalPlugRelationsSimConed"],
+#     "ConeWidth": ["0.4"]
+# }
 
 
 MyHcalBarrelConer = MarlinProcessorWrapper("MyHcalBarrelConer")
@@ -602,17 +606,17 @@ MyHcalEndcapConer.Parameters = {
     "ConeWidth": ["0.4"]
 }
 
-MyHcalRingConer = MarlinProcessorWrapper("MyHcalRingConer")
-MyHcalRingConer.OutputLevel = INFO
-MyHcalRingConer.ProcessorType = "CaloConer"
-MyHcalRingConer.Parameters = {
-    "MCParticleCollectionName": ["MCParticle"],
-    "CaloHitCollectionName": ["HcalRingCollectionRec"],
-    "CaloRelationCollectionName": ["HcalRingRelationsSimRec"],
-    "GoodHitCollection": ["HcalRingCollectionConed"],
-    "GoodRelationCollection": ["HcalRingRelationsSimConed"],
-    "ConeWidth": ["0.4"]
-}
+# MyHcalRingConer = MarlinProcessorWrapper("MyHcalRingConer")
+# MyHcalRingConer.OutputLevel = INFO
+# MyHcalRingConer.ProcessorType = "CaloConer"
+# MyHcalRingConer.Parameters = {
+#     "MCParticleCollectionName": ["MCParticle"],
+#     "CaloHitCollectionName": ["HcalRingCollectionRec"],
+#     "CaloRelationCollectionName": ["HcalRingRelationsSimRec"],
+#     "GoodHitCollection": ["HcalRingCollectionConed"],
+#     "GoodRelationCollection": ["HcalRingRelationsSimConed"],
+#     "ConeWidth": ["0.4"]
+# }
 
 MuonDigitiser = MarlinProcessorWrapper("MuonDigitiser")
 MuonDigitiser.OutputLevel = INFO
@@ -736,16 +740,16 @@ if the_args.doFilterDL:
     algList.append(FilterDL_VXDE)
 algList.append(ECalBarrelDigi)
 algList.append(ECalBarrelReco)
-algList.append(ECalPlugDigi)
-algList.append(ECalPlugReco)
+# algList.append(ECalPlugDigi)
+# algList.append(ECalPlugReco)
 algList.append(ECalEndcapDigi)
 algList.append(ECalEndcapReco)
 algList.append(HCalBarrelDigi)
 algList.append(HCalBarrelReco)
 algList.append(HCalEndcapDigi)
 algList.append(HCalEndcapReco)
-algList.append(HCalRingDigi)
-algList.append(HCalRingReco)
+# algList.append(HCalRingDigi)
+# algList.append(HCalRingReco)
 # algList.append(MyEcalBarrelConer)
 # algList.append(MyEcalEndcapConer)
 # algList.append(MyEcalPlugConer)
