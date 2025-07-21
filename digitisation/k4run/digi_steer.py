@@ -102,10 +102,22 @@ LCIOWriter_all.Parameters = {
                              "DropCollectionNames": ["VBTrackerHits", "VBTrackerHitsRelations", "VETrackerHits", "VETrackerHitsRelations", "VertexBarrelCollection", "VertexEndcapCollection",
                                                       "IBTrackerHits", "IBTrackerHitsRelations", "InnerTrackerBarrelCollection", "IETrackerHits", "IETrackerHitsRelations", "InnerTrackerEndcapCollection",
                                                       "OBTrackerHits", "OBTrackerHitsRelations", "OuterTrackerBarrelCollection", "OETrackerHits", "OETrackerHitsRelations", "OuterTrackerEndcapCollection",
+                                                      "EcalBarrelCollectionDigi","EcalBarrelRelationsSimDigi", "EcalBarrelCollectionRec", "EcalBarrelRelationsSimRec", 
+                                                      "EcalEndcapCollectionDigi","EcalEndcapRelationsSimDigi", "EcalEndcapCollectionRec", "EcalEndcapRelationsSimRec", 
+                                                      "HcalBarrelCollectionDigi","HcalBarrelRelationsSimDigi", "HcalBarrelCollectionRec", "HcalBarrelRelationsSimRec", 
+                                                      "HcalEndcapCollectionDigi","HcalEndcapRelationsSimDigi", "HcalEndcapCollectionRec", "HcalEndcapRelationsSimRec", 
+                                                      "HcalRingCollectionDigi","HcalRingRelationsSimDigi", "HcalRingCollectionRec", "HcalRingRelationsSimRec", 
                                                       ],
                              "DropCollectionTypes": [],
                              "FullSubsetCollections": [],
-                             "KeepCollectionNames": [],
+                             "KeepCollectionNames": ["VBTrackerHitsConed", "IBTrackerHitsConed", "OBTrackerHitsConed", "VETrackerHitsConed", "IETrackerHitsConed", "OETrackerHitsConed", 
+                                                     "EcalBarrelCollectionConed", "EcalBarrelRelationsSimConed",
+                                                     "EcalEndcapCollectionConed", "EcalEndcapRelationsSimConed", 
+                                                     "EcalPlugCollectionConed", "EcalPlugRelationsSimConed",
+                                                     "HcalBarrelCollectionConed", "HcalBarrelRelationsSimConed",
+                                                     "HcalEndcapCollectionConed", "HcalEndcapRelationsSimConed", 
+                                                     "HcalRingCollectionConed", "HcalRingRelationsSimConed",
+                                                     ],
                              "LCIOOutputFile": ["output_digi_onlyConedTrackerHits.slcio"],
                              "LCIOWriteMode": ["WRITE_NEW"]
                              }
@@ -242,7 +254,7 @@ VXDBarrelConer.Parameters = {
     "TrackerHitOutputCollections": ["VBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["VertexBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["VBTrackerHitsRelationsConed"],
-    "DeltaRCut": ["1.0"], 
+    "DeltaRCut": ["0.4"], 
     "FillHistograms": ["true"]
 }
 
@@ -257,7 +269,7 @@ VXDEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["VETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["VertexEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["VETrackerHitsRelationsConed"],
-    "DeltaRCut": ["1.0"], 
+    "DeltaRCut": ["0.4"], 
     "FillHistograms": ["true"]
 }
 
@@ -272,7 +284,7 @@ InnerPlanarConer.Parameters = {
     "TrackerHitOutputCollections": ["IBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["InnerTrackerBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["IBTrackerHitsRelationsConed"],
-    "DeltaRCut": ["1.0"], 
+    "DeltaRCut": ["0.4"], 
     "FillHistograms": ["true"]
 }
 
@@ -287,7 +299,7 @@ InnerEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["IETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["InnerTrackerEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["IETrackerHitsRelationsConed"],
-    "DeltaRCut": ["1.0"], 
+    "DeltaRCut": ["0.4"], 
     "FillHistograms": ["true"]
 }
 
@@ -302,7 +314,7 @@ OuterPlanarConer.Parameters = {
     "TrackerHitOutputCollections": ["OBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["OuterTrackerBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["OBTrackerHitsRelationsConed"],
-    "DeltaRCut": ["1.0"], 
+    "DeltaRCut": ["0.4"], 
     "FillHistograms": ["true"]
 }
 
@@ -317,7 +329,7 @@ OuterEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["OETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["OuterTrackerEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["OETrackerHitsRelationsConed"],
-    "DeltaRCut": ["1.0"], 
+    "DeltaRCut": ["0.4"], 
     "FillHistograms": ["true"]
 }
 
@@ -529,53 +541,78 @@ HCalRingReco.Parameters = {
     "ppd_npix": ["2000"]
 }
 
-# MyEcalBarrelConer = MarlinProcessorWrapper("MyEcalBarrelConer")
-# MyEcalBarrelConer.OutputLevel = INFO
-# MyEcalBarrelConer.ProcessorType = "CaloConer"
-# MyEcalBarrelConer.Parameters = {
-#     "MCParticleCollectionName": ["MCParticle"],
-#     "CaloHitCollectionName": ["EcalBarrelCollectionRec"],
-#     "CaloRelationCollectionName": ["EcalBarrelRelationsSimRec"],
-#     "GoodHitCollection": ["EcalBarrelCollectionConed"],
-#     "GoodRelationCollection": ["EcalBarrelRelationsSimConed"],
-#     "ConeWidth": ["0.2"]
-# }
+MyEcalBarrelConer = MarlinProcessorWrapper("MyEcalBarrelConer")
+MyEcalBarrelConer.OutputLevel = INFO
+MyEcalBarrelConer.ProcessorType = "CaloConer"
+MyEcalBarrelConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["EcalBarrelCollectionRec"],
+    "CaloRelationCollectionName": ["EcalBarrelRelationsSimRec"],
+    "GoodHitCollection": ["EcalBarrelCollectionConed"],
+    "GoodRelationCollection": ["EcalBarrelRelationsSimConed"],
+    "ConeWidth": ["0.4"]
+}
 
-# MyEcalEndcapConer = MarlinProcessorWrapper("MyEcalEndcapConer")
-# MyEcalEndcapConer.OutputLevel = INFO
-# MyEcalEndcapConer.ProcessorType = "CaloConer"
-# MyEcalEndcapConer.Parameters = {
-#     "MCParticleCollectionName": ["MCParticle"],
-#     "CaloHitCollectionName": ["EcalEndcapCollectionRec"],
-#     "CaloRelationCollectionName": ["EcalEndcapRelationsSimRec"],
-#     "GoodHitCollection": ["EcalEndcapCollectionConed"],
-#     "GoodRelationCollection": ["EcalEndcapRelationsSimConed"],
-#     "ConeWidth": ["0.2"]
-# }
+MyEcalEndcapConer = MarlinProcessorWrapper("MyEcalEndcapConer")
+MyEcalEndcapConer.OutputLevel = INFO
+MyEcalEndcapConer.ProcessorType = "CaloConer"
+MyEcalEndcapConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["EcalEndcapCollectionRec"],
+    "CaloRelationCollectionName": ["EcalEndcapRelationsSimRec"],
+    "GoodHitCollection": ["EcalEndcapCollectionConed"],
+    "GoodRelationCollection": ["EcalEndcapRelationsSimConed"],
+    "ConeWidth": ["0.4"]
+}
 
-# MyHcalBarrelConer = MarlinProcessorWrapper("MyHcalBarrelConer")
-# MyHcalBarrelConer.OutputLevel = INFO
-# MyHcalBarrelConer.ProcessorType = "CaloConer"
-# MyHcalBarrelConer.Parameters = {
-#     "MCParticleCollectionName": ["MCParticle"],
-#     "CaloHitCollectionName": ["HcalBarrelCollectionRec"],
-#     "CaloRelationCollectionName": ["HcalBarrelRelationsSimRec"],
-#     "GoodHitCollection": ["HcalBarrelCollectionConed"],
-#     "GoodRelationCollection": ["HcalBarrelRelationsSimConed"],
-#     "ConeWidth": ["0.2"]
-# }
+MyEcalPlugConer = MarlinProcessorWrapper("MyEcalPlugConer")
+MyEcalPlugConer.OutputLevel = INFO
+MyEcalPlugConer.ProcessorType = "CaloConer"
+MyEcalPlugConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["EcalPlugCollectionRec"],
+    "CaloRelationCollectionName": ["EcalPlugRelationsSimRec"],
+    "GoodHitCollection": ["EcalPlugCollectionConed"],
+    "GoodRelationCollection": ["EcalPlugRelationsSimConed"],
+    "ConeWidth": ["0.4"]
+}
 
-# MyHcalEndcapConer = MarlinProcessorWrapper("MyHcalEndcapConer")
-# MyHcalEndcapConer.OutputLevel = INFO
-# MyHcalEndcapConer.ProcessorType = "CaloConer"
-# MyHcalEndcapConer.Parameters = {
-#     "MCParticleCollectionName": ["MCParticle"],
-#     "CaloHitCollectionName": ["HcalEndcapCollectionRec"],
-#     "CaloRelationCollectionName": ["HcalEndcapRelationsSimRec"],
-#     "GoodHitCollection": ["HcalEndcapCollectionConed"],
-#     "GoodRelationCollection": ["HcalEndcapRelationsSimConed"],
-#     "ConeWidth": ["0.2"]
-# }
+
+MyHcalBarrelConer = MarlinProcessorWrapper("MyHcalBarrelConer")
+MyHcalBarrelConer.OutputLevel = INFO
+MyHcalBarrelConer.ProcessorType = "CaloConer"
+MyHcalBarrelConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["HcalBarrelCollectionRec"],
+    "CaloRelationCollectionName": ["HcalBarrelRelationsSimRec"],
+    "GoodHitCollection": ["HcalBarrelCollectionConed"],
+    "GoodRelationCollection": ["HcalBarrelRelationsSimConed"],
+    "ConeWidth": ["0.4"]
+}
+
+MyHcalEndcapConer = MarlinProcessorWrapper("MyHcalEndcapConer")
+MyHcalEndcapConer.OutputLevel = INFO
+MyHcalEndcapConer.ProcessorType = "CaloConer"
+MyHcalEndcapConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["HcalEndcapCollectionRec"],
+    "CaloRelationCollectionName": ["HcalEndcapRelationsSimRec"],
+    "GoodHitCollection": ["HcalEndcapCollectionConed"],
+    "GoodRelationCollection": ["HcalEndcapRelationsSimConed"],
+    "ConeWidth": ["0.4"]
+}
+
+MyHcalRingConer = MarlinProcessorWrapper("MyHcalRingConer")
+MyHcalRingConer.OutputLevel = INFO
+MyHcalRingConer.ProcessorType = "CaloConer"
+MyHcalRingConer.Parameters = {
+    "MCParticleCollectionName": ["MCParticle"],
+    "CaloHitCollectionName": ["HcalRingCollectionRec"],
+    "CaloRelationCollectionName": ["HcalRingRelationsSimRec"],
+    "GoodHitCollection": ["HcalRingCollectionConed"],
+    "GoodRelationCollection": ["HcalRingRelationsSimConed"],
+    "ConeWidth": ["0.4"]
+}
 
 MuonDigitiser = MarlinProcessorWrapper("MuonDigitiser")
 MuonDigitiser.OutputLevel = INFO
@@ -709,10 +746,12 @@ algList.append(HCalEndcapDigi)
 algList.append(HCalEndcapReco)
 algList.append(HCalRingDigi)
 algList.append(HCalRingReco)
-# algList.append(MyEcalBarrelConer)
-# algList.append(MyEcalEndcapConer)
-# algList.append(MyHcalBarrelConer)
-# algList.append(MyHcalEndcapConer)
+algList.append(MyEcalBarrelConer)
+algList.append(MyEcalEndcapConer)
+algList.append(MyEcalPlugConer)
+algList.append(MyHcalBarrelConer)
+algList.append(MyHcalEndcapConer)
+algList.append(MyHcalRingConer)
 algList.append(MuonDigitiser)
 algList.append(LCIOWriter_all)
 #algList.append(LCIOWriter_light)
@@ -720,7 +759,7 @@ algList.append(LCIOWriter_all)
 from Configurables import ApplicationMgr
 ApplicationMgr( TopAlg = algList,
                 EvtSel = 'NONE',
-                EvtMax   = -1,
+                EvtMax   = 1,
                 ExtSvc = [evtsvc],
                 OutputLevel=INFO
               )
