@@ -3,6 +3,17 @@ from Gaudi.Configuration import *
 
 from Configurables import LcioEvent, EventDataSvc, MarlinProcessorWrapper
 from k4MarlinWrapper.parseConstants import *
+
+import os
+
+from k4FWCore.parseArgs import parser
+
+parser.add_argument("--enableBIB", action="store_true", default=False, help="Enable BIB overlay")
+parser.add_argument("--enableIP", action="store_true", default=False, help="Enable IP overlay")
+parser.add_argument("--TypeEvent", type=str, default="electronGun_pT_0_50", help="Type of event to process")
+parser.add_argument("--InFileName", type=str, default="0", help="Input file name for the simulation")
+the_args = parser.parse_args()
+
 algList = []
 evtsvc = EventDataSvc()
 
@@ -13,7 +24,7 @@ parseConstants(CONSTANTS)
 
 read = LcioEvent()
 read.OutputLevel = INFO
-read.Files = ["../../samples/evt_updt_test/sim/output_sim.slcio"]
+read.Files = ["/scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/samples/bib_v5_pions/sim/superSplit/split_sim_pions.0.slcio"]
 algList.append(read)
 
 EventNumber = MarlinProcessorWrapper("EventNumber")
@@ -27,32 +38,64 @@ MyAIDAProcessor = MarlinProcessorWrapper("MyAIDAProcessor")
 MyAIDAProcessor.OutputLevel = INFO
 MyAIDAProcessor.ProcessorType = "AIDAProcessor"
 MyAIDAProcessor.Parameters = {
-    "FileName": ["lctuple_TYPEEVENT_actsseededckf_INFILENAME"],
+#    "FileName": ["lctuple_"+the_args.TypeEvent+"_actsseededckf_"+the_args.InFileName],
+    "FileName": ["lctuple"+"_actsseededckf_"+the_args.InFileName],
     "FileType": ["root"]
 }
 
 Output_REC = MarlinProcessorWrapper("Output_REC")
 Output_REC.OutputLevel = INFO
 Output_REC.ProcessorType = "LCIOOutputProcessor"
-Output_REC.Parameters = {
-    #"DropCollectionNames": ["PandoraStartVertices", "MCPhysicsParticles", "AllTracks", "SeedTracks", "IBTrackerHitsRelations", "IETrackerHitsRelations", "OBTrackerHitsRelations", "OETrackerHitsRelations", "VBTrackerHitsRelations", "VETrackerHitsRelations"],
-    "DropCollectionTypes": [
-        "SimCalorimeterHit", "SimTrackerHit", 
-        "CalorimeterHit", "TrackerHitPlane",
-        "LCRelation"
+if not the_args.enableBIB:
+    Output_REC.Parameters = {
+        "DropCollectionTypes": [],
+        "DropCollectionNames": [],
+        "FullSubsetCollections": [],
+        "KeepCollectionNames": ["MCParticle_SiTracks_Refitted"],
+        "LCIOOutputFile": ["output_reco.slcio"],
+        "LCIOWriteMode": ["WRITE_NEW"]
+    }
+else:
+    Output_REC.Parameters = {
+        "DropCollectionTypes": [
+            "SimTrackerHit", 
+            "CalorimeterHit", "TrackerHitPlane",
+            "LCRelation"
         ],
-    "DropCollectionNames": ["MCPhysicsParticles", "MCPhysicsParticles_IP", "AllTracks", "SeedTracks"],
-    "FullSubsetCollections": ["SiTracks"],
-    "KeepCollectionNames": ["MCParticle_SiTracks"],
-    "LCIOOutputFile": ["TYPEEVENT_reco_INFILENAME.slcio"],
-    "LCIOWriteMode": ["WRITE_NEW"]
-}
+        "DropCollectionNames": [
+            "AllTracks", "SeedTracks", "SiTracks",
+            "MCPhysicsParticles", "MCPhysicsParticles_IP",
+            "EcalBarrelRelationsSimDigi", "EcalBarrelRelationsSimRec", "EcalBarrelRelationsSimSel", 
+            "EcalEndcapRelationsSimDigi", "EcalEndcapRelationsSimRec", "EcalEndcapRelationsSimSel",  
+            "HcalBarrelRelationsSimDigi", "HcalBarrelRelationsSimRec", "HcalBarrelRelationsSimSel",  
+            "HcalEndcapRelationsSimDigi", "HcalEndcapRelationsSimRec", "HcalEndcapRelationsSimSel"
+        ],
+        "FullSubsetCollections": [
+            "EcalBarrelCollectionSel", "EcalEndcapCollectionSel",
+            "HcalBarrelCollectionConed", "HcalEndcapCollectionConed",
+            "IBTrackerHitsConed", "IETrackerHitsConed",
+            "OBTrackerHitsConed", "OETrackerHitsConed", 
+            "VBTrackerHitsConed", "VETrackerHitsConed", 
+            "SiTracks_Refitted"
+        ],
+        "KeepCollectionNames": [
+            "EcalBarrelCollectionSel", "EcalEndcapCollectionSel", 
+            "HcalBarrelCollectionConed", "HcalEndcapCollectionConed",
+            "IBTrackerHitsConed", "IETrackerHitsConed",
+            "OBTrackerHitsConed", "OETrackerHitsConed", 
+            "VBTrackerHitsConed", "VETrackerHitsConed", 
+            "SiTracks_Refitted",
+            "MCParticle_SiTracks_Refitted"
+        ],
+        "LCIOOutputFile": ["output_reco_bib.slcio"],
+        "LCIOWriteMode": ["WRITE_NEW"]
+    }
 
 InitDD4hep = MarlinProcessorWrapper("InitDD4hep")
 InitDD4hep.OutputLevel = INFO
 InitDD4hep.ProcessorType = "InitializeDD4hep"
 InitDD4hep.Parameters = {
-    "DD4hepXMLFile": ["/scratch/gregorypenn/lccontent/maia_Geometry/MAIA_versions/v1_jun27/detector-simulation/geometries/MAIA_v0/MAIA_v0.xml"],
+    "DD4hepXMLFile": [os.environ["MAIA_GEO"]],
     #"DD4hepXMLFile": ["/code/detector-simulation/geometries/MuColl_10TeV_v0A/MuColl_10TeV_v0A.xml"],
     "EncodingStringParameterName": ["GlobalTrackerReadoutID"]
 }
@@ -178,8 +221,8 @@ VXDBarrelConer.Parameters = {
     "TrackerHitOutputCollections": ["VBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["VertexBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["VBTrackerHitsRelationsConed"],
-    "Dist3DCut": ["30."],
-    "FillHistograms": ["true"]
+    "DeltaRCut": ["0.8"],
+    "FillHistograms": ["false"]
 }
 
 VXDEndcapConer = MarlinProcessorWrapper("VXDEndcapConer")
@@ -193,8 +236,8 @@ VXDEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["VETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["VertexEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["VETrackerHitsRelationsConed"],
-    "Dist3DCut": ["30."],
-    "FillHistograms": ["true"]
+    "DeltaRCut": ["0.8"],
+    "FillHistograms": ["false"]
 }
 
 InnerPlanarConer = MarlinProcessorWrapper("InnerPlanarConer")
@@ -208,8 +251,8 @@ InnerPlanarConer.Parameters = {
     "TrackerHitOutputCollections": ["IBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["InnerTrackerBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["IBTrackerHitsRelationsConed"],
-    "Dist3DCut": ["30."],
-    "FillHistograms": ["true"]
+    "DeltaRCut": ["0.8"],
+    "FillHistograms": ["false"]
 }
 
 InnerEndcapConer = MarlinProcessorWrapper("InnerEndcapConer")
@@ -223,8 +266,8 @@ InnerEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["IETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["InnerTrackerEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["IETrackerHitsRelationsConed"],
-    "Dist3DCut": ["30."],
-    "FillHistograms": ["true"]
+    "DeltaRCut": ["0.8"],
+    "FillHistograms": ["false"]
 }
 
 OuterPlanarConer = MarlinProcessorWrapper("OuterPlanarConer")
@@ -238,8 +281,8 @@ OuterPlanarConer.Parameters = {
     "TrackerHitOutputCollections": ["OBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["OuterTrackerBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["OBTrackerHitsRelationsConed"],
-    "Dist3DCut": ["30."],
-    "FillHistograms": ["true"]
+    "DeltaRCut": ["0.8"],
+    "FillHistograms": ["false"]
 }
 
 OuterEndcapConer = MarlinProcessorWrapper("OuterEndcapConer")
@@ -253,8 +296,8 @@ OuterEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["OETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["OuterTrackerEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["OETrackerHitsRelationsConed"],
-    "Dist3DCut": ["30."],
-    "FillHistograms": ["true"]
+    "DeltaRCut": ["0.8"],
+    "FillHistograms": ["false"]
 }
 
 CKFTracking = MarlinProcessorWrapper("CKFTracking")
@@ -265,7 +308,7 @@ CKFTracking.Parameters = {
     "CKF_NumMeasurementsCutOff": ["1"],
     "CaloFace_Radius": ["1857"],
     "CaloFace_Z": ["2307"],
-    "MatFile": ["/opt/spack/opt/spack/linux-ubuntu24.04-x86_64/gcc-13.3.0/actstracking-1.3.1-bqlvvdmew24gow2jqheahfpzxnp6xwbt/share/ACTSTracking/data/MAIA_v0_material.json"],
+    "MatFile": [os.environ["ACTS_MatFile_MAIA"]],
     "PropagateBackward": ["False"],
     "DetectorSchema": ["MAIA_v0"],
     "RunCKF": ["True"],
@@ -296,8 +339,8 @@ CKFTracking.Parameters = {
                       "8", "2",
                       "17", "2",
                       "18", "2"],
-    "TGeoFile": ["/opt/spack/opt/spack/linux-ubuntu24.04-x86_64/gcc-13.3.0/actstracking-1.3.1-bqlvvdmew24gow2jqheahfpzxnp6xwbt/share/ACTSTracking/data/MAIA_v0.root"],
-    "TGeoDescFile": ["/opt/spack/opt/spack/linux-ubuntu24.04-x86_64/gcc-13.3.0/actstracking-1.3.1-bqlvvdmew24gow2jqheahfpzxnp6xwbt/share/ACTSTracking/data/MAIA_v0.json"],
+    "TGeoFile": [os.environ["ACTSTRACKING_DATA"]+"/MAIA_v0.root"],
+    "TGeoDescFile": [os.environ['ACTSTRACKING_DATA']+"/MAIA_v0.json"],
     "TrackCollectionName": ["AllTracks"],
     "TrackerHitCollectionNames": ["VBTrackerHitsConed", "IBTrackerHitsConed", "OBTrackerHitsConed", "VETrackerHitsConed", "IETrackerHitsConed", "OETrackerHitsConed"]
 }
@@ -308,6 +351,26 @@ TrackDeduper.ProcessorType = "ACTSDuplicateRemoval"
 TrackDeduper.Parameters = {
     "InputTrackCollectionName": ["AllTracks"],
     "OutputTrackCollectionName": ["SiTracks"]
+}
+
+Refit = MarlinProcessorWrapper("Refit")
+Refit.OutputLevel = WARNING
+Refit.ProcessorType = "RefitFinal"
+Refit.Parameters = {
+    "DoCutsOnRedChi2Nhits": ["true"],
+    "EnergyLossOn": ["true"],
+    "InputRelationCollectionName": ["SiTrackRelations"],
+    "InputTrackCollectionName": ["SiTracks"],
+    "Max_Chi2_Incr": ["1.79769e+30"],
+    "MinClustersOnTrackAfterFit": ["3"],
+    "MultipleScatteringOn": ["true"],
+    "NHitsCuts": ["1,2", "1", "3,4", "1", "5,6", "0"],
+    "OutputRelationCollectionName": ["SiTracks_Refitted_Relation"],
+    "OutputTrackCollectionName": ["SiTracks_Refitted"],
+    "ReducedChi2Cut": ["10."],
+    "ReferencePoint": ["-1"],
+    "SmoothOn": ["false"],
+    "extrapolateForward": ["true"]
 }
 
 MyTrackSelector = MarlinProcessorWrapper("MyTrackSelector")
@@ -332,8 +395,8 @@ MyTrackTruth.OutputLevel = INFO
 MyTrackTruth.ProcessorType = "TrackTruthProc"
 MyTrackTruth.Parameters = {
     "MCParticleCollection": ["MCParticle"],
-    "Particle2TrackRelationName": ["MCParticle_SiTracks"],
-    "TrackCollection": ["SiTracks"],
+    "Particle2TrackRelationName": ["MCParticle_SiTracks_Refitted"],
+    "TrackCollection": ["SiTracks_Refitted"],
     "TrackerHit2SimTrackerHitRelationName": ["VBTrackerHitsRelationsConed", "IBTrackerHitsRelationConed", "OBTrackerHitsRelationsConed", "VETrackerHitsRelationsConed", "IETrackerHitsRelationsConed", "OETrackerHitsRelationsConed"]
 }
 
@@ -346,8 +409,8 @@ MyEcalBarrelDigi.Parameters = {
     "inputHitCollections": ["ECalBarrelCollection"],
     "outputHitCollections": ["EcalBarrelCollectionDigi"],
     "outputRelationCollections": ["EcalBarrelRelationsSimDigi"],
-    "threshold": ["0.002"],
-    #"threshold": ["5e-05"],
+    #"threshold": ["0.002"],
+    "threshold": ["5e-05"],
     "thresholdUnit": ["GeV"],
     "timingCorrectForPropagation": ["1"],
     "timingCut": ["1"],
@@ -363,7 +426,8 @@ MyEcalBarrelReco.ProcessorType = "RealisticCaloRecoSilicon"
 MyEcalBarrelReco.Parameters = {
     "CellIDLayerString": ["layer"],
     #    "calibration_factorsMipGev": ["0.00641222630095"],
-    "calibration_factorsMipGev": ["0.0066150"],
+    "calibration_factorsMipGev": ["0.0066150"], #used for v3
+    #"calibration_factorsMipGev": ["0.00826875"],
     "calibration_layergroups": ["50"],
     "inputHitCollections": ["EcalBarrelCollectionDigi"],
     "inputRelationCollections": ["EcalBarrelRelationsSimDigi"],
@@ -380,8 +444,8 @@ MyEcalEndcapDigi.Parameters = {
     "inputHitCollections": ["ECalEndcapCollection"],
     "outputHitCollections": ["EcalEndcapCollectionDigi"],
     "outputRelationCollections": ["EcalEndcapRelationsSimDigi"],
-    "threshold": ["0.002"],
-    #"threshold": ["5e-05"],
+    #"threshold": ["0.002"],
+    "threshold": ["5e-05"],
     "thresholdUnit": ["GeV"],
     "timingCorrectForPropagation": ["1"],
     "timingCut": ["1"],
@@ -397,7 +461,8 @@ MyEcalEndcapReco.ProcessorType = "RealisticCaloRecoSilicon"
 MyEcalEndcapReco.Parameters = {
     "CellIDLayerString": ["layer"],
     #    "calibration_factorsMipGev": ["0.00641222630095"],
-    "calibration_factorsMipGev": ["0.0066150"],
+    "calibration_factorsMipGev": ["0.0066150"], #used for v3
+    #"calibration_factorsMipGev": ["0.00826875"],
     "calibration_layergroups": ["50"],
     "inputHitCollections": ["EcalEndcapCollectionDigi"],
     "inputRelationCollections": ["EcalEndcapRelationsSimDigi"],
@@ -410,7 +475,7 @@ MyHcalBarrelDigi.OutputLevel = INFO
 MyHcalBarrelDigi.ProcessorType = "RealisticCaloDigiScinPpd"
 MyHcalBarrelDigi.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_mip": ["0.0004925"],
+    "calibration_mip": ["0.0004725"],
     "inputHitCollections": ["HCalBarrelCollection"],
     "outputHitCollections": ["HcalBarrelCollectionDigi"],
     "outputRelationCollections": ["HcalBarrelRelationsSimDigi"],
@@ -418,8 +483,8 @@ MyHcalBarrelDigi.Parameters = {
     "ppd_npix": ["2000"],
     "ppd_npix_uncert": ["0"],
     "ppd_pix_spread": ["0"],
-    "threshold": ["0.001"],
-    "thresholdUnit": ["GeV"],
+    "threshold": ["0.5"],
+    "thresholdUnit": ["MIP"],
     "timingCorrectForPropagation": ["1"],
     "timingCut": ["1"],
     "timingResolution": ["0"],
@@ -456,8 +521,8 @@ MyHcalEndcapDigi.Parameters = {
     "ppd_npix": ["2000"],
     "ppd_npix_uncert": ["0"],
     "ppd_pix_spread": ["0"],
-    "threshold": ["0.001"],
-    "thresholdUnit": ["GeV"],
+    "threshold": ["0.5"],
+    "thresholdUnit": ["MIP"],
     "timingCorrectForPropagation": ["1"],
     "timingCut": ["1"],
     "timingResolution": ["0"],
@@ -490,7 +555,7 @@ MyEcalBarrelConer.Parameters = {
     "CaloRelationCollectionName": ["EcalBarrelRelationsSimRec"],
     "GoodHitCollection": ["EcalBarrelCollectionConed"],
     "GoodRelationCollection": ["EcalBarrelRelationsSimConed"],
-    "ConeWidth": ["0.2"]
+    "ConeWidth": ["0.4"]
 }
 
 MyEcalEndcapConer = MarlinProcessorWrapper("MyEcalEndcapConer")
@@ -502,7 +567,7 @@ MyEcalEndcapConer.Parameters = {
     "CaloRelationCollectionName": ["EcalEndcapRelationsSimRec"],
     "GoodHitCollection": ["EcalEndcapCollectionConed"],
     "GoodRelationCollection": ["EcalEndcapRelationsSimConed"],
-    "ConeWidth": ["0.2"]
+    "ConeWidth": ["0.4"]
 }
 
 MyHcalBarrelConer = MarlinProcessorWrapper("MyHcalBarrelConer")
@@ -514,7 +579,7 @@ MyHcalBarrelConer.Parameters = {
     "CaloRelationCollectionName": ["HcalBarrelRelationsSimRec"],
     "GoodHitCollection": ["HcalBarrelCollectionConed"],
     "GoodRelationCollection": ["HcalBarrelRelationsSimConed"],
-    "ConeWidth": ["0.2"]
+    "ConeWidth": ["0.4"]
 }
 
 MyHcalEndcapConer = MarlinProcessorWrapper("MyHcalEndcapConer")
@@ -526,7 +591,7 @@ MyHcalEndcapConer.Parameters = {
     "CaloRelationCollectionName": ["HcalEndcapRelationsSimRec"],
     "GoodHitCollection": ["HcalEndcapCollectionConed"],
     "GoodRelationCollection": ["HcalEndcapRelationsSimConed"],
-    "ConeWidth": ["0.2"]
+    "ConeWidth": ["0.4"]
 }
 
 
@@ -538,9 +603,9 @@ MyEcalBarrelSelector.Parameters = {
     "CaloRelationCollectionName": ["EcalBarrelRelationsSimConed"],
     "GoodHitCollection": ["EcalBarrelCollectionSel"],
     "GoodRelationCollection": ["EcalBarrelRelationsSimSel"],
-    "ThresholdsFilePath": ["/code/CaloSelector/ECAL_Thresholds_10TeV.root"], # not sure what will happen when this is read, I don't have this file
+    "ThresholdsFilePath": ["/scratch/gregorypenn/MyBIBUtils/data/ECAL_Thresholds_10TeV.root"],
     "Nsigma": ["0"],
-    "DoBIBsubtraction": ["true"]
+    "DoBIBsubtraction": ["false"]
 }
 
 MyEcalEndcapSelector = MarlinProcessorWrapper("MyEcalEndcapSelector")
@@ -551,9 +616,9 @@ MyEcalEndcapSelector.Parameters = {
     "CaloRelationCollectionName": ["EcalEndcapRelationsSimConed"],
     "GoodHitCollection": ["EcalEndcapCollectionSel"],
     "GoodRelationCollection": ["EcalEndcapRelationsSimSel"],
-    "ThresholdsFilePath": ["/code/CaloSelector/ECAL_Thresholds_10TeV.root"], # not sure what will happen when this is read, I don't have this file
+    "ThresholdsFilePath": ["/scratch/gregorypenn/MyBIBUtils/data/ECAL_Thresholds_10TeV.root"],
     "Nsigma": ["0"],
-    "DoBIBsubtraction": ["true"]
+    "DoBIBsubtraction": ["false"]
 }
 
 DDMarlinPandora = MarlinProcessorWrapper("DDMarlinPandora")
@@ -587,7 +652,7 @@ DDMarlinPandora.Parameters = {
     "EMStochasticTerm": ["0.17"],
     "FinalEnergyDensityBin": ["110."],
     "HCalBarrelNormalVector": ["0", "0", "1"],
-    "HCalCaloHitCollections": ["HcalBarrelCollectionRec", "HcalEndcapCollectionRec"],
+    "HCalCaloHitCollections": ["HcalBarrelCollectionConed", "HcalEndcapCollectionConed"],
     "HCalMipThreshold": ["0.3"],
     "HCalToEMGeVCalibration": ["1.02373335516"],
     "HCalToHadGeVCalibration": ["1.01799349172"],
@@ -626,7 +691,7 @@ DDMarlinPandora.Parameters = {
     "NEventsToSkip": ["0"],
     "NOuterSamplingLayers": ["3"],
     "PFOCollectionName": ["PandoraPFOs"],
-    "PandoraSettingsXmlFile": ["PandoraSettings/PandoraSettingsDefault.xml"],
+    "PandoraSettingsXmlFile": ["PandoraSettings/PandoraSettings_Basic.xml"],
     "ProngVertexCollections": ["ProngVertices"],
     "ReachesECalBarrelTrackerOuterDistance": ["-100"],
     "ReachesECalBarrelTrackerZMaxDistance": ["-50"],
@@ -634,8 +699,8 @@ DDMarlinPandora.Parameters = {
     "ReachesECalMinFtdLayer": ["0"],
     "ReachesECalNBarrelTrackerHits": ["0"],
     "ReachesECalNFtdHits": ["0"],
-    "RelCaloHitCollections": ["CaloHitsRelations", "MuonHitsRelations"],
-    "RelTrackCollections": ["SiTracks_Relation"],
+    "RelCaloHitCollections": ["EcalBarrelRelationsSimSel", "EcalEndcapRelationsSimSel", "HcalBarrelRelationsSimConed", "HcalEndcapRelationsSimConed", "RelationMuonHit"],
+    "RelTrackCollections": ["SiTracks_Refitted_Relation"],
     "ShouldFormTrackRelationships": ["1"],
     "SoftwareCompensationEnergyDensityBins": ["0", "2.", "5.", "7.5", "9.5", "13.", "16.", "20.", "23.5", "28.", "33.", "40.", "50.", "75.", "100."],
     "SoftwareCompensationWeights": ["1.61741", "-0.00444385", "2.29683e-05", "-0.0731236", "-0.00157099", "-7.09546e-07", "0.868443", "1.0561", "-0.0238574"],
@@ -669,7 +734,7 @@ DDMarlinPandora.Parameters = {
     "StartVertexAlgorithmName": ["PandoraPFANew"],
     "StartVertexCollectionName": ["PandoraStartVertices"],
     "StripSplittingOn": ["0"],
-    "TrackCollections": ["SiTracks"],
+    "TrackCollections": ["SiTracks_Refitted"],
     "TrackCreatorName": ["DDTrackCreatorCLIC"],
     "TrackStateTolerance": ["0"],
     "TrackSystemName": ["DDKalTest"],
@@ -708,6 +773,42 @@ ValenciaJetProcessor.Parameters = {
     "recombinationScheme": ["E_scheme"]
 }
 
+TrueMCintoRecoForJets = MarlinProcessorWrapper("TrueMCintoRecoForJets")
+TrueMCintoRecoForJets.OutputLevel = INFO
+TrueMCintoRecoForJets.ProcessorType = "TrueMCintoRecoForJets"
+TrueMCintoRecoForJets.Parameters = {
+                                      "MCParticleInputCollectionName": ["MCParticle"],
+                                      "RECOParticleCollectionName": ["MCParticlePandoraPFOs"],
+                                      "RecoParticleInputCollectionName": ["PandoraPFOs"],
+                                      "RecoParticleNoLeptonCollectionName": ["PandoraPFOsNoLeptons"],
+                                      "cosAngle_pfo_lepton": ["0.995"],
+                                      "ignoreNeutrinosInMCJets": ["true"],
+                                      "vetoBosonLeptons": ["false"],
+                                      "vetoBosonLeptonsOnReco": ["false"]
+                                      }
+
+TruthFastJetProcessor = MarlinProcessorWrapper("TruthFastJetProcessor")
+TruthFastJetProcessor.OutputLevel = INFO
+TruthFastJetProcessor.ProcessorType = "FastJetProcessor"
+TruthFastJetProcessor.Parameters = {
+                                    "algorithm": ["kt_algorithm", "0.4"],
+                                    "clusteringMode": ["Inclusive", "5"],
+                                    "jetOut": ["TruthJetOut"],
+                                    "recParticleIn": ["MCParticlePandoraPFOs"],
+                                    "recombinationScheme": ["E_scheme"]
+                                    }
+
+TruthValenciaJetProcessor = MarlinProcessorWrapper("TruthValenciaJetProcessor")
+TruthValenciaJetProcessor.OutputLevel = INFO
+TruthValenciaJetProcessor.ProcessorType = "FastJetProcessor"
+TruthValenciaJetProcessor.Parameters = {
+    "algorithm": ["ValenciaPlugin", "1.2", "1.0", "0.7"],
+    "clusteringMode": ["ExclusiveNJets", "2"],
+    "jetOut": ["TruthValenciaJetOut"],
+    "recParticleIn": ["MCParticlePandoraPFOs"],
+    "recombinationScheme": ["E_scheme"]
+}
+
 MyDDSimpleMuonDigi = MarlinProcessorWrapper("MyDDSimpleMuonDigi")
 MyDDSimpleMuonDigi.OutputLevel = INFO
 MyDDSimpleMuonDigi.ProcessorType = "DDSimpleMuonDigi"
@@ -720,74 +821,79 @@ MyDDSimpleMuonDigi.Parameters = {
     "RelationOutputCollection": ["RelationMuonHit"]
 }
 
-# Trying w/o overlay at first
-
-# OverlayMIX = MarlinProcessorWrapper("OverlayMIX")
-# OverlayMIX.OutputLevel = INFO
-# OverlayMIX.ProcessorType = "OverlayTimingRandomMix"
-# OverlayMIX.Parameters = {
-#     "PathToMuPlus": ["/dataMuC/BIB10TeV/sim_mm_pruned/"],
-#     "PathToMuMinus": ["/dataMuC/BIB10TeV/sim_mp_pruned/"],
-#     "Collection_IntegrationTimes": [
-#         "VertexBarrelCollection", "-0.18", "0.18",
-#         "VertexEndcapCollection", "-0.18", "0.18",
-#         "InnerTrackerBarrelCollection", "-0.36", "0.36",
-#         "InnerTrackerEndcapCollection", "-0.36", "0.36",
-#         "OuterTrackerBarrelCollection", "-0.36", "0.36",
-#         "OuterTrackerEndcapCollection", "-0.36", "0.36",
-#     #    "ECalBarrelCollection", "-0.5", "15.",
-#     #    "ECalEndcapCollection", "-0.5", "15.",
-#     #    "HCalBarrelCollection", "-0.5", "15.",
-#     #    "HCalEndcapCollection", "-0.5", "15.",
-#     #    "YokeBarrelCollection", "-0.5", "12.",
-#     #    "YokeEndcapCollection", "-0.5", "12."
-#     ],
-#     "IntegrationTimeMin": ["-0.5"],
-#     "MCParticleCollectionName": ["MCParticle"],
-#     "MergeMCParticles": ["false"],
-#     "NumberBackground": ["1666"]
-# }
+OverlayMIX = MarlinProcessorWrapper("OverlayMIX")
+OverlayMIX.OutputLevel = INFO
+OverlayMIX.ProcessorType = "OverlayTimingRandomMix"
+OverlayMIX.Parameters = {
+    "PathToMuPlus": ["/scratch/gregorypenn/BIBCopy/mp_pruned/"],
+    "PathToMuMinus": ["/scratch/gregorypenn/BIBCopy/mm_pruned/"],
+    "Collection_IntegrationTimes": [
+        "VertexBarrelCollection", "-0.18", "0.18",
+        "VertexEndcapCollection", "-0.18", "0.18",
+        "InnerTrackerBarrelCollection", "-0.36", "0.36",
+        "InnerTrackerEndcapCollection", "-0.36", "0.36",
+        "OuterTrackerBarrelCollection", "-0.36", "0.36",
+        "OuterTrackerEndcapCollection", "-0.36", "0.36",
+        "ECalBarrelCollection", "-0.5", "15.",
+        "ECalEndcapCollection", "-0.5", "15.",
+        "HCalBarrelCollection", "-0.5", "15.",
+        "HCalEndcapCollection", "-0.5", "15.",
+        "YokeBarrelCollection", "-0.5", "15.",
+        "YokeEndcapCollection", "-0.5", "15."
+    ],
+    "IntegrationTimeMin": ["-0.5"],
+    "MCParticleCollectionName": ["MCParticle"],
+    "MergeMCParticles": ["false"],
+    "NumberBackground": ["1666"]
+}
 
 
-# OverlayIP = MarlinProcessorWrapper("OverlayIP")
-# OverlayIP.OutputLevel = INFO
-# OverlayIP.ProcessorType = "OverlayTimingGeneric"
-# OverlayIP.Parameters = {
-#     "AllowReusingBackgroundFiles": ["true"],
-#     "BackgroundFileNames": ["/dataMuC/IPairs/sim_pairs_cycle1.slcio","/dataMuC/IPairs/sim_pairs_cycle2.slcio"],
-#     "Collection_IntegrationTimes": [
-#         "VertexBarrelCollection", "-0.18", "0.18",
-#         "VertexEndcapCollection", "-0.18", "0.18",
-#         "InnerTrackerBarrelCollection", "-0.36", "0.36",
-#         "InnerTrackerEndcapCollection", "-0.36", "0.36",
-#         "OuterTrackerBarrelCollection", "-0.36", "0.36",
-#         "OuterTrackerEndcapCollection", "-0.36", "0.36",
-# #        "ECalBarrelCollection", "-0.5", "15.",
-# #        "ECalEndcapCollection", "-0.5", "15.",
-# #        "HCalBarrelCollection", "-0.5", "15.",
-# #        "HCalEndcapCollection", "-0.5", "15.",
-# #        "YokeBarrelCollection", "-0.5", "15.",
-# #        "YokeEndcapCollection", "-0.5", "15."
-#     ],
-#     "Delta_t": ["10000"],
-#     "IntegrationTimeMin": ["-0.5"],
-#     "MCParticleCollectionName": ["MCParticle"],
-#     "MCPhysicsParticleCollectionName": ["MCPhysicsParticles_IP"],
-#     "MergeMCParticles": ["false"],
-#     "NBunchtrain": ["1"],
-#     "NumberBackground": ["1"],
-#     "PhysicsBX": ["1"],
-#     "Poisson_random_NOverlay": ["false"],
-#     "RandomBx": ["false"],
-#     "StartBackgroundFileIndex": ["0"],
-#     "TPCDriftvelocity": ["0.05"]
-# }
+OverlayIP = MarlinProcessorWrapper("OverlayIP")
+OverlayIP.OutputLevel = INFO
+OverlayIP.ProcessorType = "OverlayTimingGeneric"
+OverlayIP.Parameters = {
+    "AllowReusingBackgroundFiles": ["true"],
+    "BackgroundFileNames": [
+        "/dataMuC/IPairs/sim/sim_pairs_cycle1.slcio",
+        "/dataMuC/IPairs/sim/sim_pairs_cycle2.slcio",
+        "/dataMuC/IPairs/sim/sim_pairs_cycle3.slcio",
+        "/dataMuC/IPairs/sim/sim_pairs_cycle4.slcio"
+    ],
+    "Collection_IntegrationTimes": [
+        "VertexBarrelCollection", "-0.18", "0.18",
+        "VertexEndcapCollection", "-0.18", "0.18",
+        "InnerTrackerBarrelCollection", "-0.36", "0.36",
+        "InnerTrackerEndcapCollection", "-0.36", "0.36",
+        "OuterTrackerBarrelCollection", "-0.36", "0.36",
+        "OuterTrackerEndcapCollection", "-0.36", "0.36",
+        "ECalBarrelCollection", "-0.5", "15.",
+        "ECalEndcapCollection", "-0.5", "15.",
+        "HCalBarrelCollection", "-0.5", "15.",
+        "HCalEndcapCollection", "-0.5", "15.",
+        "YokeBarrelCollection", "-0.5", "15.",
+        "YokeEndcapCollection", "-0.5", "15."
+    ],
+    "Delta_t": ["10000"],
+    "IntegrationTimeMin": ["-0.5"],
+    "MCParticleCollectionName": ["MCParticle"],
+    "MCPhysicsParticleCollectionName": ["MCPhysicsParticles_IP"],
+    "MergeMCParticles": ["false"],
+    "NBunchtrain": ["1"],
+    "NumberBackground": ["1"],
+    "PhysicsBX": ["1"],
+    "Poisson_random_NOverlay": ["false"],
+    "RandomBx": ["false"],
+    "StartBackgroundFileIndex": ["0"],
+    "TPCDriftvelocity": ["0.05"]
+}
 
 algList.append(MyAIDAProcessor)
 algList.append(EventNumber)
 algList.append(InitDD4hep)
-# algList.append(OverlayMIX) 
-# algList.append(OverlayIP)
+if the_args.enableBIB:
+    algList.append(OverlayMIX)
+if the_args.enableIP:
+    algList.append(OverlayIP)
 algList.append(VXDBarrelDigitiser)
 algList.append(VXDEndcapDigitiser)
 algList.append(InnerPlanarDigiProcessor)
@@ -800,12 +906,11 @@ algList.append(InnerPlanarConer)
 algList.append(InnerEndcapConer)
 algList.append(OuterPlanarConer)
 algList.append(OuterEndcapConer)
-
 algList.append(CKFTracking)
 algList.append(TrackDeduper)
+algList.append(Refit)
 #algList.append(MyTrackSelector)
 algList.append(MyTrackTruth)
-'''
 algList.append(MyEcalBarrelDigi)
 algList.append(MyEcalBarrelReco)
 algList.append(MyEcalEndcapDigi)
@@ -822,14 +927,16 @@ algList.append(MyEcalBarrelSelector)
 algList.append(MyEcalEndcapSelector)
 algList.append(MyDDSimpleMuonDigi)
 algList.append(DDMarlinPandora)
-algList.append(FastJetProcessor)
-#algList.append(ValenciaJetProcessor)
-'''
+# algList.append(FastJetProcessor)
+# algList.append(ValenciaJetProcessor)
+# algList.append(TrueMCintoRecoForJets)
+# algList.append(TruthFastJetProcessor)
+# algList.append(TruthValenciaJetProcessor)
 algList.append(Output_REC)
 
 ApplicationMgr(TopAlg=algList,
                EvtSel='NONE',
-               EvtMax=-1,
+               EvtMax=1,
                ExtSvc=[evtsvc],
                OutputLevel=INFO
                )

@@ -80,29 +80,29 @@ LCIOWriter_all.Parameters = {
                              "LCIOWriteMode": ["WRITE_NEW"]
                              }
 
-MyEcalBarrelConer = MarlinProcessorWrapper("MyEcalBarrelConer")
-MyEcalBarrelConer.OutputLevel = INFO
-MyEcalBarrelConer.ProcessorType = "CaloConer"
-MyEcalBarrelConer.Parameters = {
-    "MCParticleCollectionName": ["MCParticle"],
-    "CaloHitCollectionName": ["EcalBarrelCollectionRec"],
-    "CaloRelationCollectionName": ["EcalBarrelRelationsSimRec"],
-    "GoodHitCollection": ["EcalBarrelCollectionConed"],
-    "GoodRelationCollection": ["EcalBarrelRelationsSimConed"],
-    "ConeWidth": ["0.4"]
-}
+# MyEcalBarrelConer = MarlinProcessorWrapper("MyEcalBarrelConer")
+# MyEcalBarrelConer.OutputLevel = INFO
+# MyEcalBarrelConer.ProcessorType = "CaloConer"
+# MyEcalBarrelConer.Parameters = {
+#     "MCParticleCollectionName": ["MCParticle"],
+#     "CaloHitCollectionName": ["EcalBarrelCollectionRec"],
+#     "CaloRelationCollectionName": ["EcalBarrelRelationsSimRec"],
+#     "GoodHitCollection": ["EcalBarrelCollectionConed"],
+#     "GoodRelationCollection": ["EcalBarrelRelationsSimConed"],
+#     "ConeWidth": ["0.4"]
+# }
 
-MyEcalEndcapConer = MarlinProcessorWrapper("MyEcalEndcapConer")
-MyEcalEndcapConer.OutputLevel = INFO
-MyEcalEndcapConer.ProcessorType = "CaloConer"
-MyEcalEndcapConer.Parameters = {
-    "MCParticleCollectionName": ["MCParticle"],
-    "CaloHitCollectionName": ["EcalEndcapCollectionRec"],
-    "CaloRelationCollectionName": ["EcalEndcapRelationsSimRec"],
-    "GoodHitCollection": ["EcalEndcapCollectionConed"],
-    "GoodRelationCollection": ["EcalEndcapRelationsSimConed"],
-    "ConeWidth": ["0.4"]
-}
+# MyEcalEndcapConer = MarlinProcessorWrapper("MyEcalEndcapConer")
+# MyEcalEndcapConer.OutputLevel = INFO
+# MyEcalEndcapConer.ProcessorType = "CaloConer"
+# MyEcalEndcapConer.Parameters = {
+#     "MCParticleCollectionName": ["MCParticle"],
+#     "CaloHitCollectionName": ["EcalEndcapCollectionRec"],
+#     "CaloRelationCollectionName": ["EcalEndcapRelationsSimRec"],
+#     "GoodHitCollection": ["EcalEndcapCollectionConed"],
+#     "GoodRelationCollection": ["EcalEndcapRelationsSimConed"],
+#     "ConeWidth": ["0.4"]
+# }
 
 MyHcalBarrelConer = MarlinProcessorWrapper("MyHcalBarrelConer")
 MyHcalBarrelConer.OutputLevel = INFO
@@ -116,17 +116,17 @@ MyHcalBarrelConer.Parameters = {
     "ConeWidth": ["0.4"]
 }
 
-MyHcalEndcapConer = MarlinProcessorWrapper("MyHcalEndcapConer")
-MyHcalEndcapConer.OutputLevel = INFO
-MyHcalEndcapConer.ProcessorType = "CaloConer"
-MyHcalEndcapConer.Parameters = {
-    "MCParticleCollectionName": ["MCParticle"],
-    "CaloHitCollectionName": ["HcalEndcapCollectionRec"],
-    "CaloRelationCollectionName": ["HcalEndcapRelationsSimRec"],
-    "GoodHitCollection": ["HcalEndcapCollectionConed"],
-    "GoodRelationCollection": ["HcalEndcapRelationsSimConed"],
-    "ConeWidth": ["0.4"]
-}
+# MyHcalEndcapConer = MarlinProcessorWrapper("MyHcalEndcapConer")
+# MyHcalEndcapConer.OutputLevel = INFO
+# MyHcalEndcapConer.ProcessorType = "CaloConer"
+# MyHcalEndcapConer.Parameters = {
+#     "MCParticleCollectionName": ["MCParticle"],
+#     "CaloHitCollectionName": ["HcalEndcapCollectionRec"],
+#     "CaloRelationCollectionName": ["HcalEndcapRelationsSimRec"],
+#     "GoodHitCollection": ["HcalEndcapCollectionConed"],
+#     "GoodRelationCollection": ["HcalEndcapRelationsSimConed"],
+#     "ConeWidth": ["0.4"]
+# }
 
 #https://github.com/MuonColliderSoft/ACTSTracking/blob/ce74f55a0ec320284ce8cc2d2d233a7f9c8b912d/src/ACTSSeededCKFTrackingProc.cxx#L45
 # Adapted from Fede's config
@@ -164,7 +164,7 @@ CKFTracking.Parameters = {
                       "17", "2",
                       "18", "2"],
     "TGeoFile": [the_args.TGeoFile],
-    "TGeoDescFile": ["/opt/spack/opt/spack/linux-ubuntu24.04-x86_64/gcc-13.3.0/actstracking-1.3.1-bqlvvdmew24gow2jqheahfpzxnp6xwbt/share/ACTSTracking/data/MAIA_v0.json"],
+    "TGeoDescFile": [os.environ['ACTSTRACKING_DATA']+"/MAIA_v0.json"],
     "TrackCollectionName": ["AllTracks"],
     "TrackerHitCollectionNames": ["VBTrackerHitsConed", "IBTrackerHitsConed", "OBTrackerHitsConed", "VETrackerHitsConed", "IETrackerHitsConed", "OETrackerHitsConed"],
     "CaloFace_Radius": ["1857"],
@@ -179,26 +179,26 @@ TrackDeduplication.Parameters = {
                                  "OutputTrackCollectionName": ["SiTracks"]
                                  }
 
-# adding this to match the marlin workflow
+# https://github.com/iLCSoft/MarlinTrkProcessors/blob/master/source/Refitting/src/RefitFinal.cc
 TrackRefit = MarlinProcessorWrapper("TrackRefit")
 TrackRefit.OutputLevel = INFO
 TrackRefit.ProcessorType = "RefitFinal"
 TrackRefit.Parameters = {
-                                "EnergyLossOn": ["true"],
-                                "DoCutsOnRedChi2Nhits": ["true"],
-                                "ReducedChi2Cut": ["3."],
+                                "EnergyLossOn": ["true"], #Whether to use energy loss in fit (dE/dx?)
+                                "DoCutsOnRedChi2Nhits": ["true"], # I don't think this does anything?
+                                "ReducedChi2Cut": ["3."], # I don't think this does anything?
                                 #"NHitsCuts": ["1,2", "1", "3,4", "1", "5,6", "0"],
                                 "InputRelationCollectionName": ["SiTracksRelations"],
                                 "InputTrackCollectionName": ["SiTracks"],
-                                "Max_Chi2_Incr": ["1.79769e+30"],
-                                "MultipleScatteringOn": ["true"],
+                                "Max_Chi2_Incr": ["1.79769e+30"], # Basically infinitely loose
+                                "MultipleScatteringOn": ["true"], #Whether to use multiple scattering in fit
                                 "OutputRelationCollectionName": ["SiTracks_Refitted_Relations"],
                                 "OutputTrackCollectionName": ["SiTracks_Refitted"],
-                                "ReferencePoint": ["-1"],
-                                "SmoothOn": ["false"],
+                                "ReferencePoint": ["-1"], #Reference at 0,0,0
+                                "SmoothOn": ["false"],  #Smooth all measurement sites in fit
                                 "Verbosity": ["MESSAGE"],
-                                "extrapolateForward": ["true"],
-                                "MinClustersOnTrackAfterFit:": ["3"]
+                                "extrapolateForward": ["true"], #Extrapolate track from in to out
+                                "MinClustersOnTrackAfterFit:": ["3"] #Cut on number of track clusters
                                 }
 
 #adding track truth matching
@@ -291,7 +291,7 @@ DDMarlinPandora.Parameters = {
                               "NOuterSamplingLayers": ["3"],
                               "OutputEnergyCorrectionPoints": [],
                               "PFOCollectionName": ["PandoraPFOs"],
-                              "PandoraSettingsXmlFile": ["PandoraSettings/PandoraSettingsDefault.xml"],
+                              "PandoraSettingsXmlFile": ["PandoraSettings/PandoraSettings_IMCCTalk.xml"],
                               "ProngVertexCollections": ["ProngVertices"],
                               "ReachesECalBarrelTrackerOuterDistance": ["-100"], # used to determine whether track reaches ECal. 
                               "ReachesECalBarrelTrackerZMaxDistance": ["-50"], # used to determine whether track reaches ECal
@@ -394,10 +394,10 @@ algList.append(AIDA)
 algList.append(EventNumber)
 #algList.append(Config)
 algList.append(DD4hep)
-algList.append(MyEcalBarrelConer)
-algList.append(MyEcalEndcapConer)
+# algList.append(MyEcalBarrelConer)
+# algList.append(MyEcalEndcapConer)
 algList.append(MyHcalBarrelConer)
-algList.append(MyHcalEndcapConer)
+# algList.append(MyHcalEndcapConer)
 algList.append(CKFTracking)
 algList.append(TrackDeduplication)
 algList.append(TrackRefit)
@@ -411,7 +411,7 @@ algList.append(LCIOWriter_all)
 from Configurables import ApplicationMgr
 ApplicationMgr( TopAlg = algList,
                 EvtSel = 'NONE',
-                EvtMax   = -1, #-1 is all
+                EvtMax   = 1, #-1 is all
                 ExtSvc = [evtsvc],
                 OutputLevel=INFO
               )
