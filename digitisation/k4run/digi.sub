@@ -1,0 +1,18 @@
+sample = 0
+Universe = Vanilla
++SingularityImage = "/cvmfs/unpacked.cern.ch/ghcr.io/muoncollidersoft/mucoll-sim-alma9:latest"
+Executable     = digi.sh
+Requirements = ( HAS_SINGULARITY ) && ( HAS_CVMFS_unpacked_cern_ch ) && ( HAS_CVMFS_public_uc_osgstorage_org )
+should_transfer_files = YES
+Output  = output.out.$(Cluster)-$(Process)
+Log     = log.$(Cluster)
+Error   = error.out.$(Cluster)-$(Process)
+transfer_input_files = /scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/samples/bib_v5_pions/gen/split/split_gen_pions.$(sample).slcio, /scratch/gregorypenn/muColl-Taus/taus/MuColl-TauStudy/simulation/steer_sim_tau_gun_MAIA.py, /scratch/gregorypenn/lccontent/maia_Geometry/MAIA_versions/v1_jun27/detector-simulation/geometries/MAIA_v0
+when_to_transfer_output = ON_EXIT
+request_cpus = 1
+request_disk = 10GB
+request_memory = 10GB
++ProjectName="collab.futurecolliders"
+Executable = /scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/digitisation/k4run/digi.sh
+Arguments = "--inputFile $(sample)"
+#Queue sample from joblist.txt

@@ -102,15 +102,17 @@ LCIOWriter_all.Parameters = {
                              "DropCollectionNames": ["VBTrackerHits", "VBTrackerHitsRelations", "VETrackerHits", "VETrackerHitsRelations", "VertexBarrelCollection", "VertexEndcapCollection",
                                                       "IBTrackerHits", "IBTrackerHitsRelations", "InnerTrackerBarrelCollection", "IETrackerHits", "IETrackerHitsRelations", "InnerTrackerEndcapCollection",
                                                       "OBTrackerHits", "OBTrackerHitsRelations", "OuterTrackerBarrelCollection", "OETrackerHits", "OETrackerHitsRelations", "OuterTrackerEndcapCollection",
-                                                    #   "EcalBarrelCollectionDigi","EcalBarrelRelationsSimDigi", "EcalBarrelCollectionRec", "EcalBarrelRelationsSimRec", 
-                                                    #   "EcalEndcapCollectionDigi","EcalEndcapRelationsSimDigi", "EcalEndcapCollectionRec", "EcalEndcapRelationsSimRec", 
-                                                    #   "HcalBarrelCollectionDigi","HcalBarrelRelationsSimDigi", "HcalBarrelCollectionRec", "HcalBarrelRelationsSimRec", 
-                                                    #   "HcalEndcapCollectionDigi","HcalEndcapRelationsSimDigi", "HcalEndcapCollectionRec", "HcalEndcapRelationsSimRec", 
+                                                      "EcalBarrelCollectionDigi","EcalBarrelRelationsSimDigi", "EcalBarrelCollectionRec", "EcalBarrelRelationsSimRec", 
+                                                      "EcalEndcapCollectionDigi","EcalEndcapRelationsSimDigi", "EcalEndcapCollectionRec", "EcalEndcapRelationsSimRec", 
+                                                      "HcalBarrelCollectionDigi","HcalBarrelRelationsSimDigi", "HcalBarrelCollectionRec", "HcalBarrelRelationsSimRec", 
+                                                      "HcalEndcapCollectionDigi","HcalEndcapRelationsSimDigi", "HcalEndcapCollectionRec", "HcalEndcapRelationsSimRec", 
                                                     #   "HcalRingCollectionDigi","HcalRingRelationsSimDigi", "HcalRingCollectionRec", "HcalRingRelationsSimRec", 
                                                       ],
                              "DropCollectionTypes": [],
                              "FullSubsetCollections": [],
                              "KeepCollectionNames": ["VBTrackerHitsConed", "IBTrackerHitsConed", "OBTrackerHitsConed", "VETrackerHitsConed", "IETrackerHitsConed", "OETrackerHitsConed", 
+                                                     "EcalBarrelCollectionSel", "EcalBarrelRelationsSimSel",
+                                                     "EcalEndcapCollectionSel", "EcalEndcapRelationsSimSel",
                                                     #  "EcalBarrelCollectionConed", "EcalBarrelRelationsSimConed",
                                                     #  "EcalEndcapCollectionConed", "EcalEndcapRelationsSimConed", 
                                                     #  "EcalPlugCollectionConed", "EcalPlugRelationsSimConed",
@@ -118,7 +120,7 @@ LCIOWriter_all.Parameters = {
                                                     #  "HcalEndcapCollectionConed", "HcalEndcapRelationsSimConed", 
                                                     #  "HcalRingCollectionConed", "HcalRingRelationsSimConed",
                                                      ],
-                             "LCIOOutputFile": ["output_digi_onlyConedTrackerHits.slcio"],
+                             "LCIOOutputFile": ["output_digi.slcio"],
                              "LCIOWriteMode": ["WRITE_NEW"]
                              }
 
@@ -254,8 +256,8 @@ VXDBarrelConer.Parameters = {
     "TrackerHitOutputCollections": ["VBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["VertexBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["VBTrackerHitsRelationsConed"],
-    "DeltaRCut": ["0.4"], 
-    "FillHistograms": ["true"]
+    "DeltaRCut": ["0.8"],
+    "FillHistograms": ["false"]
 }
 
 VXDEndcapConer = MarlinProcessorWrapper("VXDEndcapConer")
@@ -269,8 +271,8 @@ VXDEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["VETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["VertexEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["VETrackerHitsRelationsConed"],
-    "DeltaRCut": ["0.4"], 
-    "FillHistograms": ["true"]
+    "DeltaRCut": ["0.8"],
+    "FillHistograms": ["false"]
 }
 
 InnerPlanarConer = MarlinProcessorWrapper("InnerPlanarConer")
@@ -284,8 +286,8 @@ InnerPlanarConer.Parameters = {
     "TrackerHitOutputCollections": ["IBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["InnerTrackerBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["IBTrackerHitsRelationsConed"],
-    "DeltaRCut": ["0.4"], 
-    "FillHistograms": ["true"]
+    "DeltaRCut": ["0.8"],
+    "FillHistograms": ["false"]
 }
 
 InnerEndcapConer = MarlinProcessorWrapper("InnerEndcapConer")
@@ -299,8 +301,8 @@ InnerEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["IETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["InnerTrackerEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["IETrackerHitsRelationsConed"],
-    "DeltaRCut": ["0.4"], 
-    "FillHistograms": ["true"]
+    "DeltaRCut": ["0.8"],
+    "FillHistograms": ["false"]
 }
 
 OuterPlanarConer = MarlinProcessorWrapper("OuterPlanarConer")
@@ -314,8 +316,8 @@ OuterPlanarConer.Parameters = {
     "TrackerHitOutputCollections": ["OBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["OuterTrackerBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["OBTrackerHitsRelationsConed"],
-    "DeltaRCut": ["0.4"], 
-    "FillHistograms": ["true"]
+    "DeltaRCut": ["0.8"],
+    "FillHistograms": ["false"]
 }
 
 OuterEndcapConer = MarlinProcessorWrapper("OuterEndcapConer")
@@ -329,15 +331,15 @@ OuterEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["OETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["OuterTrackerEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["OETrackerHitsRelationsConed"],
-    "DeltaRCut": ["0.4"], 
-    "FillHistograms": ["true"]
+    "DeltaRCut": ["0.8"],
+    "FillHistograms": ["false"]
 }
 
 
-ECalBarrelDigi = MarlinProcessorWrapper("ECalBarrelDigi")
-ECalBarrelDigi.OutputLevel = INFO
-ECalBarrelDigi.ProcessorType = "RealisticCaloDigiSilicon"
-ECalBarrelDigi.Parameters = {
+MyEcalBarrelDigi = MarlinProcessorWrapper("MyEcalBarrelDigi")
+MyEcalBarrelDigi.OutputLevel = INFO
+MyEcalBarrelDigi.ProcessorType = "RealisticCaloDigiSilicon"
+MyEcalBarrelDigi.Parameters = {
     "CellIDLayerString": ["layer"],
     "calibration_mip": ["0.0001575"],
     "inputHitCollections": ["ECalBarrelCollection"],
@@ -353,57 +355,24 @@ ECalBarrelDigi.Parameters = {
     "elec_range_mip": ["15000"]
 }
 
-ECalBarrelReco = MarlinProcessorWrapper("ECalBarrelReco")
-ECalBarrelReco.OutputLevel = INFO
-ECalBarrelReco.ProcessorType = "RealisticCaloRecoSilicon"
-ECalBarrelReco.Parameters = {
-    "CellIDLayerString": ["layer"],
-    "calibration_factorsMipGev": ["0.00641222630095"],
-    "calibration_layergroups": ["41"],
+MyEcalBarrelReco = MarlinProcessorWrapper("MyEcalBarrelReco")
+MyEcalBarrelReco.OutputLevel = INFO
+MyEcalBarrelReco.ProcessorType = "RealisticCaloRecoSilicon"
+MyEcalBarrelReco.Parameters = {
+    #    "calibration_factorsMipGev": ["0.00641222630095"],
+    "calibration_factorsMipGev": ["0.0066150"], #used for v3
+    #"calibration_factorsMipGev": ["0.00826875"],
+    "calibration_layergroups": ["50"],
     "inputHitCollections": ["EcalBarrelCollectionDigi"],
     "inputRelationCollections": ["EcalBarrelRelationsSimDigi"],
     "outputHitCollections": ["EcalBarrelCollectionRec"],
     "outputRelationCollections": ["EcalBarrelRelationsSimRec"]
 }
 
-# Not sure these really exist?
-
-# ECalPlugDigi = MarlinProcessorWrapper("ECalPlugDigi")
-# ECalPlugDigi.OutputLevel = INFO
-# ECalPlugDigi.ProcessorType = "RealisticCaloDigiSilicon"
-# ECalPlugDigi.Parameters = {
-#     "CellIDLayerString": ["layer"],
-#     "calibration_mip": ["0.0001575"],
-#     "inputHitCollections": ["ECalPlugCollection"],
-#     "outputHitCollections": ["ECalPlugCollectionDigi"],
-#     "outputRelationCollections": ["ECalPlugRelationsSimDigi"],
-#     "threshold": ["5e-05"],
-#     "thresholdUnit": ["GeV"],
-#     "timingCorrectForPropagation": ["1"],
-#     "timingCut": ["1"],
-#     "timingResolution": ["0"],
-#     "timingWindowMax": ["10"],
-#     "timingWindowMin": ["-0.5"],
-#     "elec_range_mip": ["15000"]
-# }
-
-# ECalPlugReco = MarlinProcessorWrapper("ECalPlugReco")
-# ECalPlugReco.OutputLevel = INFO
-# ECalPlugReco.ProcessorType = "RealisticCaloRecoSilicon"
-# ECalPlugReco.Parameters = {
-#     "CellIDLayerString": ["layer"],
-#     "calibration_factorsMipGev": ["0.00641222630095"],
-#     "calibration_layergroups": ["41"],
-#     "inputHitCollections": ["ECalPlugCollectionDigi"],
-#     "inputRelationCollections": ["ECalPlugRelationsSimDigi"],
-#     "outputHitCollections": ["ECalPlugCollectionRec"],
-#     "outputRelationCollections": ["ECalPlugRelationsSimRec"]
-# }
-
-ECalEndcapDigi = MarlinProcessorWrapper("ECalEndcapDigi")
-ECalEndcapDigi.OutputLevel = INFO
-ECalEndcapDigi.ProcessorType = "RealisticCaloDigiSilicon"
-ECalEndcapDigi.Parameters = {
+MyEcalEndcapDigi = MarlinProcessorWrapper("MyEcalEndcapDigi")
+MyEcalEndcapDigi.OutputLevel = INFO
+MyEcalEndcapDigi.ProcessorType = "RealisticCaloDigiSilicon"
+MyEcalEndcapDigi.Parameters = {
     "CellIDLayerString": ["layer"],
     "calibration_mip": ["0.0001575"],
     "inputHitCollections": ["ECalEndcapCollection"],
@@ -419,25 +388,27 @@ ECalEndcapDigi.Parameters = {
     "elec_range_mip": ["15000"]
 }
 
-ECalEndcapReco = MarlinProcessorWrapper("ECalEndcapReco")
-ECalEndcapReco.OutputLevel = INFO
-ECalEndcapReco.ProcessorType = "RealisticCaloRecoSilicon"
-ECalEndcapReco.Parameters = {
+MyEcalEndcapReco = MarlinProcessorWrapper("MyEcalEndcapReco")
+MyEcalEndcapReco.OutputLevel = INFO
+MyEcalEndcapReco.ProcessorType = "RealisticCaloRecoSilicon"
+MyEcalEndcapReco.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_factorsMipGev": ["0.00641222630095"],
-    "calibration_layergroups": ["41"],
+    #    "calibration_factorsMipGev": ["0.00641222630095"],
+    "calibration_factorsMipGev": ["0.0066150"], #used for v3
+    #"calibration_factorsMipGev": ["0.00826875"],
+    "calibration_layergroups": ["50"],
     "inputHitCollections": ["EcalEndcapCollectionDigi"],
     "inputRelationCollections": ["EcalEndcapRelationsSimDigi"],
     "outputHitCollections": ["EcalEndcapCollectionRec"],
     "outputRelationCollections": ["EcalEndcapRelationsSimRec"]
 }
 
-HCalBarrelDigi = MarlinProcessorWrapper("HCalBarrelDigi")
-HCalBarrelDigi.OutputLevel = INFO
-HCalBarrelDigi.ProcessorType = "RealisticCaloDigiScinPpd"
-HCalBarrelDigi.Parameters = {
+MyHcalBarrelDigi = MarlinProcessorWrapper("MyHcalBarrelDigi")
+MyHcalBarrelDigi.OutputLevel = INFO
+MyHcalBarrelDigi.ProcessorType = "RealisticCaloDigiScinPpd"
+MyHcalBarrelDigi.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_mip": ["0.0004925"],
+    "calibration_mip": ["0.0004725"],
     "inputHitCollections": ["HCalBarrelCollection"],
     "outputHitCollections": ["HcalBarrelCollectionDigi"],
     "outputRelationCollections": ["HcalBarrelRelationsSimDigi"],
@@ -445,21 +416,22 @@ HCalBarrelDigi.Parameters = {
     "ppd_npix": ["2000"],
     "ppd_npix_uncert": ["0"],
     "ppd_pix_spread": ["0"],
-    "threshold": ["2.5e-04"],
-    "thresholdUnit": ["GeV"],
-    #"timingCorrectForPropagation": ["1"],
+    "threshold": ["0.5"],
+    "thresholdUnit": ["MIP"],
+    "timingCorrectForPropagation": ["1"],
     "timingCut": ["1"],
-    #"timingResolution": ["0"],
-    #"timingWindowMax": ["10"],
-    #"timingWindowMin": ["-0.5"]
+    "timingResolution": ["0"],
+    "timingWindowMax": ["10"],
+    "timingWindowMin": ["-0.5"]
 }
 
-HCalBarrelReco = MarlinProcessorWrapper("HCalBarrelReco")
-HCalBarrelReco.OutputLevel = INFO
-HCalBarrelReco.ProcessorType = "RealisticCaloRecoScinPpd"
-HCalBarrelReco.Parameters = {
+MyHcalBarrelReco = MarlinProcessorWrapper("MyHcalBarrelReco")
+MyHcalBarrelReco.OutputLevel = INFO
+MyHcalBarrelReco.ProcessorType = "RealisticCaloRecoScinPpd"
+MyHcalBarrelReco.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_factorsMipGev": ["0.0287783798145"],
+    #    "calibration_factorsMipGev": ["0.0287783798145"],
+    "calibration_factorsMipGev": ["0.024625"],
     "calibration_layergroups": ["100"],
     "inputHitCollections": ["HcalBarrelCollectionDigi"],
     "inputRelationCollections": ["HcalBarrelRelationsSimDigi"],
@@ -469,10 +441,10 @@ HCalBarrelReco.Parameters = {
     "ppd_npix": ["2000"]
 }
 
-HCalEndcapDigi = MarlinProcessorWrapper("HCalEndcapDigi")
-HCalEndcapDigi.OutputLevel = INFO
-HCalEndcapDigi.ProcessorType = "RealisticCaloDigiScinPpd"
-HCalEndcapDigi.Parameters = {
+MyHcalEndcapDigi = MarlinProcessorWrapper("MyHcalEndcapDigi")
+MyHcalEndcapDigi.OutputLevel = INFO
+MyHcalEndcapDigi.ProcessorType = "RealisticCaloDigiScinPpd"
+MyHcalEndcapDigi.Parameters = {
     "CellIDLayerString": ["layer"],
     "calibration_mip": ["0.0004725"],
     "inputHitCollections": ["HCalEndcapCollection"],
@@ -482,21 +454,22 @@ HCalEndcapDigi.Parameters = {
     "ppd_npix": ["2000"],
     "ppd_npix_uncert": ["0"],
     "ppd_pix_spread": ["0"],
-    "threshold": ["2.5e-04"],
-    "thresholdUnit": ["GeV"],
-    #"timingCorrectForPropagation": ["1"],
+    "threshold": ["0.5"],
+    "thresholdUnit": ["MIP"],
+    "timingCorrectForPropagation": ["1"],
     "timingCut": ["1"],
-    #"timingResolution": ["0"],
-    #"timingWindowMax": ["10"],
-    #"timingWindowMin": ["-0.5"]
+    "timingResolution": ["0"],
+    "timingWindowMax": ["10"],
+    "timingWindowMin": ["-0.5"]
 }
 
-HCalEndcapReco = MarlinProcessorWrapper("HCalEndcapReco")
-HCalEndcapReco.OutputLevel = INFO
-HCalEndcapReco.ProcessorType = "RealisticCaloRecoScinPpd"
-HCalEndcapReco.Parameters = {
+MyHcalEndcapReco = MarlinProcessorWrapper("MyHcalEndcapReco")
+MyHcalEndcapReco.OutputLevel = INFO
+MyHcalEndcapReco.ProcessorType = "RealisticCaloRecoScinPpd"
+MyHcalEndcapReco.Parameters = {
     "CellIDLayerString": ["layer"],
-    "calibration_factorsMipGev": ["0.0285819096797"],
+    #   "calibration_factorsMipGev": ["0.0285819096797"],
+    "calibration_factorsMipGev": ["0.024625"],
     "calibration_layergroups": ["100"],
     "inputHitCollections": ["HcalEndcapCollectionDigi"],
     "inputRelationCollections": ["HcalEndcapRelationsSimDigi"],
@@ -505,45 +478,6 @@ HCalEndcapReco.Parameters = {
     "ppd_mipPe": ["15"],
     "ppd_npix": ["2000"]
 }
-
-# Not sure these actually exist?
-
-# HCalRingDigi = MarlinProcessorWrapper("HCalRingDigi")
-# HCalRingDigi.OutputLevel = INFO
-# HCalRingDigi.ProcessorType = "RealisticCaloDigiScinPpd"
-# HCalRingDigi.Parameters = {
-#     "CellIDLayerString": ["layer"],
-#     "calibration_mip": ["0.0004725"],
-#     "inputHitCollections": ["HCalRingCollection"],
-#     "outputHitCollections": ["HCalRingCollectionDigi"],
-#     "outputRelationCollections": ["HCalRingRelationsSimDigi"],
-#     "ppd_mipPe": ["15"],
-#     "ppd_npix": ["2000"],
-#     "ppd_npix_uncert": ["0"],
-#     "ppd_pix_spread": ["0"],
-#     "threshold": ["2.5e-04"],
-#     "thresholdUnit": ["GeV"],
-#     #"timingCorrectForPropagation": ["1"],
-#     "timingCut": ["1"],
-#     #"timingResolution": ["0"],
-#     #"timingWindowMax": ["10"],
-#     #"timingWindowMin": ["-0.5"]
-# }
-
-# HCalRingReco = MarlinProcessorWrapper("HCalRingReco")
-# HCalRingReco.OutputLevel = INFO
-# HCalRingReco.ProcessorType = "RealisticCaloRecoScinPpd"
-# HCalRingReco.Parameters = {
-#     "CellIDLayerString": ["layer"],
-#     "calibration_factorsMipGev": ["0.0285819096797"],
-#     "calibration_layergroups": ["100"],
-#     "inputHitCollections": ["HCalRingCollectionDigi"],
-#     "inputRelationCollections": ["HCalRingRelationsSimDigi"],
-#     "outputHitCollections": ["HCalRingCollectionRec"],
-#     "outputRelationCollections": ["HCalRingRelationsSimRec"],
-#     "ppd_mipPe": ["15"],
-#     "ppd_npix": ["2000"]
-# }
 
 MyEcalBarrelConer = MarlinProcessorWrapper("MyEcalBarrelConer")
 MyEcalBarrelConer.OutputLevel = INFO
@@ -569,19 +503,6 @@ MyEcalEndcapConer.Parameters = {
     "ConeWidth": ["0.4"]
 }
 
-# MyEcalPlugConer = MarlinProcessorWrapper("MyEcalPlugConer")
-# MyEcalPlugConer.OutputLevel = INFO
-# MyEcalPlugConer.ProcessorType = "CaloConer"
-# MyEcalPlugConer.Parameters = {
-#     "MCParticleCollectionName": ["MCParticle"],
-#     "CaloHitCollectionName": ["EcalPlugCollectionRec"],
-#     "CaloRelationCollectionName": ["EcalPlugRelationsSimRec"],
-#     "GoodHitCollection": ["EcalPlugCollectionConed"],
-#     "GoodRelationCollection": ["EcalPlugRelationsSimConed"],
-#     "ConeWidth": ["0.4"]
-# }
-
-
 MyHcalBarrelConer = MarlinProcessorWrapper("MyHcalBarrelConer")
 MyHcalBarrelConer.OutputLevel = INFO
 MyHcalBarrelConer.ProcessorType = "CaloConer"
@@ -606,51 +527,43 @@ MyHcalEndcapConer.Parameters = {
     "ConeWidth": ["0.4"]
 }
 
-# MyHcalRingConer = MarlinProcessorWrapper("MyHcalRingConer")
-# MyHcalRingConer.OutputLevel = INFO
-# MyHcalRingConer.ProcessorType = "CaloConer"
-# MyHcalRingConer.Parameters = {
-#     "MCParticleCollectionName": ["MCParticle"],
-#     "CaloHitCollectionName": ["HcalRingCollectionRec"],
-#     "CaloRelationCollectionName": ["HcalRingRelationsSimRec"],
-#     "GoodHitCollection": ["HcalRingCollectionConed"],
-#     "GoodRelationCollection": ["HcalRingRelationsSimConed"],
-#     "ConeWidth": ["0.4"]
-# }
+MyEcalBarrelSelector = MarlinProcessorWrapper("MyEcalBarrelSelector")
+MyEcalBarrelSelector.OutputLevel = INFO
+MyEcalBarrelSelector.ProcessorType = "CaloHitSelector"
+MyEcalBarrelSelector.Parameters = {
+    "CaloHitCollectionName": ["EcalBarrelCollectionConed"],
+    "CaloRelationCollectionName": ["EcalBarrelRelationsSimConed"],
+    "GoodHitCollection": ["EcalBarrelCollectionSel"],
+    "GoodRelationCollection": ["EcalBarrelRelationsSimSel"],
+    "ThresholdsFilePath": ["/scratch/gregorypenn/MyBIBUtils/data/ECAL_Thresholds_10TeV.root"],
+    "Nsigma": ["0"],
+    "DoBIBsubtraction": ["false"]
+}
 
-MuonDigitiser = MarlinProcessorWrapper("MuonDigitiser")
-MuonDigitiser.OutputLevel = INFO
-MuonDigitiser.ProcessorType = "DDSimpleMuonDigi"
-MuonDigitiser.Parameters = {
-                            "CalibrMUON": ["70.1"],
-                            "MUONCollections": ["YokeBarrelCollection", "YokeEndcapCollection"],
-                            "MUONOutputCollection": ["MuonHits"],
-                            "MaxHitEnergyMUON": ["2.0"],
-                            "MuonThreshold": ["1e-06"],
-                            "RelationOutputCollection": ["MuonHitsRelations"]
-                            }
+MyEcalEndcapSelector = MarlinProcessorWrapper("MyEcalEndcapSelector")
+MyEcalEndcapSelector.OutputLevel = INFO
+MyEcalEndcapSelector.ProcessorType = "CaloHitSelector"
+MyEcalEndcapSelector.Parameters = {
+    "CaloHitCollectionName": ["EcalEndcapCollectionConed"],
+    "CaloRelationCollectionName": ["EcalEndcapRelationsSimConed"],
+    "GoodHitCollection": ["EcalEndcapCollectionSel"],
+    "GoodRelationCollection": ["EcalEndcapRelationsSimSel"],
+    "ThresholdsFilePath": ["/scratch/gregorypenn/MyBIBUtils/data/ECAL_Thresholds_10TeV.root"],
+    "Nsigma": ["0"],
+    "DoBIBsubtraction": ["false"]
+}
 
-FilterDL_VXDB = MarlinProcessorWrapper("FilterDL_VXDB")
-FilterDL_VXDB.OutputLevel = INFO
-FilterDL_VXDB.ProcessorType = "FilterDoubleLayerHits"
-FilterDL_VXDB.Parameters = {
-                            "DoubleLayerCuts": ["0", "1", "2.0", "35.0", "2", "3", "1.7", "18.0", "4", "5", "1.5", "10.0", "6", "7", "1.4", "6.5"],
-                            "FillHistograms": ["false"],
-                            "InputCollection": ["VXDBarrelHits"],
-                            "OutputCollection": ["VXDBarrelHits_DLFiltered"],
-                            "SubDetectorName": ["Vertex"]
-                            }
-
-FilterDL_VXDE = MarlinProcessorWrapper("FilterDL_VXDE")
-FilterDL_VXDE.OutputLevel = INFO
-FilterDL_VXDE.ProcessorType = "FilterDoubleLayerHits"
-FilterDL_VXDE.Parameters = {
-                            "DoubleLayerCuts": ["0", "1", "2.2", "8.0", "2", "3", "1.4", "2.8", "4", "5", "0.86", "0.7", "6", "7", "0.7", "0.3"],
-                            "FillHistograms": ["false"],
-                            "InputCollection": ["VXDEndcapHits"],
-                            "OutputCollection": ["VXDEndcapHits_DLFiltered"],
-                            "SubDetectorName": ["Vertex"]
-                            }
+MyDDSimpleMuonDigi = MarlinProcessorWrapper("MyDDSimpleMuonDigi")
+MyDDSimpleMuonDigi.OutputLevel = INFO
+MyDDSimpleMuonDigi.ProcessorType = "DDSimpleMuonDigi"
+MyDDSimpleMuonDigi.Parameters = {
+    "CalibrMUON": ["70.1"],
+    "MUONCollections": ["YokeBarrelCollection", "YokeEndcapCollection"],
+    "MUONOutputCollection": ["MUON"],
+    "MaxHitEnergyMUON": ["2.0"],
+    "MuonThreshold": ["1e-06"],
+    "RelationOutputCollection": ["RelationMuonHit"]
+}
 
 OverlayFull = MarlinProcessorWrapper("OverlayFull")
 OverlayFull.OutputLevel = WARNING
@@ -659,25 +572,23 @@ OverlayFull.Parameters = {
     "PathToMuPlus": [the_args.OverlayFullPathToMuPlus],
     "PathToMuMinus": [the_args.OverlayFullPathToMuMinus],
     "Collection_IntegrationTimes": [
-        "VertexBarrelCollection", "-0.5", "15.",
-        "VertexEndcapCollection", "-0.5", "15.",
-        "InnerTrackerBarrelCollection", "-0.5", "15.",
-        "InnerTrackerEndcapCollection", "-0.5", "15.",
-        "OuterTrackerBarrelCollection", "-0.5", "15.",
-        "OuterTrackerEndcapCollection", "-0.5", "15.",
+        "VertexBarrelCollection", "-0.18", "0.18",
+        "VertexEndcapCollection", "-0.18", "0.18",
+        "InnerTrackerBarrelCollection", "-0.36", "0.36",
+        "InnerTrackerEndcapCollection", "-0.36", "0.36",
+        "OuterTrackerBarrelCollection", "-0.36", "0.36",
+        "OuterTrackerEndcapCollection", "-0.36", "0.36",
         "ECalBarrelCollection", "-0.5", "15.",
-        "ECalPlugCollection", "-0.5", "15.",
         "ECalEndcapCollection", "-0.5", "15.",
         "HCalBarrelCollection", "-0.5", "15.",
         "HCalEndcapCollection", "-0.5", "15.",
-        "HCalRingCollection", "-0.5", "15.",
         "YokeBarrelCollection", "-0.5", "15.",
         "YokeEndcapCollection", "-0.5", "15."
     ],
     "IntegrationTimeMin": ["-0.5"],
     "MCParticleCollectionName": ["MCParticle"],
     "MergeMCParticles": ["false"],
-    "NumberBackground": [the_args.OverlayFullNumberBackground]
+    "NumberBackground": [the_args.OverlayFullNumberBackground] # default should be 1666
 }
 
 OverlayIP = MarlinProcessorWrapper("OverlayIP")
@@ -735,28 +646,19 @@ algList.append(InnerPlanarConer)
 algList.append(InnerEndcapConer)
 algList.append(OuterPlanarConer)
 algList.append(OuterEndcapConer)
-if the_args.doFilterDL:
-    algList.append(FilterDL_VXDB)
-    algList.append(FilterDL_VXDE)
-algList.append(ECalBarrelDigi)
-algList.append(ECalBarrelReco)
-# algList.append(ECalPlugDigi)
-# algList.append(ECalPlugReco)
-algList.append(ECalEndcapDigi)
-algList.append(ECalEndcapReco)
-algList.append(HCalBarrelDigi)
-algList.append(HCalBarrelReco)
-algList.append(HCalEndcapDigi)
-algList.append(HCalEndcapReco)
-# algList.append(HCalRingDigi)
-# algList.append(HCalRingReco)
-# algList.append(MyEcalBarrelConer)
-# algList.append(MyEcalEndcapConer)
-# algList.append(MyEcalPlugConer)
+algList.append(MyEcalBarrelDigi)
+algList.append(MyEcalBarrelReco)
+algList.append(MyEcalEndcapDigi)
+algList.append(MyEcalEndcapReco)
+algList.append(MyHcalBarrelDigi)
+algList.append(MyHcalBarrelReco)
+algList.append(MyHcalEndcapDigi)
+algList.append(MyHcalEndcapReco)
+algList.append(MyEcalBarrelConer)
+algList.append(MyEcalEndcapConer)
 # algList.append(MyHcalBarrelConer)
-# algList.append(MyHcalEndcapConer)
-# algList.append(MyHcalRingConer)
-algList.append(MuonDigitiser)
+algList.append(MyHcalEndcapConer)
+algList.append(MyDDSimpleMuonDigi)
 algList.append(LCIOWriter_all)
 #algList.append(LCIOWriter_light)
 
