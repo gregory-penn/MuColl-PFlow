@@ -13,6 +13,6 @@ request_cpus = 1
 request_disk = 5 GB
 request_memory = 5 GB
 +ProjectName="collab.futurecolliders"
-Executable = /scratch/gregorypenn/muColl-Taus/taus/MuColl-TauStudy/run_BIB/sim/condor/sim.sh
+Executable = /scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/condor_scripts/sim.sh
 Arguments = --inputFile $(sample)
 Queue sample from joblist.txt
