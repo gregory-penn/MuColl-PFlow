@@ -18,7 +18,7 @@ parser.add_argument('-i', '--inputFile', help='--inputFil input_reco.slcio',
 args = parser.parse_args()
 
 #print statements?
-DEBUG = False
+DEBUG = True
 
 # global vars for MAIA B-field and factor to express momentum in GeV
 BFIELD = 5.0 # Taking 5 T for MAIA and 3.57 T for MuColl_v1. 
@@ -111,6 +111,9 @@ for file in to_process:
     my_cluster = event.getCollection('PandoraClusters')
     my_pfos = event.getCollection('PandoraPFOs')
 
+    truthE = my_mcp.getEnergy()
+    print("truth MCP energy: " , truthE)
+
     n_ele = 0
     n_muon = 0
     n_photon = 0
@@ -163,9 +166,7 @@ for file in to_process:
 
     for pfo in pfos_close_to_MCP:
        pfo_type = pfo.getType()
-       if abs(pfo_type) == 211:
-          n_close_pion += 1
-       elif abs(pfo_type) == 11:
+       if abs(pfo_type) == 11:
           n_close_ele += 1
        elif abs(pfo_type) == 13:
           n_close_muon += 1
@@ -173,12 +174,25 @@ for file in to_process:
           n_close_photon += 1
        elif abs(pfo_type) == 2112:
           n_close_neutron += 1
+       elif abs(pfo_type) == 211:
+          n_close_pion += 1
+          if DEBUG:
+            print("Reco pion energy: ", pfo.getEnergy())
+            print("residual w.r.t. truth: ", (pfo.getEnergy() - truthE) / truthE)
+
+       # should be one cluster per PFO, but just in case, loop over
+          for pion_cls in pfo.getClusters():
+            cluster_E = pion_cls.getEnergy()
+
+            print("Calo E of reco pion: ", cluster_E)
+            print("Residual with truth E: ", (cluster_E - truthE) / truthE)
+          
        
-    print("Number of close reco electrons: ", n_close_ele)
-    print("Number of close reco muons: ", n_close_muon)
-    print("Number of close reco photons: ", n_close_photon)
-    print("Number of close reco pions: ", n_close_pion)
-    print("Number of close reco neutrons: ", n_close_neutron)    
+    # print("Number of close reco electrons: ", n_close_ele)
+    # print("Number of close reco muons: ", n_close_muon)
+    # print("Number of close reco photons: ", n_close_photon)
+    # print("Number of close reco pions: ", n_close_pion)
+    # print("Number of close reco neutrons: ", n_close_neutron)    
     print("\n")
 
 

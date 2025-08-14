@@ -3,6 +3,11 @@
 *.slcio
 *.log
 *.pkl
+*.txt
 *.root
+output.out*
+error.out*
+log.*
 run_BIB/*
 samples/*
+bibUtils/*
