@@ -8,6 +8,10 @@ import os
 
 from k4FWCore.parseArgs import parser
 
+
+parser.add_argument("--ThresholdsPath", type=str, default="0", help="Path to ECal thresholds")
+parser.add_argument("--PathtoMuPlus", type=str, default="0", help="Path to muplus BIB")
+parser.add_argument("--PathtoMuMinus", type=str, default="0", help="Path to muminus BIB")
 parser.add_argument("--enableBIB", action="store_true", default=False, help="Enable BIB overlay")
 parser.add_argument("--enableIP", action="store_true", default=False, help="Enable IP overlay")
 parser.add_argument("--TypeEvent", type=str, default="electronGun_pT_0_50", help="Type of event to process")
@@ -24,7 +28,7 @@ parseConstants(CONSTANTS)
 
 read = LcioEvent()
 read.OutputLevel = INFO
-read.Files = ["/scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/samples/bib_v5_pions/sim/superSplit/split_sim_pions.0.slcio"]
+read.Files = [the_args.InFileName]
 algList.append(read)
 
 EventNumber = MarlinProcessorWrapper("EventNumber")
@@ -39,7 +43,7 @@ MyAIDAProcessor.OutputLevel = INFO
 MyAIDAProcessor.ProcessorType = "AIDAProcessor"
 MyAIDAProcessor.Parameters = {
 #    "FileName": ["lctuple_"+the_args.TypeEvent+"_actsseededckf_"+the_args.InFileName],
-    "FileName": ["lctuple"+"_actsseededckf_"+the_args.InFileName],
+    "FileName": [the_args.InFileName],
     "FileType": ["root"]
 }
 
@@ -603,7 +607,7 @@ MyEcalBarrelSelector.Parameters = {
     "CaloRelationCollectionName": ["EcalBarrelRelationsSimConed"],
     "GoodHitCollection": ["EcalBarrelCollectionSel"],
     "GoodRelationCollection": ["EcalBarrelRelationsSimSel"],
-    "ThresholdsFilePath": ["/scratch/gregorypenn/MyBIBUtils/data/ECAL_Thresholds_10TeV.root"],
+    "ThresholdsFilePath": [the_args.ThresholdsPath + "/ECAL_Thresholds_10TeV.root"],
     "Nsigma": ["0"],
     "DoBIBsubtraction": ["false"]
 }
@@ -616,7 +620,7 @@ MyEcalEndcapSelector.Parameters = {
     "CaloRelationCollectionName": ["EcalEndcapRelationsSimConed"],
     "GoodHitCollection": ["EcalEndcapCollectionSel"],
     "GoodRelationCollection": ["EcalEndcapRelationsSimSel"],
-    "ThresholdsFilePath": ["/scratch/gregorypenn/MyBIBUtils/data/ECAL_Thresholds_10TeV.root"],
+    "ThresholdsFilePath": [the_args.ThresholdsPath + "/ECAL_Thresholds_10TeV.root"],
     "Nsigma": ["0"],
     "DoBIBsubtraction": ["false"]
 }
@@ -825,8 +829,8 @@ OverlayMIX = MarlinProcessorWrapper("OverlayMIX")
 OverlayMIX.OutputLevel = INFO
 OverlayMIX.ProcessorType = "OverlayTimingRandomMix"
 OverlayMIX.Parameters = {
-    "PathToMuPlus": ["/scratch/gregorypenn/BIBCopy/mp_pruned/"],
-    "PathToMuMinus": ["/scratch/gregorypenn/BIBCopy/mm_pruned/"],
+    "PathToMuPlus": [the_args.PathtoMuPlus],
+    "PathToMuMinus": [the_args.PathtoMuMinus],
     "Collection_IntegrationTimes": [
         "VertexBarrelCollection", "-0.18", "0.18",
         "VertexEndcapCollection", "-0.18", "0.18",

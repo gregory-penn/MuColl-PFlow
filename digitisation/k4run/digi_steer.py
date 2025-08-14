@@ -26,6 +26,14 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    "--ThresholdsPath",
+    help="Path to files for ECal thresholds",
+    type=str,
+    default="/path/to/thresholds/",
+)
+
+
+parser.add_argument(
     "--OverlayFullNumberBackground",
     help="Number of background files used for BIB overlay",
     type=str,
@@ -535,7 +543,7 @@ MyEcalBarrelSelector.Parameters = {
     "CaloRelationCollectionName": ["EcalBarrelRelationsSimConed"],
     "GoodHitCollection": ["EcalBarrelCollectionSel"],
     "GoodRelationCollection": ["EcalBarrelRelationsSimSel"],
-    "ThresholdsFilePath": ["/scratch/gregorypenn/MyBIBUtils/data/ECAL_Thresholds_10TeV.root"],
+    "ThresholdsFilePath": [the_args.OverlayFullPathToMuMinus + "/ECAL_Thresholds_10TeV.root"],
     "Nsigma": ["0"],
     "DoBIBsubtraction": ["false"]
 }
@@ -548,7 +556,7 @@ MyEcalEndcapSelector.Parameters = {
     "CaloRelationCollectionName": ["EcalEndcapRelationsSimConed"],
     "GoodHitCollection": ["EcalEndcapCollectionSel"],
     "GoodRelationCollection": ["EcalEndcapRelationsSimSel"],
-    "ThresholdsFilePath": ["/scratch/gregorypenn/MyBIBUtils/data/ECAL_Thresholds_10TeV.root"],
+    "ThresholdsFilePath": [the_args.OverlayFullPathToMuMinus + "/ECAL_Thresholds_10TeV.root"],
     "Nsigma": ["0"],
     "DoBIBsubtraction": ["false"]
 }

@@ -11,6 +11,14 @@ echo "Geometry directory looks like: "
 ls -lthr MAIA_v0/
 echo "<<<<Exporting MAIA geometry"
 export MAIA_GEO=$PWD/MAIA_v0/MAIA_v0.xml
+echo "Setting up BIB utils"
+mkdir MyBIBUtils/build && cd MyBIBUtils/build
+cmake ..
+make
+export MARLIN_DLL=`readlink -e lib/libMyBIBUtils.so`:${MARLIN_DLL}
+cd ../..
+echo "check current directory"
+echo $PWD
 echo "<<<Check if we can find executables"
 which ddsim
 which Marlin
@@ -24,7 +32,7 @@ echo $SHARED
 echo "Checking that BIB sim files can be located"
 ls -lthr /ospool/uc-shared/public/futurecolliders/v5/simBIB/mm_pruned
 echo "Checking alternate path"
-ls -lthr /cvmfs/public-uc.osgstorage.org/futurecolliders/v5/simBIB/mm_pruned
+ls -lthr /cvmfs/public-uc.osgstorage.org/ospool/uc-shared/public/futurecolliders/v5/simBIB/
 
 # below was for debugging the failed hosts. Unsuccessful.
 # echo "Checking if DDG4 is present"
@@ -44,7 +52,7 @@ ls -lthr /cvmfs/public-uc.osgstorage.org/futurecolliders/v5/simBIB/mm_pruned
 # echo "Hail mary to update the path, in case that just works..."
 # export LD_LIBRARY_PATH=/opt/spack/opt/spack/linux-almalinux9-x86_64/gcc-11.5.0/qt-base-6.8.1-wgi77vuqvm66nbaej3sq6d6fjlewpn7n/lib:$LD_LIBRARY_PATH
 
-Initialize variables
+#Initialize variables
 input_file=""
 chunks=""
 n_events=""
@@ -67,8 +75,7 @@ done
 input_file_string=
 
 # Corrected command assignment
-command="k4run digi_steer.py --LcioEvent.Files split_gen_pions.${input_file}.slcio --outputFile split_sim_pions.${input_file}.slcio --numberOfEvents 50"
- ../../samples/bib_v5_pions/sim/superSplit/split_sim_pions.000.slcio --OverlayFullPathToMuPlus /ospool/uc-shared/public/futurecolliders/v5/simBIB/mp_pruned --OverlayFullPathToMuMinus /ospool/uc-shared/public/futurecolliders/v5/simBIB/mm_pruned --OverlayFullNumberBackground 1666 --doOverlayFull
+command="k4run digi_steer.py --LcioEvent.Files split_gen_pions.${input_file}.slcio --outputFile split_sim_pions.${input_file}.slcio --numberOfEvents 50 ../../samples/bib_v5_pions/sim/superSplit/split_sim_pions.000.slcio --OverlayFullPathToMuPlus /ospool/uc-shared/public/futurecolliders/v5/simBIB/mp_pruned --OverlayFullPathToMuMinus /ospool/uc-shared/public/futurecolliders/v5/simBIB/mm_pruned --OverlayFullNumberBackground 1666 --doOverlayFull"
 # Print or execute the constructed command
 echo "Command: $command"
 # Print the constructed command
