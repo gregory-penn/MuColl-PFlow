@@ -695,7 +695,7 @@ DDMarlinPandora.Parameters = {
     "NEventsToSkip": ["0"],
     "NOuterSamplingLayers": ["3"],
     "PFOCollectionName": ["PandoraPFOs"],
-    "PandoraSettingsXmlFile": ["PandoraSettings/PandoraSettings_Basic.xml"],
+    "PandoraSettingsXmlFile": ["PandoraSettings/PandoraSettingsDefault.xml"],
     "ProngVertexCollections": ["ProngVertices"],
     "ReachesECalBarrelTrackerOuterDistance": ["-100"],
     "ReachesECalBarrelTrackerZMaxDistance": ["-50"],
@@ -913,7 +913,7 @@ algList.append(OuterEndcapConer)
 algList.append(CKFTracking)
 algList.append(TrackDeduper)
 algList.append(Refit)
-#algList.append(MyTrackSelector)
+algList.append(MyTrackSelector)
 algList.append(MyTrackTruth)
 algList.append(MyEcalBarrelDigi)
 algList.append(MyEcalBarrelReco)
