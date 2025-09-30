@@ -16,6 +16,7 @@ parser.add_argument("--enableBIB", action="store_true", default=False, help="Ena
 parser.add_argument("--enableIP", action="store_true", default=False, help="Enable IP overlay")
 parser.add_argument("--TypeEvent", type=str, default="electronGun_pT_0_50", help="Type of event to process")
 parser.add_argument("--InFileName", type=str, default="0", help="Input file name for the simulation")
+parser.add_argument("--OutFileName", type=str, default="reco_output.slcio", help="Output file name for the simulation")
 the_args = parser.parse_args()
 
 algList = []
@@ -56,7 +57,7 @@ if not the_args.enableBIB:
         "DropCollectionNames": [],
         "FullSubsetCollections": [],
         "KeepCollectionNames": ["MCParticle_SiTracks_Refitted"],
-        "LCIOOutputFile": ["output_reco.slcio"],
+        "LCIOOutputFile": [the_args.OutFileName],
         "LCIOWriteMode": ["WRITE_NEW"]
     }
 else:
