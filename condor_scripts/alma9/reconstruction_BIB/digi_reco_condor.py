@@ -10,6 +10,7 @@ from k4FWCore.parseArgs import parser
 
 
 parser.add_argument("--ThresholdsPath", type=str, default="0", help="Path to ECal thresholds")
+parser.add_argument("--ACTSTrackingPath", type=str, default="ACTSTracking", help="Output file name for the simulation")
 parser.add_argument("--PathtoMuPlus", type=str, default="0", help="Path to muplus BIB")
 parser.add_argument("--PathtoMuMinus", type=str, default="0", help="Path to muminus BIB")
 parser.add_argument("--enableBIB", action="store_true", default=False, help="Enable BIB overlay")
@@ -313,7 +314,7 @@ CKFTracking.Parameters = {
     "CKF_NumMeasurementsCutOff": ["1"],
     "CaloFace_Radius": ["1857"],
     "CaloFace_Z": ["2307"],
-    "MatFile": ["ACTSTracking/data/MAIA_v0_material.json"],
+    "MatFile": [the_args.ACTSTrackingPath + "/data/MAIA_v0_material.json"],
     "PropagateBackward": ["False"],
     "DetectorSchema": ["MAIA_v0"],
     "RunCKF": ["True"],
@@ -344,8 +345,8 @@ CKFTracking.Parameters = {
                       "8", "2",
                       "17", "2",
                       "18", "2"],
-    "TGeoFile": ["ACTSTracking/data/MAIA_v0.root"],
-    "TGeoDescFile": ["ACTSTracking/data/MAIA_v0.json"],
+    "TGeoFile": [the_args.ACTSTrackingPath + "/data/MAIA_v0.root"],
+    "TGeoDescFile": [the_args.ACTSTrackingPath + "/data/MAIA_v0.json"],
     "TrackCollectionName": ["AllTracks"],
     "TrackerHitCollectionNames": ["VBTrackerHitsConed", "IBTrackerHitsConed", "OBTrackerHitsConed", "VETrackerHitsConed", "IETrackerHitsConed", "OETrackerHitsConed"]
 }

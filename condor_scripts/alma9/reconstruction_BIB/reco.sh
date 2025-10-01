@@ -57,7 +57,7 @@ done
 input_file_string=
 
 # Corrected command assignment
-command="k4run digi_reco_condor.py --InFileName ${input_file} --ThresholdsPath MyBIBUtils/data/ --enableBIB --PathtoMuPlus ${pathToBIBTemp}/pruned_mp --PathtoMuMinus ${pathToBIBTemp}/pruned_mm --OutFileName reco_${input_file}"
+command="k4run digi_reco_condor.py --InFileName ${input_file} --ACTSTrackingPath ACTSTracking/ --ThresholdsPath MyBIBUtils/data/ --enableBIB --PathtoMuPlus ${pathToBIBTemp}/pruned_mp --PathtoMuMinus ${pathToBIBTemp}/pruned_mm --OutFileName reco_${input_file}"
 
 # Print the constructed command
 echo "Executing command: $command"
