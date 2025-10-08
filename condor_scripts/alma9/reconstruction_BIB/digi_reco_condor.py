@@ -632,6 +632,38 @@ MyEcalEndcapSelector.Parameters = {
     "DoBIBsubtraction": ["false"]
 }
 
+MyHcalBarrelSelector = MarlinProcessorWrapper("MyHcalBarrelSelector")
+MyHcalBarrelSelector.OutputLevel = INFO
+MyHcalBarrelSelector.ProcessorType = "CaloHitSelector"
+MyHcalBarrelSelector.Parameters = {
+    "CaloHitCollectionName": ["HcalBarrelCollectionConed"],
+    "CaloRelationCollectionName": ["HcalBarrelRelationsSimConed"],
+    "GoodHitCollection": ["HcalBarrelCollectionSel"],
+    "GoodRelationCollection": ["HcalBarrelRelationsSimSel"],
+    "ThresholdsFilePath": [the_args.ThresholdsPath + "/HCAL_Thresholds_10TeV.root"],
+    "FlatThreshold": ["5e-05"],
+    "Nsigma": ["0"],
+    "TimeWindowMin": ["-0.3"],
+    "TimeWindowMax": ["0.3"],
+    "DoBIBsubtraction": ["false"]
+}
+
+MyHcalEndcapSelector = MarlinProcessorWrapper("MyHcalEndcapSelector")
+MyHcalEndcapSelector.OutputLevel = INFO
+MyHcalEndcapSelector.ProcessorType = "CaloHitSelector"
+MyHcalEndcapSelector.Parameters = {
+    "CaloHitCollectionName": ["HcalEndcapCollectionConed"],
+    "CaloRelationCollectionName": ["HcalEndcapRelationsSimConed"],
+    "GoodHitCollection": ["HcalEndcapCollectionSel"],
+    "GoodRelationCollection": ["HcalEndcapRelationsSimSel"],
+    "ThresholdsFilePath": [the_args.ThresholdsPath + "/HCAL_Thresholds_10TeV.root"],
+    "FlatThreshold": ["5e-05"],
+    "Nsigma": ["0"],
+    "TimeWindowMin": ["-0.3"],
+    "TimeWindowMax": ["0.3"],
+    "DoBIBsubtraction": ["false"]
+}
+
 DDMarlinPandora = MarlinProcessorWrapper("DDMarlinPandora")
 DDMarlinPandora.OutputLevel = INFO
 DDMarlinPandora.ProcessorType = "DDPandoraPFANewProcessor"
@@ -937,6 +969,8 @@ algList.append(MyHcalBarrelConer)
 algList.append(MyHcalEndcapConer)
 algList.append(MyEcalBarrelSelector)
 algList.append(MyEcalEndcapSelector)
+algList.append(MyHcalBarrelSelector)
+algList.append(MyHcalEndcapSelector)
 algList.append(MyDDSimpleMuonDigi)
 algList.append(DDMarlinPandora)
 # algList.append(FastJetProcessor)
