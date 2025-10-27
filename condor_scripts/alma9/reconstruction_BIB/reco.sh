@@ -30,14 +30,14 @@ echo $PUBLIC
 echo "Checking if SHARED is set"
 echo $SHARED
 echo "Checking that BIB files are found"
-ls -lthr /cvmfs/public-uc.osgstorage.org/ospool/uc-shared/public/futurecolliders/gregorypenn/BIB_v5/
+ls -lthr /cvmfs/public-uc.osgstorage.org/ospool/uc-shared/public/futurecolliders/gregorypenn/BIB_v7/
 
 #Initialize variables
 input_file=""
 chunks=""
 n_events=""
 
-pathToBIBTemp="/cvmfs/public-uc.osgstorage.org/ospool/uc-shared/public/futurecolliders/gregorypenn/BIB_v5/"
+pathToBIBTemp="/cvmfs/public-uc.osgstorage.org/ospool/uc-shared/public/futurecolliders/gregorypenn/BIB_v7/"
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -57,7 +57,7 @@ done
 input_file_string=
 
 # Corrected command assignment
-command="k4run digi_reco_condor.py --InFileName ${input_file} --ACTSTrackingPath ACTSTracking/ --ThresholdsPath MyBIBUtils/data/ --enableBIB --PathtoMuPlus ${pathToBIBTemp}/pruned_mp --PathtoMuMinus ${pathToBIBTemp}/pruned_mm --OutFileName reco_${input_file}"
+command="k4run digi_reco_condor.py --InFileName ${input_file} --ACTSTrackingPath ACTSTracking/ --ThresholdsPath MyBIBUtils/data/ --enableBIB --PathtoMuPlus ${pathToBIBTemp}/sim_mp_pruned --PathtoMuMinus ${pathToBIBTemp}/sim_mm_pruned --OutFileName reco_${input_file}"
 
 # Print the constructed command
 echo "Executing command: $command"
