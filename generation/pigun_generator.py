@@ -59,8 +59,8 @@ elif (charge_str.casefold() == "minus"):
 lifetime = 2.6033e-8 * s
 
 # bounds on theta
-theta_min = 10.0 * deg 
-theta_max = 170.0 * deg
+theta_min = 8.0 * deg 
+theta_max = 172.0 * deg
 
 # =================================================
 
@@ -74,37 +74,21 @@ for j in range(0, nevt):
     
     # --------- generate particle properties ----------
     
-    # uncomment below for gun flat in energy
+    #below is for flat in pT
 
-    E = random.uniform(1., 1000.) #flat in E between 1 GeV and 1 TeV
+    pt = random.uniform(10., 1000.) #flat in E between 10 GeV and 1 TeV
+
+    # I want theta and phi to be flat. Solve for px and py to enforce phi flatness.
 
     phi = random.random() * np.pi * 2.0  # flat in phi
     
     theta = random.uniform(theta_min, theta_max) # flat in theta
 
-    p = np.sqrt(E**2 - mass**2)
-
-    px = p * np.sin(theta) * np.cos(phi)
-    py = p * np.sin(theta) * np.sin(phi)
-    pz = p * np.cos(theta)
-
-    momentum = array("f", [px, py, pz])
-
-    #below is for flat in pT
-
-    #pt = 50. #GeV
-
-    # I want theta and phi to be flat. Solve for px and py to enforce phi flatness.
-
-    # phi = random.random() * np.pi * 2.0  # flat in phi
-    
-    # theta = random.uniform(theta_min, theta_max) # flat in theta
-
-    # px = pt * np.cos(phi)
-    # py = pt * np.sin(phi)
+    px = pt * np.cos(phi)
+    py = pt * np.sin(phi)
 
     # defining pz such that theta is uniform between 10 and 170 degrees
-    # pz = pt / np.tan(theta)
+    pz = pt / np.tan(theta)
 
     #calculate p then E
     p = np.sqrt(px**2 + py**2 + pz**2)
