@@ -2,83 +2,81 @@ import os
 
 from DDSim.DD4hepSimulation import DD4hepSimulation
 from g4units import mm, GeV, MeV, m, deg
-from numpy import random
 SIM = DD4hepSimulation()
 
-## Path to the compact geometry description [XML file]
+# The compact XML file
 SIM.compactFile = os.environ.get('MAIA_GEO')
-## Lorentz boost for the crossing angle [radian]
+# Lorentz boost for the crossing angle, in radian!
 SIM.crossingAngleBoost = 0.
 SIM.enableDetailedShowerMode = True
 SIM.enableG4GPS = False
 SIM.enableG4Gun = False
 SIM.enableGun = False
-## InputFiles for simulation .stdhep, .slcio, .HEPEvt, .hepevt, .hepmc files are supported
+# InputFiles for simulation .stdhep, .slcio, .HEPEvt, .hepevt, .hepmc files are supported
 SIM.inputFiles = "output_gen.slcio" #generated from lcio_tau_gun.py
 ## Macro file to execute for runType 'run' or 'vis'
+# Macro file to execute for runType 'run' or 'vis'
 SIM.macroFile = []
-## number of events to simulate, used in batch mode
-SIM.numberOfEvents = 100
-## Outputfile from the simulation,only lcio output is supported
+# number of events to simulate, used in batch mode
+SIM.numberOfEvents = 10
+# Outputfile from the simulation,only lcio output is supported
+# SIM.outputFile = "out/digi/sim_mod1_mumu2H2bb750.slcio"
 SIM.outputFile = "output_sim.slcio"
-## Verbosity use integers from 1 (most) to 7 (least) verbose
-## or strings: VERBOSE, DEBUG, INFO, WARNING, ERROR, FATAL, ALWAYS
+# SIM.outputFile = "out/sim_mod1_mcparticles.slcio"
+# Verbosity use integers from 1(most) to 7(least) verbose
+# or strings: VERBOSE, DEBUG, INFO, WARNING, ERROR, FATAL, ALWAYS
 SIM.printLevel = 3
-## The type of action to do in this invocation
-## batch: just simulate some events, needs numberOfEvents, and input file or gun
-## vis: enable visualisation, run the macroFile if it is set
-## run: run the macroFile and exit
-## shell: enable interactive session
+# The type of action to do in this invocation
+# batch: just simulate some events, needs numberOfEvents, and input file or gun
+# vis: enable visualisation, run the macroFile if it is set
+# run: run the macroFile and exit
+# shell: enable interactive session
 SIM.runType = "batch"
-## Skip first N events when reading a file
+# Skip first N events when reading a file
 SIM.skipNEvents = 0
-## Steering file to change default behaviour
+# Steering file to change default behaviour
 SIM.steeringFile = None
-## FourVector of translation for the Smearing of the Vertex position: x y z t
+# FourVector of translation for the Smearing of the Vertex position: x y z t
 SIM.vertexOffset = [0.0, 0.0, 0.0, 0.0]
-## FourVector of the Sigma for the Smearing of the Vertex position: x y z t
-#TODO: Ask why vertexSigma is changed from a list of zeroes (and if it correctly is picking up "mm")
-SIM.vertexSigma = [0.001 * mm, 0.001 * mm, 0.001 * mm, 0.001 * mm]
+# FourVector of the Sigma for the Smearing of the Vertex position: x y z t
+SIM.vertexSigma = [0.0, 0.0, 0.0, 0.0]
 
 
 ################################################################################
-## Action holding sensitive detector actions
-##   The default tracker and calorimeter actions can be set with
-## 
-##   >>> SIM = DD4hepSimulation()
-##   >>> SIM.action.tracker = "Geant4TrackerAction"
-##   >>> SIM.action.calo    = "Geant4CalorimeterAction"
-## 
-##   for specific subdetectors specific sensitive detectors can be set based on pattern matching
-## 
-##   >>> SIM = DD4hepSimulation()
-##   >>> SIM.action.mapActions['tpc'] = "TPCSDAction"
-## 
-##   and additional parameters for the sensitive detectors can be set when the map is given a tuple
-## 
-##   >>> SIM = DD4hepSimulation()
-##   >>> SIM.action.mapActions['ecal'] =( "CaloPreShowerSDAction", {"FirstLayerNumber": 1} )
-## 
-##    
+# Action holding sensitive detector actions
+# The default tracker and calorimeter actions can be set with
+##
+# >>> SIM = DD4hepSimulation()
+# >>> SIM.action.tracker = "Geant4TrackerAction"
+# >>> SIM.action.calo    = "Geant4CalorimeterAction"
+##
+# for specific subdetectors specific sensitive detectors can be set based on pattern matching
+##
+# >>> SIM = DD4hepSimulation()
+# >>> SIM.action.mapActions['tpc'] = "TPCSDAction"
+##
+# and additional parameters for the sensitive detectors can be set when the map is given a tuple
+##
+# >>> SIM = DD4hepSimulation()
+# >>> SIM.action.mapActions['ecal'] =( "CaloPreShowerSDAction", {"FirstLayerNumber": 1} )
+##
+##
 ################################################################################
 
-##  set the default tracker action 
-SIM.action.tracker = "Geant4TrackerWeightedAction" 
+# set the default tracker action
+SIM.action.tracker = "Geant4TrackerWeightedAction"
 
-##  set the default calorimeter action 
+# set the default calorimeter action
 SIM.action.calo = "Geant4ScintillatorCalorimeterAction"
 
-##  create a map of patterns and actions to be applied to sensitive detectors
-##         example: SIM.action.mapActions['tpc'] = "TPCSDAction" 
+# create a map of patterns and actions to be applied to sensitive detectors
+# example: SIM.action.mapActions['tpc'] = "TPCSDAction"
 SIM.action.mapActions = {}
 
 
 ################################################################################
-## Configuration for the magnetic field (stepper) 
+# Configuration for the magnetic field (stepper)
 ################################################################################
-
-# TODO: Verify that this doesn't need to be changed for MAIA... 
-# It looks like just input parameters to an algorithm to me
 SIM.field.delta_chord = 0.25*mm
 SIM.field.delta_intersection = 0.001*mm
 SIM.field.delta_one_step = 0.01*mm
@@ -91,156 +89,153 @@ SIM.field.stepper = "ClassicalRK4"
 
 
 ################################################################################
-## Configuration for sensitive detector filters
-## 
-##   Set the default filter for tracker or caliromter
-##   >>> SIM.filter.tracker = "edep1kev"
-##   >>> SIM.filter.calo = ""
-## 
-##   Assign a filter to a sensitive detector via pattern matching
-##   >>> SIM.filter.mapDetFilter['FTD'] = "edep1kev"
-## 
-##   Or more than one filter:
-##   >>> SIM.filter.mapDetFilter['FTD'] = ["edep1kev", "geantino"]
-## 
-##   Don't use the default filter or anything else:
-##   >>> SIM.filter.mapDetFilter['TPC'] = None ## or "" or []
-## 
-##   Create a custom filter. The dictionary is used to instantiate the filter later on
-##   >>> SIM.filter.filters['edep3kev'] = dict(name="EnergyDepositMinimumCut/3keV", parameter={"Cut": 3.0*keV} )
-## 
-##    
+# Configuration for sensitive detector filters
+##
+# Set the default filter for tracker or caliromter
+# >>> SIM.filter.tracker = "edep1kev"
+# >>> SIM.filter.calo = ""
+##
+# Assign a filter to a sensitive detector via pattern matching
+# >>> SIM.filter.mapDetFilter['FTD'] = "edep1kev"
+##
+# Or more than one filter:
+# >>> SIM.filter.mapDetFilter['FTD'] = ["edep1kev", "geantino"]
+##
+# Don't use the default filter or anything else:
+# >>> SIM.filter.mapDetFilter['TPC'] = None ## or "" or []
+##
+# Create a custom filter. The dictionary is used to instantiate the filter later on
+# >>> SIM.filter.filters['edep3kev'] = dict(name="EnergyDepositMinimumCut/3keV", parameter={"Cut": 3.0*keV} )
+##
+##
 ################################################################################
 
-##  default filter for calorimeter sensitive detectors; this is applied if no other filter is used for a calorimeter 
+# default filter for calorimeter sensitive detectors; this is applied if no other filter is used for a calorimeter
 SIM.filter.calo = "edep0"
 
-##  list of filter objects: map between name and parameter dictionary 
-SIM.filter.filters = {'edep0': {'parameter': {'Cut': 0.0}, 'name': 'EnergyDepositMinimumCut/Cut0'}, 'geantino': {'parameter': {}, 'name': 'GeantinoRejectFilter/GeantinoRejector'}, 'edep1kev': {'parameter': {'Cut': 0.001}, 'name': 'EnergyDepositMinimumCut'}}
+# list of filter objects: map between name and parameter dictionary
+SIM.filter.filters = {'edep0': {'parameter': {'Cut': 0.0}, 'name': 'EnergyDepositMinimumCut/Cut0'}, 'geantino': {'parameter': {},
+                                                                                                                 'name': 'GeantinoRejectFilter/GeantinoRejector'}, 'edep1kev': {'parameter': {'Cut': 0.001}, 'name': 'EnergyDepositMinimumCut'}}
 
-##  a map between patterns and filter objects, using patterns to attach filters to sensitive detector 
+# a map between patterns and filter objects, using patterns to attach filters to sensitive detector
 SIM.filter.mapDetFilter = {}
 
-##  default filter for tracking sensitive detectors; this is applied if no other filter is used for a tracker
+# default filter for tracking sensitive detectors; this is applied if no other filter is used for a tracker
 SIM.filter.tracker = "edep1kev"
 
 
 ################################################################################
-## Configuration for the DDG4 ParticleGun 
+# Configuration for the DDG4 ParticleGun
 ################################################################################
 
-##  direction of the particle gun, 3 vector 
-#TODO: Follow up with Ethan, this didn't change anything, right? Both direction, distribution, and energy. I recall a discussion on what "gun energy" is... Never came to an understanding.
-#My guess is that there are some default options that could be applied in the absence of these settings.
+# direction of the particle gun, 3 vector
 # SIM.gun.direction = (0, 0, 1)
 
-## choose the distribution of the random direction for theta
-## 
-##     Options for random distributions:
-## 
-##     'uniform' is the default distribution, flat in theta
-##     'cos(theta)' is flat in cos(theta)
-##     'eta', or 'pseudorapidity' is flat in pseudorapity
-##     'ffbar' is distributed according to 1+cos^2(theta)
-## 
-##     Setting a distribution will set isotrop = True
-##     
-# SIM.gun.distribution = "uniform"
-# tauEnergy = random.rand()*195+5 ## draw random number on [0,1] and shift to [5,200]
-# SIM.gun.energy = 10*GeV # tauEnergy*GeV
+# choose the distribution of the random direction for theta
+##
+# Options for random distributions:
+##
+# 'uniform' is the default distribution, flat in theta
+# 'cos(theta)' is flat in cos(theta)
+# 'eta', or 'pseudorapidity' is flat in pseudorapity
+# 'ffbar' is distributed according to 1+cos^2(theta)
+##
+# Setting a distribution will set isotrop = True
+##
+SIM.gun.distribution = "uniform"
+SIM.gun.energy = 10.0*GeV
 
-##  isotropic distribution for the particle gun
-## 
-##     use the options phiMin, phiMax, thetaMin, and thetaMax to limit the range of randomly distributed directions
-##     if one of these options is not None the random distribution will be set to True and cannot be turned off!
-##     
+# isotropic distribution for the particle gun
+##
+# use the options phiMin, phiMax, thetaMin, and thetaMax to limit the range of randomly distributed directions
+# if one of these options is not None the random distribution will be set to True and cannot be turned off!
+##
+SIM.gun.isotrop = True
+SIM.gun.multiplicity = 10
+SIM.gun.particle = "mu-"
+SIM.gun.phiMax = None
 
-# SIM.gun.isotrop = True
-# SIM.gun.multiplicity = 1
-# SIM.gun.particle = "tau-"
+# Minimal azimuthal angle for random distribution
+SIM.gun.phiMin = None
 
-## Azimuthal angle for random distribution
-# SIM.gun.phiMax = None
-# SIM.gun.phiMin = None
+# position of the particle gun, 3 vector
+SIM.gun.position = (0.0, 0.0, 0.0)
+SIM.gun.thetaMax = 172*deg
+SIM.gun.thetaMin = 8*deg
 
-# Polar angle for random distribution
-# SIM.gun.thetaMax = 170*deg
-# SIM.gun.thetaMin = 10*deg
-
-##  position of the particle gun, 3 vector 
-# SIM.gun.position = (0.0, 0.0, 0.0)
 
 ################################################################################
-## Configuration for the output levels of DDG4 components 
+# Configuration for the output levels of DDG4 components
 ################################################################################
 
-## Output level for input sources
+# Output level for input sources
 SIM.output.inputStage = 3
 
-## Output level for Geant4 kernel
+# Output level for Geant4 kernel
 SIM.output.kernel = 3
 
-## Output level for ParticleHandler
+# Output level for ParticleHandler
 SIM.output.part = 3
 
-## Output level for Random Number Generator setup
+# Output level for Random Number Generator setup
 SIM.output.random = 6
 
 
 ################################################################################
-## Configuration for the Particle Handler/ MCTruth treatment 
+# Configuration for the Particle Handler/ MCTruth treatment
 ################################################################################
 
-##  Keep all created particles 
+# Keep all created particles
 SIM.part.keepAllParticles = False
 
-## Minimal distance between particle vertex and endpoint of parent after
-## which the vertexIsNotEndpointOfParent flag is set
-##TODO: Why was this changed?
-SIM.part.minDistToParentVertex = 2.2e-20
+# Minimal distance between particle vertex and endpoint of parent after
+# which the vertexIsNotEndpointOfParent flag is set
+##
+SIM.part.minDistToParentVertex = 2.2e-14
 
-## MinimalKineticEnergy to store particles created in the tracking region
-## TODO: Ask about this as well, likely does nothing, but could increase processing time.
-SIM.part.minimalKineticEnergy = 0.01*MeV
+# MinimalKineticEnergy to store particles created in the tracking region
+SIM.part.minimalKineticEnergy = 1.0*MeV
 
-##  Printout at End of Tracking 
+# Printout at End of Tracking
 SIM.part.printEndTracking = True
 
-##  Printout at Start of Tracking 
+# Printout at Start of Tracking
 SIM.part.printStartTracking = True
 
-## List of processes to save, on command line give as whitespace separated string in quotation marks
+# List of processes to save, on command line give as whitespace separated string in quotation marks
 SIM.part.saveProcesses = ['Decay']
 
 
 ################################################################################
-## Configuration for the PhysicsList 
+# Configuration for the PhysicsList
 ################################################################################
 SIM.physics.decays = False
-SIM.physics.list = "QGSP_BERT_HP"
+SIM.physics.list = "FTFP_BERT_HP"
 
-##  location of particle.tbl file containing extra particles and their lifetime information
+# location of particle.tbl file containing extra particles and their lifetime information
+##
 SIM.physics.pdgfile = os.path.join( os.environ.get("DD4HEP"), "DDG4/examples/particle.tbl" )
+#SIM.physics.pdgfile = "/code/GeantExtraPart/x1x1.tbl"
 
-##  The global geant4 rangecut for secondary production
-## 
-##     Default is 0.7 mm as is the case in geant4 10
-## 
-##     To disable this plugin and be absolutely sure to use the Geant4 default range cut use "None"
-## 
-##     Set printlevel to DEBUG to see a printout of all range cuts,
-##     but this only works if range cut is not "None"
-##     
+# The global geant4 rangecut for secondary production
+##
+# Default is 0.7 mm as is the case in geant4 10
+##
+# To disable this plugin and be absolutely sure to use the Geant4 default range cut use "None"
+##
+# Set printlevel to DEBUG to see a printout of all range cuts,
+# but this only works if range cut is not "None"
+##
 SIM.physics.rangecut = 0.7*mm
 
-SIM.physics.rejectPDGs = {1,2,3,4,5,6,21,23,24,25}
+SIM.physics.rejectPDGs = {1, 2, 3, 4, 5, 6, 21, 23, 24, 25}
 
 ################################################################################
-## Properties for the random number generator 
+# Properties for the random number generator
 ################################################################################
 
-## If True, calculate random seed for each event based on eventID and runID
-## allows reproducibility even when SkippingEvents
+# If True, calculate random seed for each event based on eventID and runID
+# allows reproducibility even when SkippingEvents
 SIM.random.enableEventSeed = True
 SIM.random.file = None
 SIM.random.luxury = 1
