@@ -65,38 +65,47 @@ else:
     Output_REC.Parameters = {
         "DropCollectionTypes": [
             "SimTrackerHit", 
-            "CalorimeterHit", "TrackerHitPlane",
+            "SimCalorimeterHit",
+            "CalorimeterHit", 
+            "TrackerHitPlane",
             "LCRelation"
         ],
         "DropCollectionNames": [
             "AllTracks", "SeedTracks", "SiTracks",
-            "MCPhysicsParticles", "MCPhysicsParticles_IP",
-            "EcalBarrelRelationsSimDigi", "EcalBarrelRelationsSimRec", "EcalBarrelRelationsSimSel", 
-            "EcalEndcapRelationsSimDigi", "EcalEndcapRelationsSimRec", "EcalEndcapRelationsSimSel",  
-            "HcalBarrelRelationsSimDigi", "HcalBarrelRelationsSimRec", "HcalBarrelRelationsSimSel",  
-            "HcalEndcapRelationsSimDigi", "HcalEndcapRelationsSimRec", "HcalEndcapRelationsSimSel"
+            "MCPhysicsParticles", "MCPhysicsParticles_IP"
         ],
         "FullSubsetCollections": [
             "EcalBarrelCollectionSel", "EcalEndcapCollectionSel",
-            "HcalBarrelCollectionConed", "HcalEndcapCollectionConed",
+            "HcalBarrelCollectionSel", "HcalEndcapCollectionSel",
             "IBTrackerHitsConed", "IETrackerHitsConed",
-            "OBTrackerHitsConed", "OETrackerHitsConed", 
-            "VBTrackerHitsConed", "VETrackerHitsConed", 
+            "OBTrackerHitsConed", "OETrackerHitsConed",
+            "VBTrackerHitsConed", "VETrackerHitsConed",
+            "VBTrackerHitsRelationsConed", "VETrackerHitsRelationsConed",
+            "IBTrackerHitsRelationsConed", "IETrackerHitsRelationsConed",
+            "OBTrackerHitsRelationsConed", "OETrackerHitsRelationsConed",
+            "VertexBarrelCollectionConed", "VertexEndcapCollectionConed",
+            "InnerTrackerBarrelCollectionConed", "InnerTrackerEndcapCollectionConed",
+            "OuterTrackerBarrelCollectionConed", "OuterTrackerEndcapCollectionConed",
             "SiTracks_Refitted"
         ],
         "KeepCollectionNames": [
-            "EcalBarrelCollectionSel", "EcalEndcapCollectionSel", 
-            "HcalBarrelCollectionConed", "HcalEndcapCollectionConed",
+            "EcalBarrelCollectionSel", "EcalEndcapCollectionSel",
+            "HcalBarrelCollectionSel", "HcalEndcapCollectionSel",
             "IBTrackerHitsConed", "IETrackerHitsConed",
-            "OBTrackerHitsConed", "OETrackerHitsConed", 
-            "VBTrackerHitsConed", "VETrackerHitsConed", 
-            "SiTracks_Refitted",
-            "MCParticle_SiTracks_Refitted"
+            "OBTrackerHitsConed", "OETrackerHitsConed",
+            "VBTrackerHitsConed", "VETrackerHitsConed",
+            "VBTrackerHitsRelationsConed", "VETrackerHitsRelationsConed",
+            "IBTrackerHitsRelationsConed", "IETrackerHitsRelationsConed",
+            "OBTrackerHitsRelationsConed", "OETrackerHitsRelationsConed",
+            "VertexBarrelCollectionConed", "VertexEndcapCollectionConed",
+            "InnerTrackerBarrelCollectionConed", "InnerTrackerEndcapCollectionConed",
+            "OuterTrackerBarrelCollectionConed", "OuterTrackerEndcapCollectionConed",
+            "SiTracks_Refitted", "MCParticle_SiTracks_Refitted"
         ],
         "LCIOOutputFile": [the_args.OutFileName],
         "LCIOWriteMode": ["WRITE_NEW"]
     }
-
+    
 InitDD4hep = MarlinProcessorWrapper("InitDD4hep")
 InitDD4hep.OutputLevel = INFO
 InitDD4hep.ProcessorType = "InitializeDD4hep"
@@ -227,7 +236,7 @@ VXDBarrelConer.Parameters = {
     "TrackerHitOutputCollections": ["VBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["VertexBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["VBTrackerHitsRelationsConed"],
-    "DeltaRCut": ["0.8"],
+    "Dist3DCut": ["30."],
     "FillHistograms": ["false"]
 }
 
@@ -242,7 +251,7 @@ VXDEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["VETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["VertexEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["VETrackerHitsRelationsConed"],
-    "DeltaRCut": ["0.8"],
+    "Dist3DCut": ["30."],
     "FillHistograms": ["false"]
 }
 
@@ -257,7 +266,7 @@ InnerPlanarConer.Parameters = {
     "TrackerHitOutputCollections": ["IBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["InnerTrackerBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["IBTrackerHitsRelationsConed"],
-    "DeltaRCut": ["0.8"],
+    "Dist3DCut": ["30."],
     "FillHistograms": ["false"]
 }
 
@@ -272,7 +281,7 @@ InnerEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["IETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["InnerTrackerEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["IETrackerHitsRelationsConed"],
-    "DeltaRCut": ["0.8"],
+    "Dist3DCut": ["30."],
     "FillHistograms": ["false"]
 }
 
@@ -287,7 +296,7 @@ OuterPlanarConer.Parameters = {
     "TrackerHitOutputCollections": ["OBTrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["OuterTrackerBarrelCollectionConed"],
     "TrackerHitOutputRelations": ["OBTrackerHitsRelationsConed"],
-    "DeltaRCut": ["0.8"],
+    "Dist3DCut": ["30."],
     "FillHistograms": ["false"]
 }
 
@@ -302,7 +311,7 @@ OuterEndcapConer.Parameters = {
     "TrackerHitOutputCollections": ["OETrackerHitsConed"],
     "TrackerSimHitOutputCollections": ["OuterTrackerEndcapCollectionConed"],
     "TrackerHitOutputRelations": ["OETrackerHitsRelationsConed"],
-    "DeltaRCut": ["0.8"],
+    "Dist3DCut": ["30."],
     "FillHistograms": ["false"]
 }
 
@@ -422,7 +431,7 @@ MyEcalBarrelDigi.Parameters = {
     "timingCorrectForPropagation": ["1"],
     "timingCut": ["1"],
     "timingResolution": ["0"],
-    "timingWindowMax": ["10"],
+    "timingWindowMax": ["10."],
     "timingWindowMin": ["-0.5"],
     "elec_range_mip": ["15000"]
 }
@@ -457,7 +466,7 @@ MyEcalEndcapDigi.Parameters = {
     "timingCorrectForPropagation": ["1"],
     "timingCut": ["1"],
     "timingResolution": ["0"],
-    "timingWindowMax": ["10"],
+    "timingWindowMax": ["10."],
     "timingWindowMin": ["-0.5"],
     "elec_range_mip": ["15000"]
 }
@@ -495,7 +504,7 @@ MyHcalBarrelDigi.Parameters = {
     "timingCorrectForPropagation": ["1"],
     "timingCut": ["1"],
     "timingResolution": ["0"],
-    "timingWindowMax": ["10"],
+    "timingWindowMax": ["10."],
     "timingWindowMin": ["-0.5"]
 }
 
@@ -533,7 +542,7 @@ MyHcalEndcapDigi.Parameters = {
     "timingCorrectForPropagation": ["1"],
     "timingCut": ["1"],
     "timingResolution": ["0"],
-    "timingWindowMax": ["10"],
+    "timingWindowMax": ["10."],
     "timingWindowMin": ["-0.5"]
 }
 
@@ -695,7 +704,7 @@ DDMarlinPandora.Parameters = {
     "EMStochasticTerm": ["0.17"],
     "FinalEnergyDensityBin": ["110."],
     "HCalBarrelNormalVector": ["0", "0", "1"],
-    "HCalCaloHitCollections": ["HcalBarrelCollectionConed", "HcalEndcapCollectionConed"],
+    "HCalCaloHitCollections": ["HcalBarrelCollectionSel", "HcalEndcapCollectionSel"],
     "HCalMipThreshold": ["0.3"],
     "HCalToEMGeVCalibration": ["1.02373335516"],
     "HCalToHadGeVCalibration": ["1.01799349172"],
@@ -742,7 +751,7 @@ DDMarlinPandora.Parameters = {
     "ReachesECalMinFtdLayer": ["0"],
     "ReachesECalNBarrelTrackerHits": ["0"],
     "ReachesECalNFtdHits": ["0"],
-    "RelCaloHitCollections": ["EcalBarrelRelationsSimSel", "EcalEndcapRelationsSimSel", "HcalBarrelRelationsSimConed", "HcalEndcapRelationsSimConed", "RelationMuonHit"],
+    "RelCaloHitCollections": ["EcalBarrelRelationsSimSel", "EcalEndcapRelationsSimSel", "HcalBarrelRelationsSimSel", "HcalEndcapRelationsSimSel", "RelationMuonHit"],
     "RelTrackCollections": ["SiTracks_Refitted_Relation"],
     "ShouldFormTrackRelationships": ["1"],
     "SoftwareCompensationEnergyDensityBins": ["0", "2.", "5.", "7.5", "9.5", "13.", "16.", "20.", "23.5", "28.", "33.", "40.", "50.", "75.", "100."],
@@ -973,16 +982,16 @@ algList.append(MyHcalBarrelSelector)
 algList.append(MyHcalEndcapSelector)
 algList.append(MyDDSimpleMuonDigi)
 algList.append(DDMarlinPandora)
-# algList.append(FastJetProcessor)
-# algList.append(ValenciaJetProcessor)
-# algList.append(TrueMCintoRecoForJets)
-# algList.append(TruthFastJetProcessor)
-# algList.append(TruthValenciaJetProcessor)
+algList.append(FastJetProcessor)
+algList.append(ValenciaJetProcessor)
+algList.append(TrueMCintoRecoForJets)
+algList.append(TruthFastJetProcessor)
+algList.append(TruthValenciaJetProcessor)
 algList.append(Output_REC)
 
 ApplicationMgr(TopAlg=algList,
                EvtSel='NONE',
-               EvtMax=1,
+               EvtMax=-1,
                ExtSvc=[evtsvc],
                OutputLevel=INFO
                )
