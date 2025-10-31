@@ -40,7 +40,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-command="ddsim --steeringFile steer_sim_tau_gun_MAIA.py --inputFile ${input_file} --outputFile output_sim_${input_file}.slcio --numberOfEvents 1"
+command="ddsim --steeringFile steer_sim_tau_gun_MAIA.py --inputFile ${input_file} --outputFile output_sim_${input_file} --numberOfEvents 10"
 
 # Print the constructed command
 echo "Executing command: $command"

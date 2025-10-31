@@ -1,7 +1,7 @@
-sample = 1
+sample = 0000
 
-input_file_path = /scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/samples/timeTest/piplus_gen_$(sample).slcio
-input_file_name = piplus_gen_$(sample).slcio
+input_file_path = /scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/samples/v7_submission/gen/split/neutronGun_E_0_50/
+input_file_name = neutronGun_0_50.$(sample).slcio
 sim_script = /scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/simulation/steer_sim_tau_gun_MAIA.py
 maia_GEO = /scratch/gregorypenn/lccontent/maia_Geometry/detector-simulation/geometries/MAIA_v0
 
@@ -15,7 +15,9 @@ should_transfer_files = YES
 Output  = output.out.$(Cluster)-$(Process)
 Log     = log.$(Cluster)
 Error   = error.out.$(Cluster)-$(Process)
-transfer_input_files = $(input_file_path), $(sim_script), $(maia_GEO)
+stream_output = True
+stream_error  = True
+transfer_input_files = $(input_file_path)/$(input_file_name), $(sim_script), $(maia_GEO)
 when_to_transfer_output = ON_EXIT
 request_cpus = 1
 request_disk = 5 GB
@@ -23,3 +25,4 @@ request_memory = 5 GB
 +ProjectName="collab.futurecolliders"
 Executable = /scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/condor_scripts/alma9/simulation/sim.sh
 Arguments = --inputFile $(input_file_name)
+Queue sample from joblist.txt  
