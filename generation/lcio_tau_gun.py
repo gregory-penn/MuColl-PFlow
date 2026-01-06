@@ -13,7 +13,7 @@ from g4units import deg
 from pyLCIO import UTIL, EVENT, IMPL, IO, IOIMPL
 
 # Number of events per momentum bin
-nevt = 100000
+nevt = 10000
 
 # Output file
 outfile = "tau_gen.slcio"
@@ -25,13 +25,11 @@ wrt.open(outfile, EVENT.LCIO.WRITE_NEW)
 #========== particle properties ===================
 # random.seed()
 
-'''
 #generate uniform distribution in pT
-pT = []
-for i in range(500):
-    pT.append(random.random()*300.+20) # 20-320 GeV/c
-'''
-pT = 100 # GeV/c
+#pT = []
+#for i in range(500):
+#    pT.append(random.random()*300.+20) # 20-320 GeV/c
+
 genstat  = 1
 pdg = 15 # tau
 mass =  1.77686 # GeV/c^2
@@ -43,6 +41,7 @@ decayLen = 1.e22
 
 #for pt in pT:
 for n in range(nevt):
+    pT = random.uniform(1000., 5000.) # flat in pT from 1 to 5 TeV
     col = IMPL.LCCollectionVec(EVENT.LCIO.MCPARTICLE) 
     evt = IMPL.LCEventImpl() 
 
