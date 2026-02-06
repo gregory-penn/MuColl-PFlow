@@ -9,8 +9,8 @@ echo "Setting up BIB utils"
 rm -rf MyBIBUtils/build && mkdir MyBIBUtils/build && cd MyBIBUtils/build
 cmake ..
 make
-cd ../..
 export MARLIN_DLL=`readlink -e lib/libMyBIBUtils.so`:${MARLIN_DLL}
+cd ../..
 echo "check current directory"
 ls -lthr $PWD
 echo "<<<Check if we can find executables"

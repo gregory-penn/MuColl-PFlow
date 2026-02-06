@@ -39,4 +39,4 @@ Executable = /scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/condor_scripts/v
 Arguments = "--inputFile $(input_file_name)"
 
 # queue many jobs, determined by joblist.txt
-Queue sample from joblist.txt  
+#Queue sample from joblist.txt  
