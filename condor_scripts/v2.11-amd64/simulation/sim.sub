@@ -1,0 +1,29 @@
+sample = 000
+
+input_file_path = /scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/samples/neutronGun_feb5_2026/gen/neutrons_0_50/
+input_file_name = neutronGun_0_50_gen.$(sample).slcio
+sim_script = /scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/simulation/steer_sim_MAIA_condor.py
+
+Universe = Vanilla
++SingularityImage = "/cvmfs/unpacked.cern.ch/ghcr.io/muoncollidersoft/mucoll-sim-ubuntu24:v2.11-amd64"
+#maybe try: /cvmfs/unpacked.cern.ch/ghcr.io/muoncollidersoft/mucoll-sim-alma9:latest
+Executable     = sim.sh
+# unfortunately this job will crash on CRUSH-OSG-C7 machines. Temporary fix.
+Requirements = ( HAS_SINGULARITY ) && ( HAS_CVMFS_unpacked_cern_ch ) && (!Regexp("^CRUSH-OSG-C7", Machine))
+should_transfer_files = YES
+Output  = output.out.$(Cluster)-$(Process)
+Log     = log.$(Cluster)
+Error   = error.out.$(Cluster)-$(Process)
+stream_output = True
+stream_error  = True
+transfer_input_files = $(input_file_path)/$(input_file_name), $(sim_script)
+when_to_transfer_output = ON_EXIT
+request_cpus = 1
+request_disk = 1 GB
+request_memory = 5 GB
+retry_request_memory = 10 GB 
+#+JobDurationCategory = "Long"
++ProjectName="collab.futurecolliders"
+Executable = /scratch/gregorypenn/muColl-Taus/taus/MuColl-PFlow/condor_scripts/v2.11-amd64/simulation/sim.sh
+Arguments = --inputFile $(input_file_name)
+Queue sample from joblist.txt  
