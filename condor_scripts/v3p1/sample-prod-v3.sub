@@ -10,8 +10,7 @@ dobib = false
 nOverlay = 1667
 # only need to copy tar file containing repository
 # specify name of tarball to copy and unpack on worker node
-tarName = v3p1-clean
-repo = /scratch/gregorypenn/proto-clusters/mucoll-benchmarks/$(tarName).tar.gz
+repo = /scratch/gregorypenn/proto-clusters/mucoll-benchmarks/v3p1-clean.tar.gz
 Executable = /scratch/gregorypenn/proto-clusters/mucoll-benchmarks/condor/sample-prod-v3.sh
 
 Universe = Vanilla
