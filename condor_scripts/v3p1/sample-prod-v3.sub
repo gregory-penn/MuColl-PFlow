@@ -43,4 +43,4 @@ retry_request_memory = 48GB, 64GB, 80GB
 +ProjectName="collab.futurecolliders"
 Arguments = $(tarName) $(randomseed) $(pdgID) $(name) $(ptMin) $(ptMax) $(nevents) $(dobib) $(nOverlay)
 
-Queue randomseed from joblist.txt
+# Queue randomseed from joblist.txt
