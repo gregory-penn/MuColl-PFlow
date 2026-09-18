@@ -1,0 +1,47 @@
+randomseed = 0001 
+pdgID = 22 
+name = photon
+ptMin = 10
+ptMax = 250
+# specify name of tarball to copy and unpack on worker node
+tarName = v3p1-clean
+nevents = 1
+# needs to be "true" (case sensitive) to run BIB
+dobib = false
+# number of files to overlay (only used if BIB is on)
+nOverlay = 1667
+# only need to copy tar file containing repository
+repo = /scratch/gregorypenn/proto-clusters/mucoll-benchmarks/$(tarName).tar.gz
+
+Universe = Vanilla
+# setup version 3.1 of the software 
++SingularityImage = "/cvmfs/unpacked.cern.ch/ghcr.io/muoncollidersoft/mucoll-sim-ubuntu24:v3.1-amd64/"
+Requirements = ( HAS_SINGULARITY ) && ( HAS_CVMFS_unpacked_cern_ch ) 
+
+should_transfer_files = YES
+Output  = output.out.$(Cluster)-$(randomseed)
+Log     = log.$(Cluster)
+Error   = error.out.$(Cluster)-$(randomseed)
+stream_output = True
+stream_error  = True
+transfer_input_files = $(repo)
+# below will transfer files back if job runs over memory or time allocation. If this is undesired, change to only "ON_EXIT"
+when_to_transfer_output = ON_EXIT_OR_EVICT
+# the job will create a directory named "output", this specifies that only those files will be copied back 
+transfer_output_files = output
+
+request_cpus = 1
+# disk usage ~few MB per event with BIB. Since hits are saved w/o BIB, the file size is larger, and 2GB should be requested. 
+request_disk = 2GB
+# memory usage is approx 22 GB per event with BIB (depends on theta if tracker coning is run), and < 5 GB for no-BIB runs.
+# Memory requirements doesn't scale much with number of events in the particle gun
+request_memory = 5GB
+retry_request_memory = 48GB, 64GB, 80GB
+# below extends the maximum execute duration from 20h to 40h, likely with a small price to queue time
+# +JobDurationCategory = "Long"
+
++ProjectName="collab.futurecolliders"
+Executable = /scratch/gregorypenn/proto-clusters/mucoll-benchmarks/condor/sample-prod-v3.sh
+Arguments = $(tarName) $(randomseed) $(pdgID) $(name) $(ptMin) $(ptMax) $(nevents) $(dobib) $(nOverlay)
+
+Queue randomseed from joblist.txt
