@@ -3,15 +3,16 @@ pdgID = 22
 name = photon
 ptMin = 10
 ptMax = 250
-# specify name of tarball to copy and unpack on worker node
-tarName = v3p1-clean
 nevents = 1
 # needs to be "true" (case sensitive) to run BIB
 dobib = false
 # number of files to overlay (only used if BIB is on)
 nOverlay = 1667
 # only need to copy tar file containing repository
+# specify name of tarball to copy and unpack on worker node
+tarName = v3p1-clean
 repo = /scratch/gregorypenn/proto-clusters/mucoll-benchmarks/$(tarName).tar.gz
+Executable = /scratch/gregorypenn/proto-clusters/mucoll-benchmarks/condor/sample-prod-v3.sh
 
 Universe = Vanilla
 # setup version 3.1 of the software 
@@ -41,7 +42,6 @@ retry_request_memory = 48GB, 64GB, 80GB
 # +JobDurationCategory = "Long"
 
 +ProjectName="collab.futurecolliders"
-Executable = /scratch/gregorypenn/proto-clusters/mucoll-benchmarks/condor/sample-prod-v3.sh
 Arguments = $(tarName) $(randomseed) $(pdgID) $(name) $(ptMin) $(ptMax) $(nevents) $(dobib) $(nOverlay)
 
 Queue randomseed from joblist.txt
