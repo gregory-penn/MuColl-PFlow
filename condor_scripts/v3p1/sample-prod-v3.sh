@@ -24,25 +24,27 @@ randomseed="$2"
 echo "Using random seed: ${randomseed}"
 pdgID="$3"
 echo "Generating particle guns of particles with pdgID: ${pdgID}"
-type="$4"
-echo "Your files will be saved with the string: ${type}"
+name="$4"
+echo "Your files will be saved with the string: ${name}"
 ptMin="$5"
 ptMax="$6"
+thetaMin="$7"
+thetaMax="$8"
 echo "Generating particles with pT from ${ptMin} GeV to ${ptMax} GeV"
-nevents="$7"
-nOverlay="$9"
+nevents="$9"
+nOverlay="$11"
 # Set up directory for output file copy
 mkdir output/
 
-gen_command="python generation/pgun/pgun_edm4hep.py -p 1 -e ${nevents} --pdg ${pdgID} --pt ${ptMin} ${ptMax} --theta 10 170 -s ${randomseed} -- output/gen.${type}.${randomseed}.root"
-sim_command="ddsim --steeringFile simulation/steer_baseline.py --inputFiles output/gen.${type}.${randomseed}.root --outputFile output/sim.${type}.${randomseed}.root --numberOfEvents ${nevents}"
+gen_command="python generation/pgun/pgun_edm4hep.py -p 1 -e ${nevents} --pdg ${pdgID} --pt ${ptMin} ${ptMax} --theta ${thetaMin} ${thetaMax} -s ${randomseed} -- output/gen.${name}.${randomseed}.root"
+sim_command="ddsim --steeringFile simulation/steer_baseline.py --inputFiles output/gen.${name}.${randomseed}.root --outputFile output/sim.${name}.${randomseed}.root --numberOfEvents ${nevents}"
 # run with BIB or not
-if [[ "$8" == "true" ]]; then
+if [[ "$10" == "true" ]]; then
     echo "Running with full BIB (${nOverlay} files). Tracker coning is also on."
-    reco_command="k4run $MUCOLL_CONFIG/$MUCOLL_CONFIG_NAME/digi_reco_steer.py --inputFiles output/sim.${type}.${randomseed}.root --outputFile output/reco.${type}.${randomseed}.edm4hep.root --histoFile output/reco_histo.${type}.${randomseed}.root --doOverlayFull --OverlayFullNumberBackground ${nOverlay} --OverlayFullPathToMuPlus ${bib_path}/sim_mp/ --OverlayFullPathToMuMinus ${bib_path}/sim_mm/ --doTrackerConing"
+    reco_command="k4run $MUCOLL_CONFIG/$MUCOLL_CONFIG_NAME/digi_reco_steer.py --inputFiles output/sim.${name}.${randomseed}.root --outputFile output/reco.${name}.${randomseed}.edm4hep.root --histoFile output/reco_histo.${name}.${randomseed}.root --doOverlayFull --OverlayFullNumberBackground ${nOverlay} --OverlayFullPathToMuPlus ${bib_path}/sim_mp/ --OverlayFullPathToMuMinus ${bib_path}/sim_mm/ --doTrackerConing"
 else
     echo "Running without BIB."
-    reco_command="k4run $MUCOLL_CONFIG/$MUCOLL_CONFIG_NAME/digi_reco_steer.py --inputFiles output/sim.${type}.${randomseed}.root --outputFile output/reco.${type}.${randomseed}.edm4hep.root --histoFile output/reco_histo.${type}.${randomseed}.root"
+    reco_command="k4run $MUCOLL_CONFIG/$MUCOLL_CONFIG_NAME/digi_reco_steer.py --inputFiles output/sim.${name}.${randomseed}.root --outputFile output/reco.${name}.${randomseed}.edm4hep.root --histoFile output/reco_histo.${name}.${randomseed}.root"
 fi
 # Print and run
 echo "Executing command: $gen_command"

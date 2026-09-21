@@ -3,6 +3,8 @@ pdgID = 22
 name = photon
 ptMin = 10
 ptMax = 250
+thetaMin = 10
+thetaMax = 170 
 nevents = 1
 # needs to be "true" (case sensitive) to run BIB
 dobib = false
@@ -41,6 +43,6 @@ retry_request_memory = 48GB, 64GB, 80GB
 # +JobDurationCategory = "Long"
 
 +ProjectName="collab.futurecolliders"
-Arguments = $(tarName) $(randomseed) $(pdgID) $(name) $(ptMin) $(ptMax) $(nevents) $(dobib) $(nOverlay)
+Arguments = $(tarName) $(randomseed) $(pdgID) $(name) $(ptMin) $(ptMax) $(thetaMin) $(thetaMax) $(nevents) $(dobib) $(nOverlay)
 
 # Queue randomseed from joblist.txt
